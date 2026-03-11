@@ -15,30 +15,30 @@ export function GarageDoorScroll() {
     offset: ['start start', 'end end'],
   });
 
-  // 1. Fáze (0.0 - 0.3): Vrata se otevírají
-  const doorY = useTransform(scrollYProgress, [0, 0.3], ['0%', '-100%']);
+  // 1. Fáze (0.0 - 0.4): Vrata se otevírají (prodlouženo)
+  const doorY = useTransform(scrollYProgress, [0, 0.4], ['0%', '-100%']);
   
-  // 2. Fáze (0.1 - 0.25): Text se objevuje
-  // 3. Fáze (0.4 - 0.55): Text odjíždí nahoru a mizí
-  const textOpacity = useTransform(scrollYProgress, [0.1, 0.25, 0.4, 0.55], [0, 1, 1, 0]);
-  const textY = useTransform(scrollYProgress, [0.1, 0.25, 0.4, 0.55], [40, 0, 0, -100]);
-  const textPointerEvents = useTransform(scrollYProgress, (v) => v > 0.5 ? 'none' : 'auto');
+  // 2. Fáze (0.2 - 0.45): Text se objevuje
+  // 3. Fáze (0.55 - 0.7): Text odjíždí nahoru a mizí
+  const textOpacity = useTransform(scrollYProgress, [0.2, 0.35, 0.55, 0.7], [0, 1, 1, 0]);
+  const textY = useTransform(scrollYProgress, [0.2, 0.35, 0.55, 0.7], [40, 0, 0, -100]);
+  const textPointerEvents = useTransform(scrollYProgress, (v) => v > 0.65 ? 'none' : 'auto');
 
-  // 4. Fáze (0.5 - 0.65): Video a tlačítko přijíždí zespodu
-  const videoOpacity = useTransform(scrollYProgress, [0.5, 0.65], [0, 1]);
-  const videoY = useTransform(scrollYProgress, [0.5, 0.65], [100, 0]);
-  const videoPointerEvents = useTransform(scrollYProgress, (v) => v > 0.5 ? 'auto' : 'none');
+  // 4. Fáze (0.65 - 0.85): Video a tlačítko přijíždí
+  const videoOpacity = useTransform(scrollYProgress, [0.65, 0.8], [0, 1]);
+  const videoY = useTransform(scrollYProgress, [0.65, 0.8], [100, 0]);
+  const videoPointerEvents = useTransform(scrollYProgress, (v) => v > 0.65 ? 'auto' : 'none');
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     // Načteme iframe těsně předtím, než se objeví
-    if (latest > 0.4 && !isVideoVisible) {
+    if (latest > 0.6 && !isVideoVisible) {
       setIsVideoVisible(true);
     }
   });
 
   return (
-    <section ref={containerRef} className="relative h-[400vh] bg-background">
-      {/* Sticky kontejner, který zůstane na místě během scrollování celých 400vh */}
+    <section ref={containerRef} className="relative h-[500vh] bg-background snap-start">
+      {/* Sticky kontejner, který zůstane na místě během scrollování celých 500vh */}
       <div className="sticky top-0 h-[100dvh] w-full flex flex-col items-center justify-center overflow-hidden px-4 py-16 md:py-24 [@media(max-height:700px)]:py-6">
         
         <div className="text-center z-10 mb-4 md:mb-8 [@media(max-height:700px)]:mb-2 shrink-0">
