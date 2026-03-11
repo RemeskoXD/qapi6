@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String   // Hashed password
+  role      Role     @default(TECHNICIAN)
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  availabilities Availability[]
+  appointments   Appointment[]
+}
+
+enum Role {
+  ADMIN
+  TECHNICIAN
+}
+
+model Availability {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  date      DateTime @db.Date // The specific day
+  startTime String   // e.g., "08:00"
+  endTime   String   // e.g., "16:00"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, date])
+}
+
+model Appointment {
+  id          String   @id @default(uuid())
+  customerName String
+  address     String
+  phone       String
+  email       String
+  serviceType String   // e.g., "Servis oken", "Montáž vrat"
+  notes       String?  @db.Text
+  date        DateTime @db.Date
+  time        String   // e.g., "10:00"
+  status      Status   @default(PENDING)
+  
+  assignedTo  String?
+  technician  User?    @relation(fields: [assignedTo], references: [id])
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum Status {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
