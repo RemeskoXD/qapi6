@@ -16,7 +16,7 @@ const guarantees = [
   },
   {
     icon: Wrench,
-    title: '10 let záruka na materiál',
+    title: '5 let záruka na materiál',
     description: 'Používáme pouze certifikované komponenty, které vydrží desetiletí.',
   },
   {

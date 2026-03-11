@@ -46,7 +46,7 @@ export function ServisOkenSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-32">
           {[
-            { icon: Wrench, title: 'Oprava a nastavení oken a dveří', warranty: 12 },
+            { icon: Wrench, title: 'Oprava a nastavení oken a dveří', warranty: 24 },
             { icon: ShieldCheck, title: 'Promazání kování a těsnění', warranty: 12 },
             { icon: ThermometerSun, title: 'Výměna těsnění', warranty: 24 },
             { icon: Lock, title: 'Výměna kování a komponentů', warranty: 24 },

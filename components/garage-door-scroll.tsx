@@ -2,43 +2,38 @@
 
 import { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'motion/react';
-import { Shield, Lock, ShieldCheck, Play, ArrowRight, Wrench } from 'lucide-react';
+import { Play, ArrowRight, Wrench } from 'lucide-react';
 import Link from 'next/link';
 
 export function GarageDoorScroll() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVideoVisible, setIsVideoVisible] = useState(false);
 
-  // Sledujeme progress scrollování v rámci tohoto kontejneru (výška 400vh pro delší scrollování)
+  // Sledujeme progress scrollování v rámci tohoto kontejneru
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
 
-  // 1. Fáze (0.0 - 0.4): Vrata se otevírají (prodlouženo)
-  const doorY = useTransform(scrollYProgress, [0, 0.4], ['0%', '-100%']);
+  // 1. Fáze (0.0 - 0.2): Vrata jsou zavřená a čekají (pauza)
+  // 2. Fáze (0.2 - 0.7): Vrata se otevírají
+  const doorY = useTransform(scrollYProgress, [0, 0.2, 0.7], ['0%', '0%', '-100%']);
   
-  // 2. Fáze (0.2 - 0.45): Text se objevuje
-  // 3. Fáze (0.55 - 0.7): Text odjíždí nahoru a mizí
-  const textOpacity = useTransform(scrollYProgress, [0.2, 0.35, 0.55, 0.7], [0, 1, 1, 0]);
-  const textY = useTransform(scrollYProgress, [0.2, 0.35, 0.55, 0.7], [40, 0, 0, -100]);
-  const textPointerEvents = useTransform(scrollYProgress, (v) => v > 0.65 ? 'none' : 'auto');
-
-  // 4. Fáze (0.65 - 0.85): Video a tlačítko přijíždí
-  const videoOpacity = useTransform(scrollYProgress, [0.65, 0.8], [0, 1]);
-  const videoY = useTransform(scrollYProgress, [0.65, 0.8], [100, 0]);
-  const videoPointerEvents = useTransform(scrollYProgress, (v) => v > 0.65 ? 'auto' : 'none');
+  // 3. Fáze (0.7 - 0.9): Tlačítko se objevuje
+  const buttonOpacity = useTransform(scrollYProgress, [0.7, 0.9], [0, 1]);
+  const buttonY = useTransform(scrollYProgress, [0.7, 0.9], [50, 0]);
+  const buttonPointerEvents = useTransform(scrollYProgress, (v) => v > 0.7 ? 'auto' : 'none');
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    // Načteme iframe těsně předtím, než se objeví
-    if (latest > 0.6 && !isVideoVisible) {
+    // Načteme iframe hned jak se začnou otevírat vrata
+    if (latest > 0.1 && !isVideoVisible) {
       setIsVideoVisible(true);
     }
   });
 
   return (
-    <section ref={containerRef} className="relative h-[500vh] bg-background snap-start">
-      {/* Sticky kontejner, který zůstane na místě během scrollování celých 500vh */}
+    <section ref={containerRef} className="relative h-[400vh] bg-background">
+      {/* Sticky kontejner, který zůstane na místě během scrollování */}
       <div className="sticky top-0 h-[100dvh] w-full flex flex-col items-center justify-center overflow-hidden px-4 py-16 md:py-24 [@media(max-height:700px)]:py-6">
         
         <div className="text-center z-10 mb-4 md:mb-8 [@media(max-height:700px)]:mb-2 shrink-0">
@@ -52,56 +47,23 @@ export function GarageDoorScroll() {
         <div className="relative w-full max-w-[1400px] flex-1 min-h-[200px] bg-[#1a1a1a] border-[8px] md:border-[16px] border-[#2a2a2a] rounded-t-xl md:rounded-t-2xl shadow-2xl overflow-hidden group">
           
           {/* Interiér garáže */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] to-[#1a1a1a] flex items-center justify-center overflow-hidden">
-            
-            {/* --- PŮVODNÍ TEXTOVÁ ČÁST --- */}
-            <motion.div 
-              style={{ opacity: textOpacity, y: textY, pointerEvents: textPointerEvents as any }}
-              className="absolute inset-0 flex flex-col items-center justify-center p-2 sm:p-4 md:p-8 text-center"
-            >
-              <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-20 md:h-20 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-1 sm:mb-2 md:mb-4 shadow-[0_0_30px_rgba(212,175,55,0.2)] border border-primary/20">
-                <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 md:w-10 md:h-10 text-primary" />
-              </div>
-              <h3 className="text-lg sm:text-xl md:text-5xl font-display font-bold text-white mb-1 sm:mb-2 md:mb-6 leading-tight">
-                Implicitní <span className="text-primary italic">důvěra</span>
-              </h3>
-              <p className="text-white/60 text-[10px] sm:text-xs md:text-lg max-w-lg mx-auto font-light mb-2 sm:mb-4 md:mb-8 hidden sm:block">
-                Neříkáme, že jsme profesionálové. My vám to ukážeme. Čisté uniformy, špičkové nářadí a absolutní soustředění na detail.
-              </p>
-              <div className="flex flex-wrap justify-center gap-1 sm:gap-2 md:gap-6">
-                <div className="flex items-center gap-1 md:gap-2 text-[8px] sm:text-[10px] md:text-sm text-white/80 bg-white/5 px-1.5 py-0.5 sm:px-2 sm:py-1 md:px-4 md:py-2 rounded-full border border-white/10">
-                  <Shield className="w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4 text-primary" />
-                  <span>Certifikovaní technici</span>
-                </div>
-                <div className="flex items-center gap-1 md:gap-2 text-[8px] sm:text-[10px] md:text-sm text-white/80 bg-white/5 px-1.5 py-0.5 sm:px-2 sm:py-1 md:px-4 md:py-2 rounded-full border border-white/10">
-                  <Lock className="w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4 text-primary" />
-                  <span>Absolutní čistota práce</span>
-                </div>
-              </div>
-            </motion.div>
-
+          <div className="absolute inset-0 bg-black flex items-center justify-center overflow-hidden">
             {/* --- VIDEO --- */}
-            <motion.div 
-              style={{ opacity: videoOpacity, pointerEvents: videoPointerEvents as any }}
-              className="absolute inset-0 bg-black"
-            >
-              {isVideoVisible ? (
-                <iframe 
-                  src="https://www.youtube-nocookie.com/embed/cMQFYabS5eU?autoplay=1&controls=1&rel=0&modestbranding=1&playsinline=1" 
-                  title="QAPI Video"
-                  className="absolute inset-0 w-full h-full object-cover"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                  allowFullScreen
-                />
-              ) : (
-                <div className="absolute inset-0 w-full h-full bg-[#111] flex items-center justify-center">
-                  <div className="w-12 h-12 md:w-20 md:h-20 rounded-full bg-primary/20 flex items-center justify-center animate-pulse">
-                    <Play className="w-6 h-6 md:w-10 md:h-10 text-primary ml-1" />
-                  </div>
+            {isVideoVisible ? (
+              <iframe 
+                src="https://www.youtube-nocookie.com/embed/cMQFYabS5eU?autoplay=1&controls=1&rel=0&modestbranding=1&playsinline=1" 
+                title="QAPI Video"
+                className="absolute inset-0 w-full h-full object-cover"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                allowFullScreen
+              />
+            ) : (
+              <div className="absolute inset-0 w-full h-full bg-[#111] flex items-center justify-center">
+                <div className="w-12 h-12 md:w-20 md:h-20 rounded-full bg-primary/20 flex items-center justify-center animate-pulse">
+                  <Play className="w-6 h-6 md:w-10 md:h-10 text-primary ml-1" />
                 </div>
-              )}
-            </motion.div>
-
+              </div>
+            )}
           </div>
 
           {/* Garážová vrata (Pohybují se nahoru) */}
@@ -138,7 +100,7 @@ export function GarageDoorScroll() {
 
         {/* Tlačítko pod garáží */}
         <motion.div 
-          style={{ opacity: videoOpacity, y: videoY, pointerEvents: videoPointerEvents as any }}
+          style={{ opacity: buttonOpacity, y: buttonY, pointerEvents: buttonPointerEvents as any }}
           className="mt-4 md:mt-8 [@media(max-height:700px)]:mt-2 w-full flex justify-center px-4 relative z-20 shrink-0"
         >
           <Link href="#rezervace" className="group cursor-pointer w-full max-w-xl">

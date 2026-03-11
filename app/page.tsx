@@ -8,7 +8,7 @@ import { About } from '@/components/about';
 import { Process } from '@/components/process';
 import { Booking } from '@/components/booking';
 import { Footer } from '@/components/footer';
-import { GarageDoorScroll } from '@/components/garage-door-scroll';
+// import { GarageDoorScroll } from '@/components/garage-door-scroll';
 import { VrataSection } from '@/components/vrata-section';
 import { ServisOkenSection } from '@/components/servis-oken-section';
 import { StiniciSection } from '@/components/stinici-section';
@@ -23,7 +23,7 @@ export default function Home() {
       <Hero />
       <Guarantees />
       <Partners />
-      <GarageDoorScroll />
+      {/* <GarageDoorScroll /> */}
       <Services />
       <VrataSection />
       <ServisOkenSection />
