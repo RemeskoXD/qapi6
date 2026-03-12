@@ -48,7 +48,7 @@ export function WindowSaving() {
           >
             Nová okna vás budou stát <br className="hidden md:block" />
             <span className="relative inline-block mt-2 md:mt-4">
-              <span className="text-[#FF3131] opacity-50">150 000 Kč</span>
+              <span className="text-[#FF3131] opacity-50">300 000 Kč+</span>
               <span className="absolute top-1/2 left-0 w-full h-1.5 md:h-2 bg-[#FF3131] -rotate-6 transform -translate-y-1/2 rounded-full shadow-[0_0_15px_rgba(255,49,49,0.5)]"></span>
             </span>
             <span className="text-[#FF3131] opacity-50">.</span>
@@ -76,31 +76,35 @@ export function WindowSaving() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="bg-[#0f1629]/50 border border-white/5 rounded-3xl p-8 md:p-12 relative overflow-hidden group"
+            className="bg-[#0f1629]/50 border border-white/5 rounded-3xl p-8 md:p-12 relative group"
           >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#FF3131]/5 rounded-full blur-[50px] -mr-10 -mt-10 transition-all duration-500 group-hover:bg-[#FF3131]/10" />
+            <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#FF3131]/5 rounded-full blur-[50px] -mr-10 -mt-10 transition-all duration-500 group-hover:bg-[#FF3131]/10" />
+            </div>
             
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 rounded-2xl bg-[#FF3131]/10 flex items-center justify-center">
-                <X className="w-6 h-6 text-[#FF3131]" />
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 rounded-2xl bg-[#FF3131]/10 flex items-center justify-center">
+                  <X className="w-6 h-6 text-[#FF3131]" />
+                </div>
+                <h3 className="text-2xl font-bold text-white/90">Kompletní výměna oken</h3>
               </div>
-              <h3 className="text-2xl font-bold text-white/90">Kompletní výměna oken</h3>
+              
+              <div className="text-4xl md:text-5xl font-bold text-white/40 mb-10 flex items-baseline gap-2">
+                300 000 Kč <span className="text-2xl">+</span>
+              </div>
+              
+              <ul className="space-y-6">
+                {negativePoints.map((point, i) => (
+                  <li key={i} className="flex items-start gap-4">
+                    <div className="mt-1 w-6 h-6 rounded-full bg-[#FF3131]/10 flex items-center justify-center shrink-0">
+                      <X className="w-3 h-3 text-[#FF3131]" />
+                    </div>
+                    <span className="text-white/60 leading-relaxed">{point}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            
-            <div className="text-4xl md:text-5xl font-bold text-white/40 mb-10 flex items-baseline gap-2">
-              150 000 Kč <span className="text-2xl">+</span>
-            </div>
-            
-            <ul className="space-y-6 relative z-10">
-              {negativePoints.map((point, i) => (
-                <li key={i} className="flex items-start gap-4">
-                  <div className="mt-1 w-6 h-6 rounded-full bg-[#FF3131]/10 flex items-center justify-center shrink-0">
-                    <X className="w-3 h-3 text-[#FF3131]" />
-                  </div>
-                  <span className="text-white/60 leading-relaxed">{point}</span>
-                </li>
-              ))}
-            </ul>
           </motion.div>
 
           {/* Positive Card */}
@@ -109,35 +113,39 @@ export function WindowSaving() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="bg-[#0f1629] border-2 border-primary/40 rounded-3xl p-8 md:p-12 relative shadow-[0_0_50px_rgba(212,175,55,0.15)] overflow-hidden group"
+            className="bg-[#0f1629] border-2 border-primary/40 rounded-3xl p-8 md:p-12 relative shadow-[0_0_50px_rgba(212,175,55,0.15)] group"
           >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[60px] -mr-20 -mt-20 transition-all duration-500 group-hover:bg-primary/20" />
+            <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[60px] -mr-20 -mt-20 transition-all duration-500 group-hover:bg-primary/20" />
+            </div>
             
-            <div className="absolute -top-4 left-8 bg-[#1A1F2C] border border-primary/50 text-primary text-xs font-bold px-4 py-2 rounded-full flex items-center gap-2 uppercase tracking-wider shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+            <div className="absolute -top-4 left-8 bg-[#1A1F2C] border border-primary/50 text-primary text-xs font-bold px-4 py-2 rounded-full flex items-center gap-2 uppercase tracking-wider shadow-[0_0_20px_rgba(212,175,55,0.2)] z-20">
               <Star className="w-3 h-3 fill-primary" /> DOPORUČUJEME
             </div>
             
-            <div className="flex items-center gap-4 mb-6 mt-2">
-              <div className="w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center border border-primary/30">
-                <ShieldCheck className="w-6 h-6 text-primary" />
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-6 mt-2">
+                <div className="w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center border border-primary/30">
+                  <ShieldCheck className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-2xl font-bold text-white">Profesionální Qapi servis</h3>
               </div>
-              <h3 className="text-2xl font-bold text-white">Profesionální Qapi servis</h3>
+              
+              <div className="text-4xl md:text-5xl font-bold text-primary mb-10 flex items-baseline gap-2 drop-shadow-[0_0_15px_rgba(212,175,55,0.3)]">
+                od 199 Kč <span className="text-xl text-white/50 font-normal">/ okno</span>
+              </div>
+              
+              <ul className="space-y-6">
+                {positivePoints.map((point, i) => (
+                  <li key={i} className="flex items-start gap-4">
+                    <div className="mt-1 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center shrink-0 border border-primary/30">
+                      <Check className="w-4 h-4 text-primary" />
+                    </div>
+                    <span className="text-white/90 leading-relaxed font-medium">{point}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-10 flex items-baseline gap-2 drop-shadow-[0_0_15px_rgba(212,175,55,0.3)]">
-              od 199 Kč <span className="text-xl text-white/50 font-normal">/ okno</span>
-            </div>
-            
-            <ul className="space-y-6 relative z-10">
-              {positivePoints.map((point, i) => (
-                <li key={i} className="flex items-start gap-4">
-                  <div className="mt-1 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center shrink-0 border border-primary/30">
-                    <Check className="w-4 h-4 text-primary" />
-                  </div>
-                  <span className="text-white/90 leading-relaxed font-medium">{point}</span>
-                </li>
-              ))}
-            </ul>
           </motion.div>
         </div>
 

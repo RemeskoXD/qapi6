@@ -184,7 +184,7 @@ export function Booking() {
             {[
               { num: 1, label: 'Služba' },
               { num: 2, label: 'Detaily' },
-              { num: 3, label: 'Termín' },
+              { num: 3, label: 'Pref. termín' },
               { num: 4, label: 'Údaje' },
               { num: 5, label: 'Hotovo' }
             ].map((s) => (
@@ -321,7 +321,10 @@ export function Booking() {
             {/* Step 3: Date & Time */}
             {step === 3 && (
               <div className="space-y-8" style={{ transform: "translateZ(20px)" }}>
-                <h3 className="text-2xl font-display font-bold text-white mb-8">Vyberte si termín</h3>
+                <div>
+                  <h3 className="text-2xl font-display font-bold text-white mb-2">Vyberte si preferovaný termín</h3>
+                  <p className="text-white/60 text-sm mb-8">Tento termín je orientační. Budeme se snažit mu co nejvíce přiblížit a přesný čas vám potvrdíme telefonicky.</p>
+                </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                   <div className="flex justify-center bg-muted/30 p-4 md:p-6 rounded-2xl border border-white/5 shadow-inner overflow-x-auto">
                     <style>{`
@@ -475,7 +478,7 @@ export function Booking() {
                       disabled={isSubmitting || !formData.name || !formData.phone || !formData.email || !formData.address || !agreedToTerms}
                       className="w-full sm:w-auto px-10 py-5 bg-primary text-primary-foreground font-bold text-base md:text-lg uppercase tracking-widest rounded-xl hover:bg-white transition-colors flex items-center justify-center gap-3 shadow-[0_15px_30px_rgba(212,175,55,0.3)] disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-1"
                     >
-                      {isSubmitting ? 'Odesílám...' : '[ REZERVOVAT TERMÍN ZDARMA ]'} <CheckCircle2 className="w-6 h-6" />
+                      {isSubmitting ? 'Odesílám...' : '[ REZERVOVAT PREFEROVANÝ TERMÍN ZDARMA ]'} <CheckCircle2 className="w-6 h-6" />
                     </button>
                     <div className="flex items-center gap-2 text-white/60 text-xs md:text-sm font-light mt-2 bg-white/5 px-4 py-2 rounded-lg border border-white/10">
                       <ShieldCheck className="w-4 h-4 text-primary" />
