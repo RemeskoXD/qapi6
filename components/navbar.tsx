@@ -19,10 +19,12 @@ export function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'Služby', href: '#sluzby' },
-    { name: 'Garážová vrata', href: '#vrata' },
-    { name: 'O nás', href: '#o-nas' },
-    { name: 'Kontakt', href: '#kontakt' },
+    { name: 'Home', href: '/' },
+    { name: 'Servis oken', href: '/servis-oken' },
+    { name: 'Garážová vrata', href: '/garazova-vrata' },
+    { name: 'Stínící techniky', href: '/stinici-technika' },
+    { name: 'O nás', href: '/#o-nas' },
+    { name: 'Kontakt', href: '/#kontakt' },
   ];
 
   return (
@@ -37,7 +39,7 @@ export function Navbar() {
         <Link href="/" className="flex items-center gap-2 group z-10">
           <motion.div 
             whileHover={{ scale: 1.05, rotateY: 10 }}
-            className="relative w-[140px] h-[42px] sm:w-[160px] sm:h-[48px] md:w-[180px] md:h-[54px] lg:w-[200px] lg:h-[60px] 2xl:w-[224px] 2xl:h-[64px] transition-transform duration-300"
+            className="relative w-[180px] h-[54px] sm:w-[200px] sm:h-[60px] md:w-[220px] md:h-[66px] lg:w-[240px] lg:h-[72px] 2xl:w-[260px] 2xl:h-[78px] transition-transform duration-300"
           >
             <Image
               src="https://qapi.cz/wp-content/uploads/2025/10/Logo-Bile.png"
@@ -126,7 +128,7 @@ export function Navbar() {
                 transition={{ delay: navLinks.length * 0.1 }}
               >
                 <Link
-                  href="#rezervace"
+                  href="/#rezervace"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="block mt-6 px-6 py-4 bg-primary text-primary-foreground font-bold text-center uppercase tracking-wider rounded-xl shadow-[0_10px_20px_rgba(212,175,55,0.3)]"
                 >

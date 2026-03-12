@@ -6,16 +6,16 @@ export function Footer() {
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "QAPI - Servis oken a garážová vrata",
+    "name": "Ropemi s.r.o. - Servis oken a garážová vrata",
     "image": "https://qapi.cz/wp-content/uploads/2025/10/Logo-Bile.png",
     "@id": "https://qapi.cz",
     "url": "https://qapi.cz",
     "telephone": "+420702835964",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Luxusní ulice 123",
-      "addressLocality": "Praha 1",
-      "postalCode": "110 00",
+      "streetAddress": "Varšavská 715/36, Vinohrady",
+      "addressLocality": "Praha 2",
+      "postalCode": "120 00",
       "addressCountry": "CZ"
     },
     "geo": {
@@ -55,7 +55,7 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-6 transform transition-transform duration-500 hover:translate-z-10">
             <Link href="/" className="flex items-center gap-2 group inline-block">
-              <div className="relative w-48 h-14 md:w-56 md:h-16 transition-transform duration-300 group-hover:scale-105 group-hover:rotate-y-10">
+              <div className="relative w-64 h-20 md:w-80 md:h-24 transition-transform duration-300 group-hover:scale-105 group-hover:rotate-y-10">
                 <Image
                   src="https://qapi.cz/wp-content/uploads/2025/10/Logo-Bile.png"
                   alt="QAPI Logo"
@@ -83,10 +83,10 @@ export function Footer() {
             <h4 className="text-xs font-bold text-white uppercase tracking-[0.2em] drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">Služby</h4>
             <ul className="space-y-4">
               {[
-                { name: 'Garážová vrata', href: '#vrata' },
-                { name: 'Servis oken', href: '#servis-oken' },
-                { name: 'Stínící technika', href: '#stinici' },
-                { name: 'Průmyslová vrata', href: '#vrata' },
+                { name: 'Garážová vrata', href: '/garazova-vrata' },
+                { name: 'Servis oken', href: '/servis-oken' },
+                { name: 'Stínící technika', href: '/stinici-technika' },
+                { name: 'Průmyslová vrata', href: '/garazova-vrata' },
               ].map((item) => (
                 <li key={item.name}>
                   <Link href={item.href} className="text-white/60 hover:text-primary transition-colors font-light relative group inline-block">
@@ -103,9 +103,9 @@ export function Footer() {
             <h4 className="text-xs font-bold text-white uppercase tracking-[0.2em] drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">Společnost</h4>
             <ul className="space-y-4">
               {[
-                { name: 'O nás', href: '#o-nas' },
-                { name: 'Kontakt', href: '#kontakt' },
-                { name: 'Reference', href: '#o-nas' },
+                { name: 'O nás', href: '/#o-nas' },
+                { name: 'Kontakt', href: '/#kontakt' },
+                { name: 'Reference', href: '/#o-nas' },
               ].map((item) => (
                 <li key={item.name}>
                   <Link href={item.href} className="text-white/60 hover:text-primary transition-colors font-light relative group inline-block">
@@ -136,9 +136,11 @@ export function Footer() {
               <li className="flex items-start gap-3 text-white/60 font-light group transition-all duration-300 hover:translate-x-2 hover:text-white/80">
                 <MapPin className="w-4 h-4 mt-1 shrink-0 group-hover:text-primary transition-colors group-hover:scale-110 group-hover:rotate-12" />
                 <span>
-                  QAPI s.r.o.<br />
-                  Luxusní ulice 123<br />
-                  110 00 Praha 1
+                  Ropemi s.r.o.<br />
+                  Varšavská 715/36, Vinohrady<br />
+                  120 00 Praha 2<br />
+                  IČO: 22333941<br />
+                  <span className="text-xs opacity-70 mt-1 block">Společnost vedená u Městského soudu v Praze, spisová značka: C 414732</span>
                 </span>
               </li>
             </ul>

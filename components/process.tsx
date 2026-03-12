@@ -91,7 +91,7 @@ export function Process() {
             </p>
           </div>
           <Link
-            href="#rezervace"
+            href="/#rezervace"
             className="px-8 py-4 bg-primary text-primary-foreground font-bold text-sm uppercase tracking-widest rounded-xl hover:bg-white transition-colors shadow-[0_10px_20px_rgba(212,175,55,0.2)] whitespace-nowrap"
           >
             Získat cenu do 2 minut

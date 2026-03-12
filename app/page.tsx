@@ -9,9 +9,6 @@ import { Process } from '@/components/process';
 import { Booking } from '@/components/booking';
 import { Footer } from '@/components/footer';
 // import { GarageDoorScroll } from '@/components/garage-door-scroll';
-import { VrataSection } from '@/components/vrata-section';
-import { ServisOkenSection } from '@/components/servis-oken-section';
-import { StiniciSection } from '@/components/stinici-section';
 import { KontaktSection } from '@/components/kontakt-section';
 import { MapSection } from '@/components/map-section';
 import { ReviewsSection } from '@/components/reviews-section';
@@ -25,9 +22,6 @@ export default function Home() {
       <Partners />
       {/* <GarageDoorScroll /> */}
       <Services />
-      <VrataSection />
-      <ServisOkenSection />
-      <StiniciSection />
       <About />
       <Process />
       <MapSection />

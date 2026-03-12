@@ -54,7 +54,7 @@ export function StiniciSection() {
           >
             <motion.div className="absolute inset-0 w-full h-full" style={{ transform: "translateZ(-30px)" }}>
               <Image
-                src="https://web2.itnahodinu.cz/OKNA/vnitrnistineni.webp"
+                src="https://web2.itnahodinu.cz/OKNA/zaluziestinenim.webp"
                 alt="Exteriérové stínění"
                 fill
                 className="object-cover transition-transform duration-[2s] ease-[0.16,1,0.3,1] group-hover:scale-105 mix-blend-luminosity group-hover:mix-blend-normal opacity-80"
@@ -111,7 +111,7 @@ export function StiniciSection() {
               viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.6 }}
             >
-              <Link href="#rezervace" className="inline-flex items-center gap-3 text-primary uppercase tracking-[0.2em] font-bold text-xs hover:text-white transition-colors pt-8 group">
+              <Link href="/#rezervace" className="inline-flex items-center gap-3 text-primary uppercase tracking-[0.2em] font-bold text-xs hover:text-white transition-colors pt-8 group">
                 Poptat exteriérové stínění 
                 <span className="w-8 h-8 rounded-full border border-primary/30 flex items-center justify-center group-hover:border-white/30 group-hover:bg-white/10 transition-all duration-300 group-hover:translate-x-2 shadow-[0_0_10px_rgba(212,175,55,0.2)]">
                   <ArrowRight className="w-4 h-4" />
@@ -170,7 +170,7 @@ export function StiniciSection() {
               viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.6 }}
             >
-              <Link href="#rezervace" className="inline-flex items-center gap-3 text-primary uppercase tracking-[0.2em] font-bold text-xs hover:text-white transition-colors pt-8 group">
+              <Link href="/#rezervace" className="inline-flex items-center gap-3 text-primary uppercase tracking-[0.2em] font-bold text-xs hover:text-white transition-colors pt-8 group">
                 Poptat interiérové stínění 
                 <span className="w-8 h-8 rounded-full border border-primary/30 flex items-center justify-center group-hover:border-white/30 group-hover:bg-white/10 transition-all duration-300 group-hover:translate-x-2 shadow-[0_0_10px_rgba(212,175,55,0.2)]">
                   <ArrowRight className="w-4 h-4" />
@@ -187,7 +187,7 @@ export function StiniciSection() {
           >
             <motion.div className="absolute inset-0 w-full h-full" style={{ transform: "translateZ(-30px)" }}>
               <Image
-                src="https://web2.itnahodinu.cz/OKNA/zaluziestinenim.webp"
+                src="https://web2.itnahodinu.cz/OKNA/vnitrnistineni.webp"
                 alt="Interiérové stínění"
                 fill
                 className="object-cover transition-transform duration-[2s] ease-[0.16,1,0.3,1] group-hover:scale-105 mix-blend-luminosity group-hover:mix-blend-normal opacity-80"

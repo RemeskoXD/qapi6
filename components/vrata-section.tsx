@@ -94,7 +94,7 @@ export function VrataSection() {
               viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.6 }}
             >
-              <Link href="#rezervace" className="inline-flex items-center gap-3 text-primary uppercase tracking-[0.2em] font-bold text-xs hover:text-white transition-colors pt-8 group">
+              <Link href="/#rezervace" className="inline-flex items-center gap-3 text-primary uppercase tracking-[0.2em] font-bold text-xs hover:text-white transition-colors pt-8 group">
                 Poptat sekční vrata 
                 <span className="w-8 h-8 rounded-full border border-primary/30 flex items-center justify-center group-hover:border-white/30 group-hover:bg-white/10 transition-all duration-300 group-hover:translate-x-2 shadow-[0_0_10px_rgba(212,175,55,0.2)]">
                   <ArrowRight className="w-4 h-4" />
@@ -148,7 +148,7 @@ export function VrataSection() {
               viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.6 }}
             >
-              <Link href="#rezervace" className="inline-flex items-center gap-3 text-primary uppercase tracking-[0.2em] font-bold text-xs hover:text-white transition-colors pt-8 group">
+              <Link href="/#rezervace" className="inline-flex items-center gap-3 text-primary uppercase tracking-[0.2em] font-bold text-xs hover:text-white transition-colors pt-8 group">
                 Poptat rolovací vrata 
                 <span className="w-8 h-8 rounded-full border border-primary/30 flex items-center justify-center group-hover:border-white/30 group-hover:bg-white/10 transition-all duration-300 group-hover:translate-x-2 shadow-[0_0_10px_rgba(212,175,55,0.2)]">
                   <ArrowRight className="w-4 h-4" />
@@ -220,7 +220,7 @@ export function VrataSection() {
               viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.6 }}
             >
-              <Link href="#rezervace" className="inline-flex items-center gap-3 text-primary uppercase tracking-[0.2em] font-bold text-xs hover:text-white transition-colors pt-8 group">
+              <Link href="/#rezervace" className="inline-flex items-center gap-3 text-primary uppercase tracking-[0.2em] font-bold text-xs hover:text-white transition-colors pt-8 group">
                 Poptat průmyslová vrata 
                 <span className="w-8 h-8 rounded-full border border-primary/30 flex items-center justify-center group-hover:border-white/30 group-hover:bg-white/10 transition-all duration-300 group-hover:translate-x-2 shadow-[0_0_10px_rgba(212,175,55,0.2)]">
                   <ArrowRight className="w-4 h-4" />

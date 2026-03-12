@@ -103,7 +103,7 @@ export function GarageDoorScroll() {
           style={{ opacity: buttonOpacity, y: buttonY, pointerEvents: buttonPointerEvents as any }}
           className="mt-4 md:mt-8 [@media(max-height:700px)]:mt-2 w-full flex justify-center px-4 relative z-20 shrink-0"
         >
-          <Link href="#rezervace" className="group cursor-pointer w-full max-w-xl">
+          <Link href="/#rezervace" className="group cursor-pointer w-full max-w-xl">
             <div className="relative overflow-hidden rounded-full bg-secondary/20 backdrop-blur-xl border-2 border-secondary p-[1px] shadow-[0_10px_40px_-10px_rgba(59,130,246,0.5)] hover:shadow-[0_20px_60px_-15px_rgba(59,130,246,0.7)] transition-all duration-500 transform hover:-translate-y-1 hover:scale-105">
               <div className="absolute inset-0 bg-gradient-to-r from-secondary/30 via-transparent to-secondary/30 animate-pulse" />
               <div className="relative px-4 py-3 md:px-8 md:py-4 flex items-center justify-between gap-2 md:gap-4 bg-background/90 rounded-full">

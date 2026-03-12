@@ -11,12 +11,12 @@ const guarantees = [
   },
   {
     icon: Clock,
-    title: 'Servis do 24 hodin',
+    title: 'Servis do 32 hodin',
     description: 'V případě havárie nebo poruchy jsme u vás do druhého dne. Nenecháme vás v tom.',
   },
   {
     icon: Wrench,
-    title: '5 let záruka na materiál',
+    title: 'Až 5 let záruka na materiál',
     description: 'Používáme pouze certifikované komponenty, které vydrží desetiletí.',
   },
   {

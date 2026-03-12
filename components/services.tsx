@@ -12,7 +12,7 @@ const services = [
     pain: 'Táhne vám okny a platíte zbytečně moc za topení?',
     relief: 'Zajistíme dokonalé utěsnění a seřízení. Snížíme vaše účty za energie a vrátíme domů tepelný komfort.',
     image: 'https://qapi.cz/wp-content/uploads/2025/10/IMG_8266-1536x864.jpg',
-    link: '#servis-oken',
+    link: '/servis-oken',
     colSpan: 'md:col-span-2',
     rowSpan: 'md:row-span-2',
   },
@@ -22,7 +22,7 @@ const services = [
     pain: 'Zasekávají se vrata nebo se bojíte o bezpečnost?',
     relief: 'Instalujeme špičková vrata s tichým chodem a maximálním zabezpečením proti vloupání.',
     image: 'https://web2.itnahodinu.cz/OKNA/garazovevratasekvencni.webp',
-    link: '#vrata',
+    link: '/garazova-vrata',
     colSpan: 'md:col-span-1',
     rowSpan: 'md:row-span-1',
   },
@@ -32,7 +32,7 @@ const services = [
     pain: 'Přehřívá se vám interiér nebo potřebujete nová okna?',
     relief: 'Precizní montáž oken a stínící techniky s důrazem na detail a dlouhou životnost.',
     image: 'https://web2.itnahodinu.cz/OKNA/vnitrnistineni.webp',
-    link: '#stinici',
+    link: '/stinici-technika',
     colSpan: 'md:col-span-1',
     rowSpan: 'md:row-span-1',
   },
@@ -72,7 +72,7 @@ export function Services() {
             transition={{ delay: 0.3, duration: 1 }}
           >
             <Link
-              href="#rezervace"
+              href="/#rezervace"
               className="inline-flex items-center gap-3 text-primary uppercase tracking-[0.2em] font-bold text-xs hover:text-white transition-colors group"
             >
               Získat cenu do 2 minut

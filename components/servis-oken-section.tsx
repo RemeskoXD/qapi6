@@ -81,7 +81,7 @@ export function ServisOkenSection() {
                 </div>
                 <h3 className="text-xl font-display font-bold text-white mb-6 flex-grow flex items-center">{service.title}</h3>
                 
-                <Link href="#rezervace" className="w-full py-3 border-t border-white/10 text-primary text-sm font-bold uppercase tracking-widest hover:bg-white/5 transition-colors group-hover:text-white">
+                <Link href="/#rezervace" className="w-full py-3 border-t border-white/10 text-primary text-sm font-bold uppercase tracking-widest hover:bg-white/5 transition-colors group-hover:text-white">
                   Zobrazit službu
                 </Link>
               </motion.div>
@@ -165,7 +165,7 @@ export function ServisOkenSection() {
               viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.6 }}
             >
-              <Link href="#rezervace" className="inline-flex items-center gap-3 text-primary uppercase tracking-[0.2em] font-bold text-xs hover:text-white transition-colors pt-8 group">
+              <Link href="/#rezervace" className="inline-flex items-center gap-3 text-primary uppercase tracking-[0.2em] font-bold text-xs hover:text-white transition-colors pt-8 group">
                 Objednat servis 
                 <span className="w-8 h-8 rounded-full border border-primary/30 flex items-center justify-center group-hover:border-white/30 group-hover:bg-white/10 transition-all duration-300 group-hover:translate-x-2 shadow-[0_0_10px_rgba(212,175,55,0.2)]">
                   <ArrowRight className="w-4 h-4" />

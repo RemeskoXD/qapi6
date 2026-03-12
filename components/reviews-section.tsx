@@ -3,6 +3,7 @@
 import { motion } from 'motion/react';
 import { Star, StarHalf, ExternalLink, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function ReviewsSection() {
   return (
@@ -103,8 +104,8 @@ export function ReviewsSection() {
             >
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-[#cc0000] rounded-full flex items-center justify-center text-white font-bold text-2xl">
-                    S
+                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center p-2">
+                    <Image src="https://web2.itnahodinu.cz/OKNA/seznam.svg" alt="Seznam.cz" width={28} height={28} className="object-contain" />
                   </div>
                   <div>
                     <h3 className="text-white font-bold text-xl">Firmy.cz (Seznam)</h3>
