@@ -28,7 +28,7 @@ const services = [
   },
   {
     id: 'montaz',
-    title: 'Montáž a Stínění',
+    title: 'Stínicí technika',
     pain: 'Přehřívá se vám interiér nebo potřebujete nová okna?',
     relief: 'Precizní montáž oken a stínící techniky s důrazem na detail a dlouhou životnost.',
     image: 'https://web2.itnahodinu.cz/OKNA/vnitrnistineni.webp',

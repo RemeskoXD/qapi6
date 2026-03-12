@@ -58,7 +58,7 @@ export function About() {
                 <div className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-primary drop-shadow-[0_0_15px_rgba(212,175,55,0.5)]">10+</div>
                 <div className="text-white/80 font-light leading-relaxed text-sm md:text-lg">
                   Let zkušeností v oboru<br />
-                  <span className="text-white font-bold">garážových vrat a stínící techniky</span>
+                  <span className="text-white font-bold">garážových vrat a stínicí techniky</span>
                 </div>
               </div>
             </div>

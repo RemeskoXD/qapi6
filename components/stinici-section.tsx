@@ -31,7 +31,7 @@ export function StiniciSection() {
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="font-display text-3xl md:text-4xl lg:text-5xl 2xl:text-6xl font-bold text-white tracking-tight drop-shadow-lg"
           >
-            Stínící <span className="text-primary italic font-light">technika</span>
+            Stínicí <span className="text-primary italic font-light">technika</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}

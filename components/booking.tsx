@@ -68,7 +68,7 @@ export function Booking() {
         { id: 'hlinikova', label: 'Hliníková okna', img: 'https://qapi.cz/wp-content/uploads/2025/10/po-2.jpg' },
       ]
     },
-    'Stínící technika': {
+    'Stínicí technika': {
       types: [
         { id: 'zaluzie', label: 'Venkovní žaluzie', img: 'https://qapi.cz/wp-content/uploads/2025/10/4.jpg' },
         { id: 'rolety', label: 'Venkovní rolety', img: 'https://qapi.cz/wp-content/uploads/2025/10/10.jpg' },
@@ -217,7 +217,7 @@ export function Booking() {
               <div className="space-y-6" style={{ transform: "translateZ(20px)" }}>
                 <h3 className="text-2xl font-display font-bold text-white mb-8">S čím přesně potřebujete pomoci?</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {['Bezplatná kontrola oken', 'Garážová vrata', 'Servis oken', 'Stínící technika'].map((item) => (
+                  {['Bezplatná kontrola oken', 'Garážová vrata', 'Servis oken', 'Stínicí technika'].map((item) => (
                     <button
                       key={item}
                       onClick={() => setService(item)}

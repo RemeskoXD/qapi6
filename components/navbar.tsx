@@ -22,7 +22,7 @@ export function Navbar() {
     { name: 'Home', href: '/' },
     { name: 'Servis oken', href: '/servis-oken' },
     { name: 'Garážová vrata', href: '/garazova-vrata' },
-    { name: 'Stínící techniky', href: '/stinici-technika' },
+    { name: 'Stínicí technika', href: '/stinici-technika' },
     { name: 'O nás', href: '/#o-nas' },
     { name: 'Kontakt', href: '/#kontakt' },
   ];

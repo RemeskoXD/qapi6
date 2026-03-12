@@ -66,7 +66,7 @@ export function Footer() {
               </div>
             </Link>
             <p className="text-white/60 font-light leading-relaxed max-w-xs">
-              Luxusní garážová vrata, stínící technika a profesionální servis oken s důrazem na detail a kvalitu.
+              Luxusní garážová vrata, stínicí technika a profesionální servis oken s důrazem na detail a kvalitu.
             </p>
             <div className="flex items-center gap-4">
               <a href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/60 hover:text-primary hover:border-primary hover:bg-primary/10 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_15px_rgba(207,175,108,0.4)]">
@@ -85,7 +85,7 @@ export function Footer() {
               {[
                 { name: 'Garážová vrata', href: '/garazova-vrata' },
                 { name: 'Servis oken', href: '/servis-oken' },
-                { name: 'Stínící technika', href: '/stinici-technika' },
+                { name: 'Stínicí technika', href: '/stinici-technika' },
                 { name: 'Průmyslová vrata', href: '/garazova-vrata' },
               ].map((item) => (
                 <li key={item.name}>
@@ -152,7 +152,7 @@ export function Footer() {
             © {new Date().getFullYear()} QAPI. Všechna práva vyhrazena.
           </p>
           <div className="text-white/30 text-xs font-light text-center md:text-left max-w-2xl">
-            <strong>Obsluhované regiony:</strong> Servis oken Praha, Brno, Ostrava, Plzeň, Liberec, Olomouc, České Budějovice, Hradec Králové. Montáž garážových vrat a stínící techniky po celé ČR.
+            <strong>Obsluhované regiony:</strong> Servis oken Praha, Brno, Ostrava, Plzeň, Liberec, Olomouc, České Budějovice, Hradec Králové. Montáž garážových vrat a stínicí techniky po celé ČR.
           </div>
           <p className="text-white/40 text-sm font-light group">
             Vytvořeno s důrazem na <span className="text-primary italic font-bold group-hover:drop-shadow-[0_0_8px_rgba(207,175,108,0.8)] transition-all duration-300 inline-block group-hover:scale-110">dokonalost</span>

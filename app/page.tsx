@@ -12,12 +12,16 @@ import { Footer } from '@/components/footer';
 import { KontaktSection } from '@/components/kontakt-section';
 import { MapSection } from '@/components/map-section';
 import { ReviewsSection } from '@/components/reviews-section';
+import { ThreeSteps } from '@/components/three-steps';
+import { WindowSaving } from '@/components/window-saving';
 
 export default function Home() {
   return (
     <main className="flex-1 overflow-x-hidden">
       <Navbar />
       <Hero />
+      <WindowSaving />
+      <ThreeSteps />
       <Guarantees />
       <Partners />
       {/* <GarageDoorScroll /> */}
