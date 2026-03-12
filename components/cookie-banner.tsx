@@ -34,6 +34,34 @@ export function CookieBanner() {
     }
     
     gtag('consent', 'update', consentSettings);
+
+    // Seznam Retargeting Hit
+    if (typeof window !== 'undefined') {
+      const seznamConsent = consentSettings.ad_storage === 'granted' ? 1 : 0;
+      
+      (window as any).sznIVA = (window as any).sznIVA || {};
+      (window as any).sznIVA.IS = (window as any).sznIVA.IS || {};
+      if (typeof (window as any).sznIVA.IS.updateIdentities === 'function') {
+        (window as any).sznIVA.IS.updateIdentities({ eid: null });
+      } else {
+        (window as any).sznIVA.IS.updateIdentities = function() {};
+      }
+      
+      const fireRetargeting = () => {
+        if ((window as any).rc && (window as any).rc.retargetingHit) {
+          (window as any).rc.retargetingHit({
+            rtgId: 1641331,
+            consent: seznamConsent
+          });
+        }
+      };
+
+      if ((window as any).rc && (window as any).rc.retargetingHit) {
+        fireRetargeting();
+      } else {
+        window.addEventListener('load', fireRetargeting);
+      }
+    }
     
     // Save to local storage
     localStorage.setItem('cookie-consent', JSON.stringify(consentSettings));

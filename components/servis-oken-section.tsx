@@ -99,7 +99,7 @@ export function ServisOkenSection() {
           >
             <motion.div className="absolute inset-0 w-full h-full" style={{ transform: "translateZ(-30px)" }}>
               <Image
-                src="https://qapi.cz/wp-content/uploads/2025/10/IMG_8265.jpg"
+                src="https://web2.itnahodinu.cz/QAPI/IMG_8265.webp"
                 alt="Opravy a seřízení"
                 fill
                 className="object-cover transition-transform duration-[2s] ease-[0.16,1,0.3,1] group-hover:scale-105 mix-blend-luminosity group-hover:mix-blend-normal opacity-80"

@@ -113,14 +113,14 @@ export function WindowSaving() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="bg-[#0f1629] border-2 border-primary/40 rounded-3xl p-8 md:p-12 relative shadow-[0_0_50px_rgba(212,175,55,0.15)] group"
+            className="bg-[#0f1629] border-2 border-primary/40 rounded-3xl p-8 md:p-12 relative shadow-[0_0_50px_rgba(212,175,55,0.15)] group mt-8 md:mt-0"
           >
             <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
               <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[60px] -mr-20 -mt-20 transition-all duration-500 group-hover:bg-primary/20" />
             </div>
             
-            <div className="absolute -top-4 left-8 bg-[#1A1F2C] border border-primary/50 text-primary text-xs font-bold px-4 py-2 rounded-full flex items-center gap-2 uppercase tracking-wider shadow-[0_0_20px_rgba(212,175,55,0.2)] z-20">
-              <Star className="w-3 h-3 fill-primary" /> DOPORUČUJEME
+            <div className="absolute -top-6 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-8 bg-primary text-background text-sm font-black px-6 py-2 rounded-full flex items-center gap-2 uppercase tracking-widest shadow-[0_10px_30px_rgba(212,175,55,0.4)] z-50 border-4 border-[#0f1629]">
+              <Star className="w-4 h-4 fill-background" /> DOPORUČUJEME
             </div>
             
             <div className="relative z-10">

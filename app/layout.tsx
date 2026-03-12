@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     siteName: 'QAPI',
     images: [
       {
-        url: 'https://qapi.cz/wp-content/uploads/2025/10/vrata-qapi-uvod-original.jpg',
+        url: 'https://web2.itnahodinu.cz/QAPI/vrata-qapi-uvod-original.webp',
         width: 1200,
         height: 630,
         alt: 'QAPI - Garážová vrata a servis oken',
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'QAPI | Poctivá garážová vrata a stínicí technika',
     description: 'Česká garážová vrata na míru, moderní stínicí technika a profesionální servis oken.',
-    images: ['https://qapi.cz/wp-content/uploads/2025/10/vrata-qapi-uvod-original.jpg'],
+    images: ['https://web2.itnahodinu.cz/QAPI/vrata-qapi-uvod-original.webp'],
   },
   robots: {
     index: true,
@@ -131,6 +131,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             })(window, document, "clarity", "script", "vukr8pkccp");
           `}
         </Script>
+
+        {/* Seznam Retargeting & Conversion */}
+        <Script src="https://c.seznam.cz/js/rc.js" strategy="afterInteractive" />
       </head>
       <body className="antialiased min-h-screen flex flex-col" suppressHydrationWarning>
         {/* Google Tag Manager (noscript) */}

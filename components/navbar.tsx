@@ -42,7 +42,7 @@ export function Navbar() {
             className="relative w-[180px] h-[54px] sm:w-[200px] sm:h-[60px] md:w-[220px] md:h-[66px] lg:w-[240px] lg:h-[72px] 2xl:w-[260px] 2xl:h-[78px] transition-transform duration-300"
           >
             <Image
-              src="https://qapi.cz/wp-content/uploads/2025/10/Logo-Bile.png"
+              src="https://web2.itnahodinu.cz/QAPI/Logo-Bile.webp"
               alt="QAPI Logo"
               fill
               className="object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]"

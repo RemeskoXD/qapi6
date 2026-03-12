@@ -11,7 +11,7 @@ const services = [
     title: 'Servis Oken',
     pain: 'Táhne vám okny a platíte zbytečně moc za topení?',
     relief: 'Zajistíme dokonalé utěsnění a seřízení. Snížíme vaše účty za energie a vrátíme domů tepelný komfort.',
-    image: 'https://qapi.cz/wp-content/uploads/2025/10/IMG_8266-1536x864.jpg',
+    image: 'https://web2.itnahodinu.cz/QAPI/IMG_8266-1536x864.webp',
     link: '/servis-oken',
     colSpan: 'md:col-span-2',
     rowSpan: 'md:row-span-2',

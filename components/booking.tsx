@@ -49,9 +49,9 @@ export function Booking() {
   const serviceOptions: Record<string, { types: { id: string, label: string, img: string }[], colors?: { id: string, label: string, hex: string }[] }> = {
     'Garážová vrata': {
       types: [
-        { id: 'sekcni', label: 'Sekční vrata', img: 'https://qapi.cz/wp-content/uploads/2025/11/WhatsApp-Image-2025-11-07-at-15.08.16.jpeg' },
-        { id: 'rolovaci', label: 'Rolovací vrata', img: 'https://qapi.cz/wp-content/uploads/2025/10/IMG_6817.jpg' },
-        { id: 'dvoukridla', label: 'Dvoukřídlá vrata', img: 'https://qapi.cz/wp-content/uploads/2025/10/po-2.jpg' },
+        { id: 'sekcni', label: 'Sekční vrata', img: 'https://web2.itnahodinu.cz/QAPI/WhatsApp-Image-2025-11-07-at-15.08.16.webp' },
+        { id: 'rolovaci', label: 'Rolovací vrata', img: 'https://web2.itnahodinu.cz/QAPI/IMG_6817.webp' },
+        { id: 'dvoukridla', label: 'Dvoukřídlá vrata', img: 'https://web2.itnahodinu.cz/QAPI/po-2.webp' },
       ],
       colors: [
         { id: 'antracit', label: 'Antracit', hex: '#333333' },
@@ -63,16 +63,16 @@ export function Booking() {
     },
     'Servis oken': {
       types: [
-        { id: 'plastova', label: 'Plastová okna', img: 'https://qapi.cz/wp-content/uploads/2025/10/IMG_8265.jpg' },
-        { id: 'drevena', label: 'Dřevěná okna', img: 'https://qapi.cz/wp-content/uploads/2025/10/IMG_8266-1536x864.jpg' },
-        { id: 'hlinikova', label: 'Hliníková okna', img: 'https://qapi.cz/wp-content/uploads/2025/10/po-2.jpg' },
+        { id: 'plastova', label: 'Plastová okna', img: 'https://web2.itnahodinu.cz/QAPI/IMG_8265.webp' },
+        { id: 'drevena', label: 'Dřevěná okna', img: 'https://web2.itnahodinu.cz/QAPI/IMG_8266-1536x864.webp' },
+        { id: 'hlinikova', label: 'Hliníková okna', img: 'https://web2.itnahodinu.cz/QAPI/po-2.webp' },
       ]
     },
     'Stínicí technika': {
       types: [
-        { id: 'zaluzie', label: 'Venkovní žaluzie', img: 'https://qapi.cz/wp-content/uploads/2025/10/4.jpg' },
-        { id: 'rolety', label: 'Venkovní rolety', img: 'https://qapi.cz/wp-content/uploads/2025/10/10.jpg' },
-        { id: 'markyzy', label: 'Markýzy', img: 'https://qapi.cz/wp-content/uploads/2025/10/IMG_6817.jpg' },
+        { id: 'zaluzie', label: 'Venkovní žaluzie', img: 'https://web2.itnahodinu.cz/QAPI/4.webp' },
+        { id: 'rolety', label: 'Venkovní rolety', img: 'https://web2.itnahodinu.cz/QAPI/10.webp' },
+        { id: 'markyzy', label: 'Markýzy', img: 'https://web2.itnahodinu.cz/QAPI/IMG_6817.webp' },
       ],
       colors: [
         { id: 'stribrna', label: 'Stříbrná', hex: '#C0C0C0' },
@@ -82,8 +82,8 @@ export function Booking() {
     },
     'Průmyslová vrata': {
       types: [
-        { id: 'sekcni-prum', label: 'Sekční průmyslová', img: 'https://qapi.cz/wp-content/uploads/2025/10/prumyslova-vrata-qapi.jpg' },
-        { id: 'rychlobezna', label: 'Rychloběžná', img: 'https://qapi.cz/wp-content/uploads/2025/10/vrata-qapi-uvod-original.jpg' },
+        { id: 'sekcni-prum', label: 'Sekční průmyslová', img: 'https://web2.itnahodinu.cz/QAPI/prumyslova-vrata-qapi.webp' },
+        { id: 'rychlobezna', label: 'Rychloběžná', img: 'https://web2.itnahodinu.cz/QAPI/vrata-qapi-uvod-original.webp' },
       ],
       colors: [
         { id: 'modra', label: 'Modrá', hex: '#003366' },
@@ -94,7 +94,7 @@ export function Booking() {
     },
     'Bezplatná kontrola oken': {
       types: [
-        { id: 'kontrola', label: 'Komplexní diagnostika', img: 'https://qapi.cz/wp-content/uploads/2025/10/IMG_8265.jpg' }
+        { id: 'kontrola', label: 'Komplexní diagnostika', img: 'https://web2.itnahodinu.cz/QAPI/IMG_8265.webp' }
       ]
     }
   };
@@ -139,6 +139,32 @@ export function Booking() {
 
       if (!response.ok) {
         throw new Error('Nepodařilo se odeslat poptávku.');
+      }
+
+      // Seznam Conversion Hit
+      if (typeof window !== 'undefined') {
+        const consent = localStorage.getItem('cookie-consent');
+        let seznamConsent = 0;
+        if (consent) {
+          try {
+            const parsed = JSON.parse(consent);
+            if (parsed.ad_storage === 'granted') seznamConsent = 1;
+          } catch (e) {}
+        }
+        
+        (window as any).sznIVA = (window as any).sznIVA || {};
+        (window as any).sznIVA.IS = (window as any).sznIVA.IS || {};
+        if (typeof (window as any).sznIVA.IS.updateIdentities === 'function') {
+          (window as any).sznIVA.IS.updateIdentities({ eid: null });
+        }
+        
+        if ((window as any).rc && (window as any).rc.conversionHit) {
+          (window as any).rc.conversionHit({
+            id: 100256578,
+            value: null,
+            consent: seznamConsent
+          });
+        }
       }
 
       setStep(5); // Success step

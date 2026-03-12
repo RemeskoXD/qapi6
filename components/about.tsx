@@ -44,7 +44,7 @@ export function About() {
           >
             <motion.div className="absolute inset-0 w-full h-full" style={{ transform: "translateZ(-30px)" }}>
               <Image
-                src="https://qapi.cz/wp-content/uploads/2025/10/IMG_7942.jpg"
+                src="https://web2.itnahodinu.cz/QAPI/IMG_7942.webp"
                 alt="Precizní práce QAPI"
                 fill
                 className="object-cover transition-transform duration-[2s] ease-[0.16,1,0.3,1] group-hover:scale-105 mix-blend-luminosity group-hover:mix-blend-normal opacity-80"

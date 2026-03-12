@@ -7,7 +7,7 @@ export function Footer() {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Ropemi s.r.o. - Servis oken a garážová vrata",
-    "image": "https://qapi.cz/wp-content/uploads/2025/10/Logo-Bile.png",
+    "image": "https://web2.itnahodinu.cz/QAPI/Logo-Bile.webp",
     "@id": "https://qapi.cz",
     "url": "https://qapi.cz",
     "telephone": "+420702835964",
@@ -57,7 +57,7 @@ export function Footer() {
             <Link href="/" className="flex items-center gap-2 group inline-block">
               <div className="relative w-64 h-20 md:w-80 md:h-24 transition-transform duration-300 group-hover:scale-105 group-hover:rotate-y-10">
                 <Image
-                  src="https://qapi.cz/wp-content/uploads/2025/10/Logo-Bile.png"
+                  src="https://web2.itnahodinu.cz/QAPI/Logo-Bile.webp"
                   alt="QAPI Logo"
                   fill
                   className="object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]"
