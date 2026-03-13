@@ -94,13 +94,14 @@ export function Services() {
               whileHover={{ scale: 1.01, rotateY: index % 2 === 0 ? 1 : -1, rotateX: 1 }}
               className={`group relative overflow-hidden bg-muted/40 ${service.colSpan} ${service.rowSpan} rounded-3xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] border border-white/5 hover:border-primary/20 transition-all duration-700 [transform-style:preserve-3d]`}
             >
-              <Link href={service.link} className="absolute inset-0 z-20" />
+              <Link href={service.link} className="absolute inset-0 z-20" aria-label={`Více informací o službě ${service.title}`} />
               
               <motion.div className="absolute inset-0 w-full h-full" style={{ transform: "translateZ(-30px)" }}>
                 <Image
                   src={service.image}
                   alt={service.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover transition-transform duration-[2s] ease-[0.16,1,0.3,1] group-hover:scale-105 opacity-50 group-hover:opacity-70 mix-blend-luminosity group-hover:mix-blend-normal"
                   referrerPolicy="no-referrer"
                 />

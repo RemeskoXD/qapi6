@@ -101,7 +101,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         </Script>
         
         {/* Google Tag Manager */}
-        <Script id="gtm-script" strategy="afterInteractive">
+        <Script id="gtm-script" strategy="lazyOnload">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -112,8 +112,8 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         </Script>
 
         {/* Google Analytics (gtag.js) */}
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-0S31HS6T6E" strategy="afterInteractive" />
-        <Script id="ga-script" strategy="afterInteractive">
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-0S31HS6T6E" strategy="lazyOnload" />
+        <Script id="ga-script" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -122,7 +122,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           `}
         </Script>
 
-        <Script id="clarity-script" strategy="afterInteractive">
+        <Script id="clarity-script" strategy="lazyOnload">
           {`
             (function(c,l,a,r,i,t,y){
                 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -133,7 +133,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         </Script>
 
         {/* Seznam Retargeting & Conversion */}
-        <Script src="https://c.seznam.cz/js/rc.js" strategy="afterInteractive" />
+        <Script src="https://c.seznam.cz/js/rc.js" strategy="lazyOnload" />
       </head>
       <body className="antialiased min-h-screen flex flex-col" suppressHydrationWarning>
         {/* Google Tag Manager (noscript) */}

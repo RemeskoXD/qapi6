@@ -45,6 +45,7 @@ export function Navbar() {
               src="https://web2.itnahodinu.cz/QAPI/Logo-Bile.webp"
               alt="QAPI Logo"
               fill
+              sizes="(max-width: 768px) 200px, 260px"
               className="object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]"
               referrerPolicy="no-referrer"
             />

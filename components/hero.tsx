@@ -76,31 +76,22 @@ export function Hero() {
       <div className="relative z-[40] container mx-auto px-4 sm:px-6 md:px-12">
         <div className="interactive-search-wrapper !mx-0 !max-w-3xl flex flex-col items-start text-left">
           
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] font-bold text-white leading-[1.05] tracking-tight drop-shadow-2xl"
+          <h1
+            className="font-display text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] font-bold text-white leading-[1.05] tracking-tight drop-shadow-2xl animate-fade-in-up animate-delay-300"
           >
             Ztrácíte teplo i peníze?
             <span className="text-primary italic font-light tracking-normal mt-3 mb-3 block">Zjistěte okamžitě,</span>
             zda vaše okna potřebují<br className="hidden lg:block" /> odborný zásah.
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-6 text-lg sm:text-xl text-white/80 font-light leading-relaxed tracking-wide max-w-2xl"
+          <p
+            className="mt-6 text-lg sm:text-xl text-white/80 font-light leading-relaxed tracking-wide max-w-2xl animate-fade-in-up animate-delay-400"
           >
             Špatně seřízená okna vás mohou stát tisíce korun ročně na energiích. Nečekejte na zimu. Naši experti odhalí skryté úniky a prodlouží životnost vašich oken.
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-10 w-full max-w-2xl"
+          <div
+            className="mt-10 w-full max-w-2xl animate-fade-in-up animate-delay-500"
           >
             <motion.div 
               animate={{ 
@@ -186,35 +177,30 @@ export function Hero() {
                 </motion.div>
               )}
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 
       {/* Right Column - Image Bleeding to Edge */}
       <div className="hidden lg:block absolute bottom-0 right-0 w-[50%] xl:w-[45%] h-full z-10 pointer-events-none">
-        <motion.div
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full h-full"
+        <div
+          className="relative w-full h-full animate-slide-in-right animate-delay-400"
         >
           <Image 
             src="https://web2.itnahodinu.cz/OKNA/kluci.webp" 
             alt="Náš tým techniků QAPI" 
             fill 
+            sizes="(max-width: 1024px) 0vw, 50vw"
             className="object-contain object-right-bottom"
             referrerPolicy="no-referrer"
             priority
           />
-        </motion.div>
+        </div>
       </div>
 
       {/* Trust Bar (Halo Effect) */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2, duration: 1 }}
-        className="absolute bottom-0 left-0 right-0 z-30 bg-background/90 backdrop-blur-xl border-t border-white/10 py-4 md:py-5"
+      <div
+        className="absolute bottom-0 left-0 right-0 z-30 bg-background/90 backdrop-blur-xl border-t border-white/10 py-4 md:py-5 animate-fade-in-up animate-delay-1200"
       >
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 text-center md:text-left">
           
@@ -223,7 +209,7 @@ export function Hero() {
             <div className="flex -space-x-2">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="w-8 h-8 rounded-full border-2 border-background bg-muted flex items-center justify-center overflow-hidden relative">
-                  <Image src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="Klient" fill className="object-cover opacity-80" referrerPolicy="no-referrer" />
+                  <Image src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="Klient" fill sizes="32px" className="object-cover opacity-80" referrerPolicy="no-referrer" />
                 </div>
               ))}
             </div>
@@ -274,7 +260,7 @@ export function Hero() {
           </a>
 
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

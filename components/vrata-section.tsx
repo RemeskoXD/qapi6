@@ -45,6 +45,7 @@ export function VrataSection() {
                 src="https://web2.itnahodinu.cz/OKNA/garazovevratasekvencni.webp"
                 alt="Sekční vrata"
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover transition-transform duration-[2s] ease-[0.16,1,0.3,1] group-hover:scale-105 mix-blend-luminosity group-hover:mix-blend-normal opacity-80"
                 referrerPolicy="no-referrer"
               />
@@ -168,6 +169,7 @@ export function VrataSection() {
                 src="https://web2.itnahodinu.cz/OKNA/rolovacivrata.webp"
                 alt="Rolovací vrata"
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover transition-transform duration-[2s] ease-[0.16,1,0.3,1] group-hover:scale-105 mix-blend-luminosity group-hover:mix-blend-normal opacity-80"
                 referrerPolicy="no-referrer"
               />
@@ -240,6 +242,7 @@ export function VrataSection() {
                 src="https://web2.itnahodinu.cz/QAPI/prumyslova-vrata-qapi.webp"
                 alt="Průmyslová vrata"
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover transition-transform duration-[2s] ease-[0.16,1,0.3,1] group-hover:scale-105 mix-blend-luminosity group-hover:mix-blend-normal opacity-80"
                 referrerPolicy="no-referrer"
               />

@@ -60,6 +60,7 @@ export function Footer() {
                   src="https://web2.itnahodinu.cz/QAPI/Logo-Bile.webp"
                   alt="QAPI Logo"
                   fill
+                  sizes="(max-width: 768px) 256px, 320px"
                   className="object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]"
                   referrerPolicy="no-referrer"
                 />
@@ -69,10 +70,10 @@ export function Footer() {
               Luxusní garážová vrata, stínicí technika a profesionální servis oken s důrazem na detail a kvalitu.
             </p>
             <div className="flex items-center gap-4">
-              <a href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/60 hover:text-primary hover:border-primary hover:bg-primary/10 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_15px_rgba(207,175,108,0.4)]">
+              <a href="https://www.facebook.com/qapi.cz" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/60 hover:text-primary hover:border-primary hover:bg-primary/10 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_15px_rgba(207,175,108,0.4)]" aria-label="Facebook">
                 <Facebook className="w-4 h-4" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/60 hover:text-primary hover:border-primary hover:bg-primary/10 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_15px_rgba(207,175,108,0.4)]">
+              <a href="https://www.instagram.com/qapi.cz" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/60 hover:text-primary hover:border-primary hover:bg-primary/10 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_15px_rgba(207,175,108,0.4)]" aria-label="Instagram">
                 <Instagram className="w-4 h-4" />
               </a>
             </div>

@@ -80,6 +80,56 @@ html {
   color: var(--primary-foreground);
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-delay-300 {
+  animation-delay: 300ms;
+  opacity: 0; /* Ensure it's hidden before animation starts */
+}
+
+.animate-delay-400 {
+  animation-delay: 400ms;
+  opacity: 0;
+}
+
+.animate-delay-500 {
+  animation-delay: 500ms;
+  opacity: 0;
+}
+
+.animate-delay-1200 {
+  animation-delay: 1200ms;
+  opacity: 0;
+}
+
 /* Hero Section - No Overlap Rule */
 .hero-section {
   position: relative;

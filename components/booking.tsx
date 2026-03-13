@@ -221,7 +221,7 @@ export function Booking() {
                   {step > s.num ? <CheckCircle2 className="w-4 h-4 md:w-6 md:h-6" /> : s.num}
                 </div>
                 <span className={`text-[9px] sm:text-[10px] md:text-xs uppercase tracking-wider md:tracking-widest font-bold hidden sm:block ${
-                  step >= s.num ? 'text-primary drop-shadow-[0_0_5px_rgba(212,175,55,0.5)]' : 'text-white/40'
+                  step >= s.num ? 'text-primary drop-shadow-[0_0_5px_rgba(212,175,55,0.5)]' : 'text-white/60'
                 }`}>
                   {s.label}
                 </span>
@@ -288,7 +288,7 @@ export function Booking() {
                             : 'border-white/5 hover:border-primary/30'
                         }`}
                       >
-                        <Image src={type.img} alt={type.label} fill className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-500 mix-blend-luminosity group-hover:mix-blend-normal" referrerPolicy="no-referrer" />
+                        <Image src={type.img} alt={type.label} fill sizes="(max-width: 768px) 100vw, 33vw" className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-500 mix-blend-luminosity group-hover:mix-blend-normal" referrerPolicy="no-referrer" />
                         <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
                         <div className="absolute bottom-4 left-4 font-bold text-lg text-white z-10">{type.label}</div>
                         {selectedType === type.id && (

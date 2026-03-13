@@ -102,6 +102,7 @@ export function ServisOkenSection() {
                 src="https://web2.itnahodinu.cz/QAPI/IMG_8265.webp"
                 alt="Opravy a seřízení"
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover transition-transform duration-[2s] ease-[0.16,1,0.3,1] group-hover:scale-105 mix-blend-luminosity group-hover:mix-blend-normal opacity-80"
                 referrerPolicy="no-referrer"
               />
