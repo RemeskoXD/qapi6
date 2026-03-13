@@ -133,7 +133,32 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         </Script>
 
         {/* Seznam Retargeting & Conversion */}
-        <Script src="https://c.seznam.cz/js/rc.js" strategy="lazyOnload" />
+        <Script id="seznam-rc" src="https://c.seznam.cz/js/rc.js" strategy="afterInteractive" />
+        <Script id="seznam-tracking" strategy="afterInteractive">
+          {`
+            function initSeznamTracking() {
+              if (window.rc && window.sznIVA && window.sznIVA.IS) {
+                window.sznIVA.IS.updateIdentities({ eid: null });
+                
+                var conversionConf = {
+                  id: 100256578,
+                  value: null,
+                  consent: null
+                };
+                window.rc.conversionHit(conversionConf);
+
+                var retargetingConf = {
+                  rtgId: 1641331,
+                  consent: null
+                };
+                window.rc.retargetingHit(retargetingConf);
+              } else {
+                setTimeout(initSeznamTracking, 100);
+              }
+            }
+            initSeznamTracking();
+          `}
+        </Script>
       </head>
       <body className="antialiased min-h-screen flex flex-col" suppressHydrationWarning>
         {/* Google Tag Manager (noscript) */}
