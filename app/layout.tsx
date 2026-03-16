@@ -139,13 +139,6 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             function initSeznamTracking() {
               if (window.rc && window.sznIVA && window.sznIVA.IS) {
                 window.sznIVA.IS.updateIdentities({ eid: null });
-                
-                var conversionConf = {
-                  id: 100256578,
-                  value: null,
-                  consent: null
-                };
-                window.rc.conversionHit(conversionConf);
 
                 var retargetingConf = {
                   rtgId: 1641331,
