@@ -180,6 +180,16 @@ export function Booking() {
             consent: seznamConsent
           });
         }
+
+        // Google Ads Conversion Hit
+        if (typeof (window as any).gtag === 'function') {
+          (window as any).gtag('event', 'conversion_event_submit_lead_form', {
+            'event_callback': function() {
+              console.log('Google Ads conversion sent');
+            },
+            'event_timeout': 2000
+          });
+        }
       }
 
       setStep(5); // Success step

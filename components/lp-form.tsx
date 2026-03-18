@@ -56,6 +56,16 @@ export function LpForm({ leadMagnetName, buttonText, thankYouHeadline, thankYouT
         throw new Error('Nepodařilo se odeslat.');
       }
 
+      // Google Ads Conversion Hit
+      if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
+        (window as any).gtag('event', 'conversion_event_submit_lead_form', {
+          'event_callback': function() {
+            console.log('Google Ads conversion sent');
+          },
+          'event_timeout': 2000
+        });
+      }
+
       setIsSubmitted(true);
     } catch (err) {
       setError('Něco se pokazilo. Zkuste to prosím znovu.');
