@@ -107,6 +107,8 @@ export function Footer() {
                 { name: 'O nás', href: '/#o-nas' },
                 { name: 'Kontakt', href: '/#kontakt' },
                 { name: 'Reference', href: '/#o-nas' },
+                { name: 'Obchodní podmínky', href: '/obchodni-podminky' },
+                { name: 'Ochrana osobních údajů', href: '/ochrana-osobnich-udaju' },
               ].map((item) => (
                 <li key={item.name}>
                   <Link href={item.href} className="text-white/60 hover:text-primary transition-colors font-light relative group inline-block">

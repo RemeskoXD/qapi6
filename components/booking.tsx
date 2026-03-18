@@ -13,6 +13,10 @@ import { CheckCircle2, ChevronRight, MapPin, Calendar as CalendarIcon, Clock, Us
 export function Booking() {
   const searchParams = useSearchParams();
   const addressParam = searchParams.get('address');
+  const nameParam = searchParams.get('name');
+  const emailParam = searchParams.get('email');
+  const phoneParam = searchParams.get('phone');
+  const serviceParam = searchParams.get('service');
   
   const [step, setStep] = useState(1);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
@@ -35,14 +39,25 @@ export function Booking() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (addressParam) {
-      setFormData(prev => ({ ...prev, address: addressParam }));
-      setIsAddressLocked(true);
-      setService('Bezplatná kontrola oken');
-      // Skip to step 3 (Date & Time) or 4 (User Details) since service is pre-selected?
-      // Let's just pre-select the service and move to step 3 since "Bezplatná kontrola oken" doesn't have types/colors in the current options, or we can add it.
+    if (addressParam || nameParam || emailParam || phoneParam) {
+      setFormData(prev => ({ 
+        ...prev, 
+        address: addressParam || prev.address,
+        name: nameParam || prev.name,
+        email: emailParam || prev.email,
+        phone: phoneParam || prev.phone,
+      }));
     }
-  }, [addressParam]);
+    
+    if (addressParam) {
+      setIsAddressLocked(true);
+    }
+    
+    if (serviceParam === 'kontrola' || addressParam) {
+      setService('Bezplatná kontrola oken');
+      setStep(3); // Skip to step 3 (Date & Time)
+    }
+  }, [addressParam, nameParam, emailParam, phoneParam, serviceParam]);
   
   const availableTimes = ['08:00', '09:30', '11:00', '13:00', '14:30', '16:00'];
 
@@ -485,7 +500,7 @@ export function Booking() {
                       />
                     </div>
                     <label htmlFor="terms" className="text-sm text-white/60 font-light cursor-pointer">
-                      Souhlasím se zpracováním osobních údajů pro účely vyřízení této poptávky.
+                      Souhlasím se <a href="/ochrana-osobnich-udaju" target="_blank" className="text-primary hover:underline">zpracováním osobních údajů</a> a beru na vědomí <a href="/obchodni-podminky" target="_blank" className="text-primary hover:underline">obchodní podmínky</a>.
                     </label>
                   </div>
                 </div>
