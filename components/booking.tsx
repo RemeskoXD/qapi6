@@ -183,7 +183,7 @@ export function Booking() {
 
         // Google Ads Conversion Hit
         if (typeof (window as any).gtag === 'function') {
-          (window as any).gtag('event', 'conversion_event_submit_lead_form', {
+          (window as any).gtag('event', 'conversion_event_submit_lead_form_2', {
             'event_callback': function() {
               console.log('Google Ads conversion sent');
             },
