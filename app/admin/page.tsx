@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
-import { Calendar, Users, Settings, LogOut, Search, Plus } from 'lucide-react';
+import { Calendar, Users, Settings, LogOut, Search, Plus, BarChart } from 'lucide-react';
+import Link from 'next/link';
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('calendar');
@@ -19,7 +20,7 @@ export default function AdminDashboard() {
             <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-4">
               <span className="text-primary font-bold text-xl">A</span>
             </div>
-            <h3 className="text-white font-medium">Administrátor</h3>
+            <h1 className="text-white font-medium text-lg">Administrátor</h1>
             <p className="text-white/40 text-sm">admin@qapi.cz</p>
           </div>
 
@@ -45,6 +46,14 @@ export default function AdminDashboard() {
                 </button>
               );
             })}
+            
+            <Link
+              href="/admin/stats"
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors text-left text-white/60 hover:bg-white/5 hover:text-white"
+            >
+              <BarChart className="w-5 h-5" />
+              Statistiky
+            </Link>
           </nav>
 
           <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-400 hover:bg-red-400/10 transition-colors mt-auto text-left">
@@ -121,6 +130,58 @@ export default function AdminDashboard() {
                     ))}
                   </tbody>
                 </table>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'settings' && (
+            <div className="space-y-8">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <h2 className="text-2xl font-display font-bold text-white">Nastavení systému</h2>
+              </div>
+
+              <div className="bg-background rounded-xl border border-white/5 p-8">
+                <h3 className="text-lg font-medium text-white mb-4">SEO a Indexování</h3>
+                <p className="text-white/60 text-sm mb-6">
+                  IndexNow umožňuje okamžitě upozornit vyhledávače (Seznam, Bing, Yandex) na změny obsahu vašeho webu.
+                </p>
+                
+                <div className="flex flex-col items-start gap-4">
+                  <button 
+                    onClick={async (e) => {
+                      const btn = e.currentTarget;
+                      const originalText = btn.innerText;
+                      btn.innerText = 'Odesílám...';
+                      btn.disabled = true;
+                      try {
+                        const res = await fetch('/api/indexnow');
+                        const data = await res.json();
+                        if (data.success) {
+                          btn.innerText = 'Úspěšně odesláno!';
+                          btn.classList.add('bg-green-500', 'text-white');
+                          btn.classList.remove('bg-primary', 'text-background');
+                        } else {
+                          btn.innerText = 'Chyba: ' + data.message;
+                          btn.classList.add('bg-red-500', 'text-white');
+                          btn.classList.remove('bg-primary', 'text-background');
+                        }
+                      } catch (err) {
+                        btn.innerText = 'Došlo k chybě';
+                        btn.classList.add('bg-red-500', 'text-white');
+                        btn.classList.remove('bg-primary', 'text-background');
+                      }
+                      setTimeout(() => {
+                        btn.innerText = originalText;
+                        btn.disabled = false;
+                        btn.classList.remove('bg-green-500', 'bg-red-500', 'text-white');
+                        btn.classList.add('bg-primary', 'text-background');
+                      }, 3000);
+                    }}
+                    className="flex items-center justify-center gap-2 bg-primary text-background px-6 py-3 rounded-lg font-medium hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Odeslat stránky do IndexNow
+                  </button>
+                </div>
               </div>
             </div>
           )}

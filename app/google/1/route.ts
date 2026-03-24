@@ -18,6 +18,22 @@ export async function GET(request: NextRequest) {
     // Continue to redirect even if logging fails
   }
 
+  // Podpora pro Google Ads Měřicí šablonu (Tracking template)
+  const searchParams = request.nextUrl.searchParams;
+  const targetUrl = searchParams.get('url');
+
+  if (targetUrl) {
+    try {
+      const parsedUrl = new URL(targetUrl);
+      // Povolit pouze http a https protokoly pro bezpečnost
+      if (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') {
+        return NextResponse.redirect(parsedUrl.toString());
+      }
+    } catch (e) {
+      // Ignorovat neplatné URL a pokračovat na výchozí přesměrování
+    }
+  }
+
   // Získání správné domény z hlaviček (řeší problém s localhostem za proxy)
   const forwardedHost = request.headers.get('x-forwarded-host');
   const host = forwardedHost || request.headers.get('host');
@@ -27,7 +43,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${protocol}://${host}/`);
   }
 
-  // Záložní řešení
+  // Záložní řešení přesměrování na hlavní stranu
   const url = request.nextUrl.clone();
   url.pathname = '/';
   return NextResponse.redirect(url);

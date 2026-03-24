@@ -1,12 +1,23 @@
 import { MetadataRoute } from 'next'
  
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: 'https://qapi.cz',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 1,
-    },
-  ]
+  const baseUrl = 'https://qapi.cz';
+  const lastModified = new Date();
+
+  const routes = [
+    '',
+    '/servis-oken',
+    '/garazova-vrata',
+    '/stinici-technika',
+    '/lp/kontrola-oken-zdarma',
+    '/lp/tajny-trik-okna',
+    '/lp/zabijaci-garazovych-vrat',
+  ];
+
+  return routes.map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified,
+    changeFrequency: 'weekly',
+    priority: route === '' ? 1 : 0.8,
+  }));
 }

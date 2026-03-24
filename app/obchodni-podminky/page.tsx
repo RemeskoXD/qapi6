@@ -1,5 +1,11 @@
+import { Metadata } from 'next';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
+
+export const metadata: Metadata = {
+  title: 'Obchodní podmínky | QAPI',
+  description: 'Všeobecné obchodní podmínky společnosti QAPI pro prodej a montáž garážových vrat, stínicí techniky a servisu oken.',
+};
 
 export default function ObchodniPodminky() {
   return (

@@ -76,10 +76,8 @@ export function CookieBanner() {
     } else {
       // Apply existing consent
       const parsedConsent = JSON.parse(consent);
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSettings(parsedConsent);
       applyConsent(parsedConsent);
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setHasConsented(true);
     }
   }, []);

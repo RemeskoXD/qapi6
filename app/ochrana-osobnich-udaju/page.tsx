@@ -1,5 +1,11 @@
+import { Metadata } from 'next';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
+
+export const metadata: Metadata = {
+  title: 'Ochrana osobních údajů (GDPR) | QAPI',
+  description: 'Zásady ochrany osobních údajů společnosti QAPI. Zjistěte, jak zpracováváme a chráníme vaše data v souladu s GDPR.',
+};
 
 export default function OchranaOsobnichUdaju() {
   return (

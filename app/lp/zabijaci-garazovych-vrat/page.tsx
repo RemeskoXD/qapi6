@@ -59,7 +59,7 @@ export default function ZabijaciGaratovychVratPage() {
             
             {/* Testimonial */}
             <div className="mt-12 p-6 rounded-2xl bg-white/5 border border-white/10 relative">
-              <div className="text-primary text-4xl absolute -top-4 -left-2 opacity-50">"</div>
+              <div className="text-primary text-4xl absolute -top-4 -left-2 opacity-50">&quot;</div>
               <p className="text-white/80 italic relative z-10">
                 Díky checklistu jsem zjistil, že mám úplně povolená lanka. Technik mi řekl, že to bylo za pět dvanáct, jinak bych musel měnit celý motor.
               </p>

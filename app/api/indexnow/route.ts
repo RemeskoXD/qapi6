@@ -1,12 +1,18 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  const urlList = [
-    'https://qapi.cz/',
-    'https://qapi.cz/servis-oken',
-    'https://qapi.cz/garazova-vrata',
-    'https://qapi.cz/stinici-technika',
+  const baseUrl = 'https://qapi.cz';
+  const routes = [
+    '',
+    '/servis-oken',
+    '/garazova-vrata',
+    '/stinici-technika',
+    '/lp/kontrola-oken-zdarma',
+    '/lp/tajny-trik-okna',
+    '/lp/zabijaci-garazovych-vrat',
   ];
+
+  const urlList = routes.map(route => `${baseUrl}${route}`);
 
   const payload = {
     host: 'qapi.cz',

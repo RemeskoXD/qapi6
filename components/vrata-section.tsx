@@ -12,7 +12,7 @@ export function VrataSection() {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:4rem_4rem]" />
       <div className="container mx-auto px-6 md:px-12 relative z-10">
         <div className="text-center mb-20">
-          <motion.h2 
+          <motion.h1 
             initial={{ opacity: 0, y: 30, rotateX: 20 }}
             whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
             viewport={{ once: true }}
@@ -20,7 +20,7 @@ export function VrataSection() {
             className="font-display text-3xl md:text-4xl lg:text-5xl 2xl:text-6xl font-bold text-white tracking-tight drop-shadow-lg"
           >
             Garážová <span className="text-primary italic font-light">vrata</span>
-          </motion.h2>
+          </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

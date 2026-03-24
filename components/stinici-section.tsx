@@ -24,7 +24,7 @@ export function StiniciSection() {
               Dokonalý komfort
             </span>
           </motion.div>
-          <motion.h2
+          <motion.h1
             initial={{ opacity: 0, y: 30, rotateX: 20 }}
             whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
             viewport={{ once: true }}
@@ -32,7 +32,7 @@ export function StiniciSection() {
             className="font-display text-3xl md:text-4xl lg:text-5xl 2xl:text-6xl font-bold text-white tracking-tight drop-shadow-lg"
           >
             Stínicí <span className="text-primary italic font-light">technika</span>
-          </motion.h2>
+          </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
