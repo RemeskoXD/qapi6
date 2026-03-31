@@ -2,6 +2,11 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
+  // Allow public access to GET /api/admin/settings for the booking form
+  if (req.nextUrl.pathname === '/api/admin/settings' && req.method === 'GET') {
+    return NextResponse.next();
+  }
+
   const basicAuth = req.headers.get('authorization');
 
   if (basicAuth) {
