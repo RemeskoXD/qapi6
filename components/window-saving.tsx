@@ -2,6 +2,7 @@
 
 import { motion } from 'motion/react';
 import { X, Check, Star, AlertTriangle, ShieldCheck } from 'lucide-react';
+import Image from 'next/image';
 
 const negativePoints = [
   'Týdny čekání na výrobu a dodání',
@@ -171,15 +172,27 @@ export function WindowSaving() {
             <p className="text-white/80 italic leading-relaxed mb-8 flex-grow text-lg">
               &quot;Myslel jsem, že budeme muset měnit všechna okna v domě. Táhlo nám do obýváku a topení jelo naplno. Technik z Qapi přijel, okna seřídil, vyměnil těsnění a rázem máme doma teplo. Ušetřili nám minimálně sto tisíc za nová okna. Naprostá profesionalita.&quot;
             </p>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-[#1A1F2C] border border-primary/30 flex items-center justify-center text-primary font-bold">
-                JJ
+            <a href="https://www.firmy.cz/detail/13869248-qapi-praha-vinohrady.html" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group hover:opacity-80 transition-opacity">
+              <div className="w-12 h-12 rounded-full overflow-hidden relative border border-primary/30">
+                <Image 
+                  src="https://i.im.cz/ac/WidrUtJEb-1Fpvq7pzNb2zrcU1iuT7uyQyjWeQIFnte1NA/64%7D" 
+                  alt="Jan Jícha" 
+                  fill 
+                  sizes="48px"
+                  className="object-cover"
+                  referrerPolicy="no-referrer"
+                />
               </div>
               <div>
-                <div className="text-white font-bold">Jan Jícha</div>
+                <div className="text-white font-bold group-hover:text-primary transition-colors flex items-center gap-2">
+                  Jan Jícha
+                  <div className="w-4 h-4 bg-white rounded-full flex items-center justify-center p-0.5">
+                    <Image src="https://web2.itnahodinu.cz/OKNA/seznam.svg" alt="Seznam.cz" width={12} height={12} className="object-contain" />
+                  </div>
+                </div>
                 <div className="text-white/40 text-sm">Ověřený zákazník</div>
               </div>
-            </div>
+            </a>
           </motion.div>
 
           <motion.div
@@ -202,15 +215,27 @@ export function WindowSaving() {
             <p className="text-white/80 italic leading-relaxed mb-8 flex-grow text-lg">
               &quot;Skvělý a profesionální přístup. Pánové přijeli přesně na čas, vysvětlili mi, v čem je problém, a rovnou ho bez jakéhokoliv nepořádku vyřešili. Okna teď těsní jako nová a konečně neslyšíme hluk z ulice. Doporučuji všemi deseti.&quot;
             </p>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-[#1A1F2C] border border-primary/30 flex items-center justify-center text-primary font-bold">
-                MP
+            <a href="https://www.firmy.cz/detail/13869248-qapi-praha-vinohrady.html" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group hover:opacity-80 transition-opacity">
+              <div className="w-12 h-12 rounded-full overflow-hidden relative border border-primary/30">
+                <Image 
+                  src="https://i.im.cz/ac/3PvM1jo9IMpCqPr8pjsJimyoYVjuQ7OmQyjWeQULns03/64%7D" 
+                  alt="Monika Pavlišová" 
+                  fill 
+                  sizes="48px"
+                  className="object-cover"
+                  referrerPolicy="no-referrer"
+                />
               </div>
               <div>
-                <div className="text-white font-bold">Monika Pavlišová</div>
+                <div className="text-white font-bold group-hover:text-primary transition-colors flex items-center gap-2">
+                  Monika Pavlišová
+                  <div className="w-4 h-4 bg-white rounded-full flex items-center justify-center p-0.5">
+                    <Image src="https://web2.itnahodinu.cz/OKNA/seznam.svg" alt="Seznam.cz" width={12} height={12} className="object-contain" />
+                  </div>
+                </div>
                 <div className="text-white/40 text-sm">Ověřená zákaznice</div>
               </div>
-            </div>
+            </a>
           </motion.div>
         </div>
       </div>

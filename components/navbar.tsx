@@ -23,6 +23,7 @@ export function Navbar() {
     { name: 'Servis oken', href: '/servis-oken' },
     { name: 'Garážová vrata', href: '/garazova-vrata' },
     { name: 'Stínicí technika', href: '/stinici-technika' },
+    { name: 'Lokality', href: '/lokality' },
     { name: 'O nás', href: '/#o-nas' },
     { name: 'Kontakt', href: '/#kontakt' },
   ];
@@ -35,32 +36,33 @@ export function Navbar() {
           : 'bg-gradient-to-b from-background/90 via-background/50 to-transparent py-4 md:py-6 lg:py-8'
       }`}
     >
-      <div className="container mx-auto px-4 sm:px-6 md:px-12 flex items-center justify-between relative [transform-style:preserve-3d]">
+      <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 flex items-center justify-between relative [transform-style:preserve-3d]">
         <Link href="/" className="flex items-center gap-2 group z-10">
           <motion.div 
             whileHover={{ scale: 1.05, rotateY: 10 }}
-            className="relative w-[180px] h-[54px] sm:w-[200px] sm:h-[60px] md:w-[220px] md:h-[66px] lg:w-[240px] lg:h-[72px] 2xl:w-[260px] 2xl:h-[78px] transition-transform duration-300"
+            className="relative w-[210px] h-[63px] sm:w-[230px] sm:h-[69px] md:w-[250px] md:h-[75px] lg:w-[270px] lg:h-[81px] 2xl:w-[290px] 2xl:h-[87px] transition-transform duration-300"
           >
             <Image
               src="https://web2.itnahodinu.cz/QAPI/Logo-Bile.webp"
               alt="QAPI Logo"
               fill
-              sizes="(max-width: 768px) 200px, 260px"
+              sizes="(max-width: 768px) 230px, 290px"
               className="object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]"
               referrerPolicy="no-referrer"
+              priority
             />
           </motion.div>
         </Link>
 
         {/* Desktop Right Side (Nav + Contact) */}
-        <div className="hidden lg:flex items-center gap-4 xl:gap-8 z-10">
+        <div className="hidden lg:flex items-center gap-6 xl:gap-10 z-10">
           {/* Nav Links */}
-          <nav className={`flex items-center gap-1 xl:gap-2 transition-all duration-500 ${isScrolled ? 'bg-white/5 border border-white/10 rounded-full px-4 py-1.5 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.2)]' : 'px-2 py-1.5'}`}>
+          <nav className={`flex items-center gap-2 xl:gap-4 transition-all duration-500 ${isScrolled ? 'bg-white/5 border border-white/10 rounded-full px-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.2)]' : 'px-2 py-1.5'}`}>
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="relative px-4 py-2 text-[11px] xl:text-xs font-bold text-white/80 hover:text-white transition-colors uppercase tracking-[0.2em] group"
+                className="relative px-4 py-2 text-[11px] xl:text-[13px] font-bold text-white/80 hover:text-white transition-colors uppercase tracking-[0.2em] group"
               >
                 <span className="relative z-10">{link.name}</span>
                 {/* Hover pill background */}
@@ -104,7 +106,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0, rotateX: 0 }}
             exit={{ opacity: 0, y: -20, rotateX: -15 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.8)] md:hidden origin-top [transform-style:preserve-3d] max-h-[calc(100dvh-80px)] overflow-y-auto"
+            className="absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.8)] lg:hidden origin-top [transform-style:preserve-3d] max-h-[calc(100dvh-80px)] overflow-y-auto"
           >
             <div className="flex flex-col p-6 gap-4">
               {navLinks.map((link, index) => (

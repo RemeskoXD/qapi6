@@ -8,9 +8,13 @@ export async function POST(request: Request) {
     const { service, type, color, date, time, name, phone, email, address, notes } = body;
 
     // Základní validace
-    if (!service || !type || !date || !time || !name || !phone || !email || !address) {
+    if (!service || !name || !phone || !email || !address) {
       return NextResponse.json({ error: 'Chybí povinné údaje' }, { status: 400 });
     }
+
+    const finalType = type || 'Nezadáno';
+    const finalDate = date || 'Nezadáno';
+    const finalTime = time || 'Nezadáno';
 
     // Uložení do databáze
     const stmt = db.prepare(`
@@ -18,7 +22,7 @@ export async function POST(request: Request) {
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
-    const info = stmt.run(service, type, color || null, date, time, name, phone, email, address, notes || null);
+    const info = stmt.run(service, finalType, color || null, finalDate, finalTime, name, phone, email, address, notes || null);
 
     // Odeslání e-mailu
     if (process.env.GMAIL_USER && process.env.GMAIL_PASS) {
@@ -37,10 +41,10 @@ export async function POST(request: Request) {
         html: `
           <h2>Nová poptávka z webu Qapi.cz</h2>
           <p><strong>Služba:</strong> ${service}</p>
-          <p><strong>Typ:</strong> ${type}</p>
+          <p><strong>Typ:</strong> ${finalType}</p>
           ${color ? `<p><strong>Barva:</strong> ${color}</p>` : ''}
-          <p><strong>Datum:</strong> ${date}</p>
-          <p><strong>Čas:</strong> ${time}</p>
+          <p><strong>Datum:</strong> ${finalDate}</p>
+          <p><strong>Čas:</strong> ${finalTime}</p>
           <hr />
           <h3>Kontaktní údaje:</h3>
           <p><strong>Jméno:</strong> ${name}</p>

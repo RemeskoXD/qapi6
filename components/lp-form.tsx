@@ -35,6 +35,20 @@ export function LpForm({ leadMagnetName, buttonText, thankYouHeadline, thankYouT
       return;
     }
 
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('Neplatný formát e-mailu. Zadejte prosím platnou e-mailovou adresu.');
+      return;
+    }
+
+    // Validate phone format (allows + and numbers)
+    const phoneRegex = /^\+?[0-9\s]+$/;
+    if (!phoneRegex.test(formData.phone)) {
+      setError('Neplatný formát telefonu. Zadejte prosím pouze znak + a číslice.');
+      return;
+    }
+
     setIsSubmitting(true);
     setError(null);
 
@@ -165,7 +179,7 @@ export function LpForm({ leadMagnetName, buttonText, thankYouHeadline, thankYouT
             name="address" 
             value={formData.address} 
             onChange={handleInputChange} 
-            placeholder="Vaše adresa (Město, Ulice)" 
+            placeholder="Adresa realizace (stačí Město)" 
             className="w-full bg-background/50 border border-white/5 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-primary/50 focus:bg-background/80 transition-all placeholder:text-white/30"
             required 
           />

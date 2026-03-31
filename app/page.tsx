@@ -22,6 +22,9 @@ export default function Home() {
       <Hero />
       <Partners />
       <WindowSaving />
+      <Suspense fallback={<div>Načítání...</div>}>
+        <Booking id="rezervace-top" />
+      </Suspense>
       <ThreeSteps />
       <Guarantees />
       {/* <GarageDoorScroll /> */}

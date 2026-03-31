@@ -8,7 +8,7 @@ export function middleware(req: NextRequest) {
     const authValue = basicAuth.split(' ')[1];
     const [user, pwd] = atob(authValue).split(':');
 
-    if (pwd === 'admin123') {
+    if (pwd === 'AHSBDLUASDIAS6887687jhkjdasd') {
       return NextResponse.next();
     }
   }
@@ -22,5 +22,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: '/admin/:path*',
+  matcher: ['/admin/:path*', '/api/admin/:path*'],
 };

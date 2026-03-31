@@ -106,6 +106,7 @@ export function Footer() {
               {[
                 { name: 'O nás', href: '/#o-nas' },
                 { name: 'Kontakt', href: '/#kontakt' },
+                { name: 'Lokality', href: '/lokality' },
                 { name: 'Reference', href: '/#o-nas' },
                 { name: 'Obchodní podmínky', href: '/obchodni-podminky' },
                 { name: 'Ochrana osobních údajů', href: '/ochrana-osobnich-udaju' },

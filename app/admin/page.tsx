@@ -1,13 +1,83 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
-import { Calendar, Users, Settings, LogOut, Search, Plus, BarChart } from 'lucide-react';
+import { Calendar, Users, Settings, LogOut, Search, Plus, BarChart, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+
+interface Lead {
+  id: number;
+  service: string;
+  type: string;
+  color: string | null;
+  date: string;
+  time: string;
+  name: string;
+  phone: string;
+  email: string;
+  address: string;
+  notes: string | null;
+  created_at: string;
+}
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('calendar');
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [settings, setSettings] = useState<Record<string, string>>({});
+  const [isSavingSettings, setIsSavingSettings] = useState(false);
+
+  useEffect(() => {
+    if (activeTab === 'calendar') {
+      fetch('/api/admin/leads', { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            setLeads(data.leads);
+          }
+        })
+        .catch(err => console.error('Failed to fetch leads:', err))
+        .finally(() => setIsLoading(false));
+    } else if (activeTab === 'settings') {
+      fetch('/api/admin/settings', { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            setSettings(data.settings);
+          }
+        })
+        .catch(err => console.error('Failed to fetch settings:', err));
+    }
+  }, [activeTab]);
+
+  const handleSettingChange = async (key: string, value: string) => {
+    setIsSavingSettings(true);
+    try {
+      const res = await fetch('/api/admin/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key, value }),
+        credentials: 'include',
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSettings(prev => ({ ...prev, [key]: value }));
+      }
+    } catch (err) {
+      console.error('Failed to save setting:', err);
+    } finally {
+      setIsSavingSettings(false);
+    }
+  };
+
+  const filteredLeads = leads.filter(lead => 
+    lead.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    lead.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    lead.phone.includes(searchQuery) ||
+    lead.service.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <main className="flex-1 bg-background min-h-screen flex flex-col">
@@ -26,7 +96,7 @@ export default function AdminDashboard() {
 
           <nav className="space-y-1">
             {[
-              { id: 'calendar', label: 'Kalendář', icon: Calendar },
+              { id: 'calendar', label: 'Poptávky', icon: Calendar },
               { id: 'team', label: 'Tým a přístupy', icon: Users },
               { id: 'settings', label: 'Nastavení', icon: Settings },
             ].map((item) => {
@@ -34,7 +104,10 @@ export default function AdminDashboard() {
               return (
                 <button
                   key={item.id}
-                  onClick={() => setActiveTab(item.id)}
+                  onClick={() => {
+                    setActiveTab(item.id);
+                    if (item.id === 'calendar') setIsLoading(true);
+                  }}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors text-left ${
                     activeTab === item.id 
                       ? 'bg-primary text-background font-medium' 
@@ -63,29 +136,88 @@ export default function AdminDashboard() {
         </aside>
 
         {/* Main Content */}
-        <div className="flex-1 bg-muted rounded-2xl border border-white/5 p-8">
+        <div className="flex-1 bg-muted rounded-2xl border border-white/5 p-8 overflow-hidden flex flex-col">
           {activeTab === 'calendar' && (
-            <div className="space-y-8">
+            <div className="space-y-8 flex-1 flex flex-col">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <h2 className="text-2xl font-display font-bold text-white">Přehled rezervací</h2>
+                <h2 className="text-2xl font-display font-bold text-white">Přehled poptávek</h2>
                 <div className="flex items-center gap-4">
                   <div className="relative">
                     <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
                     <input 
                       type="text" 
                       placeholder="Hledat klienta..." 
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
                       className="bg-background border border-white/10 rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-primary w-full"
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="bg-background rounded-xl border border-white/5 p-8 text-center">
-                <Calendar className="w-12 h-12 text-white/20 mx-auto mb-4" />
-                <h3 className="text-white font-medium mb-2">Zde bude napojený kalendář z databáze</h3>
-                <p className="text-white/40 text-sm max-w-md mx-auto">
-                  V této sekci uvidíte všechny rezervace od klientů. Data se budou načítat z MySQL databáze pomocí Prisma ORM.
-                </p>
+              <div className="bg-background rounded-xl border border-white/5 overflow-x-auto flex-1">
+                {isLoading ? (
+                  <div className="flex items-center justify-center h-64">
+                    <Loader2 className="w-8 h-8 text-primary animate-spin" />
+                  </div>
+                ) : filteredLeads.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center h-64 text-center p-8">
+                    <Calendar className="w-12 h-12 text-white/20 mb-4" />
+                    <h3 className="text-white font-medium mb-2">Zatím žádné poptávky</h3>
+                    <p className="text-white/40 text-sm max-w-md">
+                      Zde se budou zobrazovat všechny odeslané formuláře a rezervace.
+                    </p>
+                  </div>
+                ) : (
+                  <table className="w-full text-left min-w-[1000px]">
+                    <thead className="bg-white/5 border-b border-white/5">
+                      <tr>
+                        <th className="px-6 py-4 text-sm font-medium text-white/60">Datum přijetí</th>
+                        <th className="px-6 py-4 text-sm font-medium text-white/60">Klient</th>
+                        <th className="px-6 py-4 text-sm font-medium text-white/60">Kontakt</th>
+                        <th className="px-6 py-4 text-sm font-medium text-white/60">Služba</th>
+                        <th className="px-6 py-4 text-sm font-medium text-white/60">Termín</th>
+                        <th className="px-6 py-4 text-sm font-medium text-white/60">Poznámka</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5">
+                      {filteredLeads.map((lead) => (
+                        <tr key={lead.id} className="hover:bg-white/5 transition-colors">
+                          <td className="px-6 py-4 text-sm text-white/80 whitespace-nowrap">
+                            {new Date(lead.created_at).toLocaleString('cs-CZ')}
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="text-white font-medium">{lead.name}</div>
+                            <div className="text-white/60 text-xs truncate max-w-[200px]">{lead.address}</div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="text-white/80 text-sm">{lead.phone}</div>
+                            <div className="text-white/60 text-xs">{lead.email}</div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex flex-col items-start gap-2">
+                              <span className="px-2 py-1 bg-primary/20 text-primary rounded text-xs font-medium whitespace-nowrap">
+                                {lead.service}
+                              </span>
+                              {lead.notes?.includes('[Z Pop-up okna]') && (
+                                <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs font-medium whitespace-nowrap border border-green-500/30">
+                                  Z Pop-up okna
+                                </span>
+                              )}
+                            </div>
+                            <div className="text-white/60 text-xs mt-2">{lead.type} {lead.color ? `(${lead.color})` : ''}</div>
+                          </td>
+                          <td className="px-6 py-4 text-sm text-white/80 whitespace-nowrap">
+                            {lead.date !== 'Nezadáno' ? `${lead.date} ${lead.time}` : 'Nezadáno'}
+                          </td>
+                          <td className="px-6 py-4 text-sm text-white/60 max-w-[200px] truncate" title={lead.notes || ''}>
+                            {lead.notes?.replace('[Z Pop-up okna]', '').trim() || '-'}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
               </div>
             </div>
           )}
@@ -138,6 +270,48 @@ export default function AdminDashboard() {
             <div className="space-y-8">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <h2 className="text-2xl font-display font-bold text-white">Nastavení systému</h2>
+              </div>
+
+              <div className="bg-background rounded-xl border border-white/5 p-8">
+                <h3 className="text-lg font-medium text-white mb-4">Formulář poptávky</h3>
+                <div className="flex items-center justify-between py-4 border-b border-white/5">
+                  <div>
+                    <h4 className="text-white font-medium">Preferovaný termín</h4>
+                    <p className="text-white/60 text-sm">Zobrazit ve formuláři možnost výběru preferovaného data a času.</p>
+                  </div>
+                  <button
+                    onClick={() => handleSettingChange('show_preferred_time', settings.show_preferred_time === 'true' ? 'false' : 'true')}
+                    disabled={isSavingSettings}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
+                      settings.show_preferred_time === 'true' ? 'bg-primary' : 'bg-white/20'
+                    } ${isSavingSettings ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                        settings.show_preferred_time === 'true' ? 'translate-x-6' : 'translate-x-1'
+                      }`}
+                    />
+                  </button>
+                </div>
+                <div className="flex items-center justify-between py-4 border-b border-white/5">
+                  <div>
+                    <h4 className="text-white font-medium">Servis oken</h4>
+                    <p className="text-white/60 text-sm">Zobrazit ve formuláři možnost výběru služby Servis oken.</p>
+                  </div>
+                  <button
+                    onClick={() => handleSettingChange('show_window_service', settings.show_window_service === 'true' ? 'false' : 'true')}
+                    disabled={isSavingSettings}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
+                      settings.show_window_service === 'true' ? 'bg-primary' : 'bg-white/20'
+                    } ${isSavingSettings ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                        settings.show_window_service === 'true' ? 'translate-x-6' : 'translate-x-1'
+                      }`}
+                    />
+                  </button>
+                </div>
               </div>
 
               <div className="bg-background rounded-xl border border-white/5 p-8">

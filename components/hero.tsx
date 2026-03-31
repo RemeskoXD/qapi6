@@ -4,7 +4,7 @@ import { motion } from 'motion/react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Key, Phone, CheckCircle2, MapPin, Loader2, Search, Wrench, ArrowDown } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 export function Hero() {
@@ -14,6 +14,12 @@ export function Hero() {
   const [isSearching, setIsSearching] = useState(false);
   const [searchSuccess, setSearchSuccess] = useState(false);
   const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsMounted(true);
+  }, []);
 
   const handleAddressChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
@@ -56,15 +62,17 @@ export function Hero() {
       {/* Background Video - Fixed Fullscreen */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute inset-0 w-full h-full">
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/cMQFYabS5eU?autoplay=1&mute=1&controls=0&loop=1&playlist=cMQFYabS5eU&wmode=transparent&enablejsapi=1&rel=0&origin=https://qapi.cz"
-            title="QAPI Background Video"
-            allow="autoplay; encrypted-media"
-            className="hero-video-bg mix-blend-luminosity"
-            style={{ border: 'none' }}
-            tabIndex={-1}
-            aria-hidden="true"
-          />
+          {isMounted && (
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/cMQFYabS5eU?autoplay=1&mute=1&controls=0&loop=1&playlist=cMQFYabS5eU&wmode=transparent&enablejsapi=1&rel=0&origin=https://qapi.cz"
+              title="QAPI Background Video"
+              allow="autoplay; encrypted-media"
+              className="hero-video-bg mix-blend-luminosity"
+              style={{ border: 'none' }}
+              tabIndex={-1}
+              aria-hidden="true"
+            />
+          )}
         </div>
         <div className="hero-overlay" />
         
@@ -222,7 +230,7 @@ export function Hero() {
           <div className="hidden md:block w-px h-8 bg-white/10" />
 
           {/* Google Rating */}
-          <a href="#" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-white/5 p-2 rounded-xl transition-colors group">
+          <a href="https://www.google.com/search?num=10&hl=cs-CZ&sca_esv=3eb9bc99a534cb7d&cs=1&output=search&tbm=lcl&kgmid=/g/11xnxbbpwt&q=Qapi&shndl=30&source=sh/x/loc/uni/m1/1&kgs=79ba16d9f2bc28ca&utm_source=sh/x/loc/uni/m1/1#lkt=LocalPoiReviews&rlfi=hd:;si:7840798460343583537,l,CgRRYXBpkgENZG9vcl9zdXBwbGllcg;mv:[[51.0557185,18.859236100000004],[48.5518092,12.090589]]" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-white/5 p-2 rounded-xl transition-colors group">
             <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center p-2 shadow-md group-hover:scale-110 transition-transform">
               <Image src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" width={24} height={24} />
             </div>
@@ -242,7 +250,7 @@ export function Hero() {
           <div className="hidden md:block w-px h-8 bg-white/10" />
 
           {/* Seznam Rating */}
-          <a href="#" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-white/5 p-2 rounded-xl transition-colors group">
+          <a href="https://www.firmy.cz/detail/13869248-qapi-praha-vinohrady.html" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-white/5 p-2 rounded-xl transition-colors group">
             <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center p-1.5 shadow-md group-hover:scale-110 transition-transform">
               <Image src="https://web2.itnahodinu.cz/OKNA/seznam.svg" alt="Seznam.cz" width={28} height={28} className="object-contain" />
             </div>

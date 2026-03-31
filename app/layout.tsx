@@ -2,6 +2,7 @@ import type {Metadata} from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import Script from 'next/script';
 import { CookieBanner } from '@/components/cookie-banner';
+import { PopupOffer } from '@/components/popup-offer';
 import './globals.css'; // Global styles
 
 const inter = Inter({
@@ -136,6 +137,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <Script id="seznam-rc" src="https://c.seznam.cz/js/rc.js" strategy="afterInteractive" />
         <Script id="seznam-tracking" strategy="afterInteractive">
           {`
+            var seznamRetries = 0;
             function initSeznamTracking() {
               if (window.rc && window.sznIVA && window.sznIVA.IS) {
                 window.sznIVA.IS.updateIdentities({ eid: null });
@@ -145,7 +147,8 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                   consent: null
                 };
                 window.rc.retargetingHit(retargetingConf);
-              } else {
+              } else if (seznamRetries < 50) {
+                seznamRetries++;
                 setTimeout(initSeznamTracking, 100);
               }
             }
@@ -161,6 +164,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         </noscript>
         {/* End Google Tag Manager (noscript) */}
         {children}
+        <PopupOffer />
         <CookieBanner />
       </body>
     </html>

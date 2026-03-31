@@ -10,13 +10,14 @@ import { useSearchParams } from 'next/navigation';
 import 'react-day-picker/dist/style.css';
 import { CheckCircle2, ChevronRight, MapPin, Calendar as CalendarIcon, Clock, User, Phone, Mail, MessageSquare, ShieldCheck } from 'lucide-react';
 
-export function Booking() {
+export function Booking({ id = "rezervace" }: { id?: string } = {}) {
   const searchParams = useSearchParams();
   const addressParam = searchParams.get('address');
   const nameParam = searchParams.get('name');
   const emailParam = searchParams.get('email');
   const phoneParam = searchParams.get('phone');
   const serviceParam = searchParams.get('service');
+  const sourceParam = searchParams.get('source');
   
   const [step, setStep] = useState(1);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
@@ -37,6 +38,24 @@ export function Booking() {
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPreferredTime, setShowPreferredTime] = useState(false);
+  const [showWindowService, setShowWindowService] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/admin/settings')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          if (data.settings.show_preferred_time === 'true') {
+            setShowPreferredTime(true);
+          }
+          if (data.settings.show_window_service === 'false') {
+            setShowWindowService(false);
+          }
+        }
+      })
+      .catch(err => console.error('Failed to fetch settings:', err));
+  }, []);
 
   useEffect(() => {
     if (addressParam || nameParam || emailParam || phoneParam) {
@@ -55,9 +74,15 @@ export function Booking() {
     
     if (serviceParam === 'kontrola' || addressParam) {
       setService('Bezplatná kontrola oken');
-      setStep(3); // Skip to step 3 (Date & Time)
+      setSelectedType('kontrola');
+      // Skip to step 3 (Date & Time) or step 4 (Details) based on setting
+      if (showPreferredTime) {
+        setStep(3);
+      } else {
+        setStep(4);
+      }
     }
-  }, [addressParam, nameParam, emailParam, phoneParam, serviceParam]);
+  }, [addressParam, nameParam, emailParam, phoneParam, serviceParam, showPreferredTime]);
   
   const availableTimes = ['08:00', '09:30', '11:00', '13:00', '14:30', '16:00'];
 
@@ -127,6 +152,20 @@ export function Booking() {
       setError('Vyplňte prosím všechny povinné údaje (Jméno, Telefon, E-mail, Adresa).');
       return;
     }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('Neplatný formát e-mailu. Zadejte prosím platnou e-mailovou adresu.');
+      return;
+    }
+
+    // Validate phone format (allows + and numbers)
+    const phoneRegex = /^\+?[0-9\s]+$/;
+    if (!phoneRegex.test(formData.phone)) {
+      setError('Neplatný formát telefonu. Zadejte prosím pouze znak + a číslice.');
+      return;
+    }
     
     if (!agreedToTerms) {
       setError('Pro odeslání poptávky musíte souhlasit se zpracováním osobních údajů.');
@@ -137,6 +176,10 @@ export function Booking() {
     setError(null);
 
     try {
+      const finalNotes = sourceParam === 'popup' 
+        ? `[Z Pop-up okna] ${formData.notes}`.trim() 
+        : formData.notes;
+
       const response = await fetch('/api/leads', {
         method: 'POST',
         headers: {
@@ -148,7 +191,8 @@ export function Booking() {
           color: selectedColor,
           date: selectedDate ? format(selectedDate, 'yyyy-MM-dd') : '',
           time: selectedTime,
-          ...formData
+          ...formData,
+          notes: finalNotes
         }),
       });
 
@@ -202,7 +246,7 @@ export function Booking() {
   };
 
   return (
-    <section id="rezervace" className="py-16 md:py-20 lg:py-24 2xl:py-32 bg-background relative overflow-hidden [perspective:1000px]">
+    <section id={id} className="py-16 md:py-20 lg:py-24 2xl:py-32 bg-background relative overflow-hidden [perspective:1000px]">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/5 via-background to-background" />
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:4rem_4rem]" />
       
@@ -235,23 +279,26 @@ export function Booking() {
             {[
               { num: 1, label: 'Služba' },
               { num: 2, label: 'Detaily' },
-              { num: 3, label: 'Pref. termín' },
-              { num: 4, label: 'Údaje' },
-              { num: 5, label: 'Hotovo' }
-            ].map((s) => (
-              <div key={s.num} className="flex flex-col items-center gap-2 md:gap-3 bg-muted px-1 sm:px-2 md:px-4">
+              ...(showPreferredTime ? [{ num: 3, label: 'Pref. termín' }] : []),
+              { num: showPreferredTime ? 4 : 3, label: 'Údaje', originalNum: 4 },
+              { num: showPreferredTime ? 5 : 4, label: 'Hotovo', originalNum: 5 }
+            ].map((s) => {
+              const currentStepNum = s.originalNum || s.num;
+              const displayNum = s.num;
+              return (
+              <div key={currentStepNum} className="flex flex-col items-center gap-2 md:gap-3 bg-muted px-1 sm:px-2 md:px-4">
                 <div className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center font-bold transition-all duration-500 shadow-lg text-xs sm:text-sm md:text-base ${
-                  step >= s.num ? 'bg-primary text-primary-foreground shadow-[0_0_20px_rgba(212,175,55,0.5)] scale-110' : 'bg-background border border-white/10 text-white/40'
+                  step >= currentStepNum ? 'bg-primary text-primary-foreground shadow-[0_0_20px_rgba(212,175,55,0.5)] scale-110' : 'bg-background border border-white/10 text-white/40'
                 }`}>
-                  {step > s.num ? <CheckCircle2 className="w-4 h-4 md:w-6 md:h-6" /> : s.num}
+                  {step > currentStepNum ? <CheckCircle2 className="w-4 h-4 md:w-6 md:h-6" /> : displayNum}
                 </div>
                 <span className={`text-[9px] sm:text-[10px] md:text-xs uppercase tracking-wider md:tracking-widest font-bold hidden sm:block ${
-                  step >= s.num ? 'text-primary drop-shadow-[0_0_5px_rgba(212,175,55,0.5)]' : 'text-white/60'
+                  step >= currentStepNum ? 'text-primary drop-shadow-[0_0_5px_rgba(212,175,55,0.5)]' : 'text-white/60'
                 }`}>
                   {s.label}
                 </span>
               </div>
-            ))}
+            )})}
           </div>
 
           {/* Form Container */}
@@ -268,7 +315,9 @@ export function Booking() {
               <div className="space-y-6" style={{ transform: "translateZ(20px)" }}>
                 <h3 className="text-2xl font-display font-bold text-white mb-8">S čím přesně potřebujete pomoci?</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {['Bezplatná kontrola oken', 'Garážová vrata', 'Servis oken', 'Stínicí technika'].map((item) => (
+                  {['Bezplatná kontrola oken', 'Garážová vrata', 'Servis oken', 'Stínicí technika']
+                    .filter(item => item !== 'Servis oken' || showWindowService)
+                    .map((item) => (
                     <button
                       key={item}
                       onClick={() => setService(item)}
@@ -359,7 +408,13 @@ export function Booking() {
                     Zpět
                   </button>
                   <button
-                    onClick={handleNext}
+                    onClick={() => {
+                      if (showPreferredTime) {
+                        handleNext();
+                      } else {
+                        setStep(4);
+                      }
+                    }}
                     disabled={!selectedType || (serviceOptions[service]?.colors && !selectedColor)}
                     className="w-full sm:w-auto px-8 py-4 bg-primary text-primary-foreground font-bold text-sm uppercase tracking-widest rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white transition-colors flex items-center justify-center gap-2 shadow-[0_10px_20px_rgba(212,175,55,0.2)]"
                   >
@@ -370,7 +425,7 @@ export function Booking() {
             )}
 
             {/* Step 3: Date & Time */}
-            {step === 3 && (
+            {step === 3 && showPreferredTime && (
               <div className="space-y-8" style={{ transform: "translateZ(20px)" }}>
                 <div>
                   <h3 className="text-2xl font-display font-bold text-white mb-2">Vyberte si preferovaný termín</h3>
@@ -474,7 +529,7 @@ export function Booking() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs font-bold text-white/60 flex items-center gap-2 uppercase tracking-widest">
-                      <MapPin className="w-4 h-4 text-primary" /> Adresa realizace *
+                      <MapPin className="w-4 h-4 text-primary" /> Adresa realizace (stačí Město) *
                     </label>
                     <input 
                       name="address" 
@@ -482,7 +537,7 @@ export function Booking() {
                       onChange={handleInputChange} 
                       type="text" 
                       className={`w-full bg-background/50 border ${isAddressLocked ? 'border-primary/50 text-white/80' : 'border-white/5 text-white'} rounded-xl px-4 py-4 focus:outline-none focus:border-primary/50 focus:bg-background/80 transition-all placeholder:text-white/20 shadow-inner`} 
-                      placeholder="Ulice, Město, PSČ" 
+                      placeholder="Město nebo celá adresa" 
                       required 
                       readOnly={isAddressLocked}
                     />
@@ -517,7 +572,13 @@ export function Booking() {
 
                 <div className="mt-8 md:mt-12 flex flex-col-reverse sm:flex-row justify-between gap-6 items-center">
                   <button
-                    onClick={handlePrev}
+                    onClick={() => {
+                      if (showPreferredTime) {
+                        handlePrev();
+                      } else {
+                        setStep(2);
+                      }
+                    }}
                     disabled={isSubmitting}
                     className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white/10 text-white font-bold text-sm uppercase tracking-widest rounded-xl hover:border-white/30 hover:bg-white/5 transition-colors text-center disabled:opacity-50"
                   >

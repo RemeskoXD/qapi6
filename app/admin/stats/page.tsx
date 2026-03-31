@@ -32,6 +32,21 @@ export default async function AdminStatsPage() {
   const totalVisits = visits.length;
   const googleVisits = visits.filter(v => v.source === 'google/1').length;
 
+  // Fetch popup stats
+  const popupStatsRows = db.prepare('SELECT action, COUNT(*) as count FROM popup_stats GROUP BY action').all() as any[];
+  const popupStats = {
+    show: 0,
+    accept: 0,
+    decline: 0
+  };
+  popupStatsRows.forEach((row: any) => {
+    if (row.action in popupStats) {
+      popupStats[row.action as keyof typeof popupStats] = row.count;
+    }
+  });
+
+  const popupLeadsCount = (db.prepare("SELECT COUNT(*) as count FROM leads WHERE notes LIKE '%[Z Pop-up okna]%'").get() as any).count;
+
   return (
     <main className="min-h-screen bg-background p-8 md:p-12">
       <div className="max-w-6xl mx-auto">
@@ -56,6 +71,32 @@ export default async function AdminStatsPage() {
           <div className="bg-muted/20 border border-white/10 rounded-2xl p-6">
             <h3 className="text-white/60 text-sm font-bold uppercase tracking-wider mb-2">Z Google kampaně (/google/1)</h3>
             <p className="text-4xl font-display font-bold text-primary">{googleVisits}</p>
+          </div>
+        </div>
+
+        <h2 className="text-2xl font-display font-bold text-white mb-6 mt-12">
+          Statistiky Pop-up okna
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <div className="bg-muted/20 border border-white/10 rounded-2xl p-6">
+            <h3 className="text-white/60 text-sm font-bold uppercase tracking-wider mb-2">Zobrazeno</h3>
+            <p className="text-4xl font-display font-bold text-white">{popupStats.show}</p>
+          </div>
+          <div className="bg-muted/20 border border-green-500/20 rounded-2xl p-6">
+            <h3 className="text-green-400/80 text-sm font-bold uppercase tracking-wider mb-2">Přijato (Chci zdarma)</h3>
+            <p className="text-4xl font-display font-bold text-green-400">{popupStats.accept}</p>
+            <div className="flex flex-col gap-1 mt-2">
+              <p className="text-white/40 text-sm">
+                {popupStats.show > 0 ? Math.round((popupStats.accept / popupStats.show) * 100) : 0}% konverze kliknutí
+              </p>
+              <p className="text-green-400/60 text-sm font-medium">
+                {popupLeadsCount} odeslaných poptávek
+              </p>
+            </div>
+          </div>
+          <div className="bg-muted/20 border border-red-500/20 rounded-2xl p-6">
+            <h3 className="text-red-400/80 text-sm font-bold uppercase tracking-wider mb-2">Odmítnuto (Křížek / Ne)</h3>
+            <p className="text-4xl font-display font-bold text-red-400">{popupStats.decline}</p>
           </div>
         </div>
 

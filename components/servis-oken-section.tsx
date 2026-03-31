@@ -99,7 +99,7 @@ export function ServisOkenSection() {
           >
             <motion.div className="absolute inset-0 w-full h-full" style={{ transform: "translateZ(-30px)" }}>
               <Image
-                src="https://web2.itnahodinu.cz/QAPI/IMG_8265.webp"
+                src="https://web2.itnahodinu.cz/QAPI/serisoknazena.webp"
                 alt="Opravy a seřízení"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
