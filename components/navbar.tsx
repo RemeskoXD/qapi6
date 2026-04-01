@@ -25,7 +25,7 @@ export function Navbar() {
     { name: 'Stínicí technika', href: '/stinici-technika' },
     { name: 'Lokality', href: '/lokality' },
     { name: 'O nás', href: '/#o-nas' },
-    { name: 'Kontakt', href: '/#kontakt' },
+    { name: 'Kontakt', href: '/#rezervace' },
   ];
 
   return (
@@ -55,7 +55,7 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Right Side (Nav + Contact) */}
-        <div className="hidden lg:flex items-center gap-6 xl:gap-10 z-10">
+        <div className="hidden xl:flex items-center gap-6 xl:gap-10 z-10">
           {/* Nav Links */}
           <nav className={`flex items-center gap-2 xl:gap-4 transition-all duration-500 ${isScrolled ? 'bg-white/5 border border-white/10 rounded-full px-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.2)]' : 'px-2 py-1.5'}`}>
             {navLinks.map((link) => (
@@ -89,7 +89,7 @@ export function Navbar() {
 
         {/* Mobile Menu Toggle */}
         <button
-          className="lg:hidden text-white p-2 hover:text-primary transition-colors"
+          className="xl:hidden text-white p-2 hover:text-primary transition-colors"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label={isMobileMenuOpen ? "Zavřít menu" : "Otevřít menu"}
           aria-expanded={isMobileMenuOpen}
@@ -106,7 +106,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0, rotateX: 0 }}
             exit={{ opacity: 0, y: -20, rotateX: -15 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.8)] lg:hidden origin-top [transform-style:preserve-3d] max-h-[calc(100dvh-80px)] overflow-y-auto"
+            className="absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.8)] xl:hidden origin-top [transform-style:preserve-3d] max-h-[calc(100dvh-80px)] overflow-y-auto"
           >
             <div className="flex flex-col p-6 gap-4">
               {navLinks.map((link, index) => (

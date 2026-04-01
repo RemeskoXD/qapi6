@@ -1,6 +1,12 @@
 import { LokalityClient } from '@/components/lokality-client';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
+import { MapSection } from '@/components/map-section';
+import { Booking } from '@/components/booking';
+import { KontaktSection } from '@/components/kontakt-section';
+import { ThreeSteps } from '@/components/three-steps';
+import { Guarantees } from '@/components/guarantees';
+import { Suspense } from 'react';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -27,6 +33,17 @@ export default function LokalityPage() {
           <LokalityClient />
         </div>
       </section>
+      
+      <ThreeSteps />
+      <Guarantees />
+      <MapSection />
+      
+      <Suspense fallback={<div>Načítání...</div>}>
+        <Booking />
+      </Suspense>
+      
+      <KontaktSection />
+      
       <Footer />
     </main>
   );

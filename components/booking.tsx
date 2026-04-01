@@ -286,13 +286,13 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
               const currentStepNum = s.originalNum || s.num;
               const displayNum = s.num;
               return (
-              <div key={currentStepNum} className="flex flex-col items-center gap-2 md:gap-3 bg-muted px-1 sm:px-2 md:px-4">
-                <div className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center font-bold transition-all duration-500 shadow-lg text-xs sm:text-sm md:text-base ${
+              <div key={currentStepNum} className="flex flex-col items-center gap-2 md:gap-3 px-1 sm:px-2 md:px-4">
+                <div className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center font-bold transition-all duration-500 shadow-lg text-xs sm:text-sm md:text-base relative z-10 ${
                   step >= currentStepNum ? 'bg-primary text-primary-foreground shadow-[0_0_20px_rgba(212,175,55,0.5)] scale-110' : 'bg-background border border-white/10 text-white/40'
                 }`}>
                   {step > currentStepNum ? <CheckCircle2 className="w-4 h-4 md:w-6 md:h-6" /> : displayNum}
                 </div>
-                <span className={`text-[9px] sm:text-[10px] md:text-xs uppercase tracking-wider md:tracking-widest font-bold hidden sm:block ${
+                <span className={`text-[9px] sm:text-[10px] md:text-xs uppercase tracking-wider md:tracking-widest font-bold hidden sm:block relative z-10 bg-background/80 px-2 py-0.5 rounded-full backdrop-blur-sm ${
                   step >= currentStepNum ? 'text-primary drop-shadow-[0_0_5px_rgba(212,175,55,0.5)]' : 'text-white/60'
                 }`}>
                   {s.label}
