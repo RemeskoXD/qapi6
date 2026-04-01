@@ -55,14 +55,14 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Right Side (Nav + Contact) */}
-        <div className="hidden xl:flex items-center gap-6 xl:gap-10 z-10">
+        <div className="hidden 2xl:flex items-center gap-6 2xl:gap-10 z-10">
           {/* Nav Links */}
-          <nav className={`flex items-center gap-2 xl:gap-4 transition-all duration-500 ${isScrolled ? 'bg-white/5 border border-white/10 rounded-full px-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.2)]' : 'px-2 py-1.5'}`}>
+          <nav className={`flex items-center gap-2 2xl:gap-4 transition-all duration-500 ${isScrolled ? 'bg-white/5 border border-white/10 rounded-full px-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.2)]' : 'px-2 py-1.5'}`}>
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="relative px-4 py-2 text-[11px] xl:text-[13px] font-bold text-white/80 hover:text-white transition-colors uppercase tracking-[0.2em] group"
+                className="relative px-4 py-2 text-[11px] 2xl:text-[13px] font-bold text-white/80 hover:text-white transition-colors uppercase tracking-[0.2em] group"
               >
                 <span className="relative z-10">{link.name}</span>
                 {/* Hover pill background */}
@@ -74,22 +74,22 @@ export function Navbar() {
           </nav>
 
           {/* Separator */}
-          <div className="w-[1px] h-8 bg-white/10 hidden xl:block" />
+          <div className="w-[1px] h-8 bg-white/10 hidden 2xl:block" />
 
           {/* Contact */}
-          <div className="flex items-center gap-4 xl:gap-6">
+          <div className="flex items-center gap-4 2xl:gap-6">
             <a href="tel:+420702835964" className="flex items-center gap-3 text-white hover:text-primary transition-colors group">
               <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all duration-300 shadow-[0_0_15px_rgba(212,175,55,0.3)] group-hover:shadow-[0_0_25px_rgba(212,175,55,0.6)]">
                 <Phone className="w-4 h-4 text-primary group-hover:text-background transition-colors" />
               </div>
-              <span className="text-sm xl:text-base font-bold tracking-widest whitespace-nowrap">+420 702 835 964</span>
+              <span className="text-sm 2xl:text-base font-bold tracking-widest whitespace-nowrap">+420 702 835 964</span>
             </a>
           </div>
         </div>
 
         {/* Mobile Menu Toggle */}
         <button
-          className="xl:hidden text-white p-2 hover:text-primary transition-colors"
+          className="2xl:hidden text-white p-2 hover:text-primary transition-colors"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label={isMobileMenuOpen ? "Zavřít menu" : "Otevřít menu"}
           aria-expanded={isMobileMenuOpen}
@@ -106,7 +106,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0, rotateX: 0 }}
             exit={{ opacity: 0, y: -20, rotateX: -15 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.8)] xl:hidden origin-top [transform-style:preserve-3d] max-h-[calc(100dvh-80px)] overflow-y-auto"
+            className="absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.8)] 2xl:hidden origin-top [transform-style:preserve-3d] max-h-[calc(100dvh-80px)] overflow-y-auto"
           >
             <div className="flex flex-col p-6 gap-4">
               {navLinks.map((link, index) => (
