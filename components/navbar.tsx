@@ -36,11 +36,11 @@ export function Navbar() {
           : 'bg-gradient-to-b from-background/90 via-background/50 to-transparent py-4 md:py-6 lg:py-8'
       }`}
     >
-      <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 flex items-center justify-between relative [transform-style:preserve-3d]">
+      <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-16 flex items-center justify-between relative [transform-style:preserve-3d]">
         <Link href="/" className="flex items-center gap-2 group z-10">
           <motion.div 
             whileHover={{ scale: 1.05, rotateY: 10 }}
-            className="relative w-[210px] h-[63px] sm:w-[230px] sm:h-[69px] md:w-[250px] md:h-[75px] lg:w-[270px] lg:h-[81px] 2xl:w-[290px] 2xl:h-[87px] transition-transform duration-300"
+            className="relative w-[180px] h-[54px] sm:w-[200px] sm:h-[60px] md:w-[220px] md:h-[66px] lg:w-[240px] lg:h-[72px] xl:w-[260px] xl:h-[78px] 2xl:w-[280px] 2xl:h-[84px] transition-transform duration-300"
           >
             <Image
               src="https://web2.itnahodinu.cz/QAPI/Logo-Bile.webp"
@@ -55,14 +55,14 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Right Side (Nav + Contact) */}
-        <div className="hidden 2xl:flex items-center gap-6 2xl:gap-10 z-10">
+        <div className="hidden xl:flex items-center gap-3 2xl:gap-8 z-10">
           {/* Nav Links */}
-          <nav className={`flex items-center gap-2 2xl:gap-4 transition-all duration-500 ${isScrolled ? 'bg-white/5 border border-white/10 rounded-full px-6 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.2)]' : 'px-2 py-1.5'}`}>
+          <nav className={`flex items-center gap-1 2xl:gap-2 transition-all duration-500 ${isScrolled ? 'bg-white/5 border border-white/10 rounded-full px-4 py-2 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.2)]' : 'px-2 py-1.5'}`}>
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="relative px-4 py-2 text-[11px] 2xl:text-[13px] font-bold text-white/80 hover:text-white transition-colors uppercase tracking-[0.2em] group"
+                className="relative px-2 2xl:px-3 py-2 text-[10px] 2xl:text-[12px] font-bold text-white/80 hover:text-white transition-colors uppercase tracking-[0.05em] 2xl:tracking-[0.1em] group whitespace-nowrap"
               >
                 <span className="relative z-10">{link.name}</span>
                 {/* Hover pill background */}
@@ -74,22 +74,22 @@ export function Navbar() {
           </nav>
 
           {/* Separator */}
-          <div className="w-[1px] h-8 bg-white/10 hidden 2xl:block" />
+          <div className="w-[1px] h-8 bg-white/10 hidden xl:block" />
 
           {/* Contact */}
-          <div className="flex items-center gap-4 2xl:gap-6">
-            <a href="tel:+420702835964" className="flex items-center gap-3 text-white hover:text-primary transition-colors group">
-              <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all duration-300 shadow-[0_0_15px_rgba(212,175,55,0.3)] group-hover:shadow-[0_0_25px_rgba(212,175,55,0.6)]">
-                <Phone className="w-4 h-4 text-primary group-hover:text-background transition-colors" />
+          <div className="flex items-center gap-3 2xl:gap-5">
+            <a href="tel:+420702835964" className="flex items-center gap-2 2xl:gap-3 text-white hover:text-primary transition-colors group">
+              <div className="w-8 h-8 2xl:w-10 2xl:h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all duration-300 shadow-[0_0_15px_rgba(212,175,55,0.3)] group-hover:shadow-[0_0_25px_rgba(212,175,55,0.6)]">
+                <Phone className="w-3 h-3 2xl:w-4 2xl:h-4 text-primary group-hover:text-background transition-colors" />
               </div>
-              <span className="text-sm 2xl:text-base font-bold tracking-widest whitespace-nowrap">+420 702 835 964</span>
+              <span className="text-xs 2xl:text-sm font-bold tracking-wider 2xl:tracking-widest whitespace-nowrap">+420 702 835 964</span>
             </a>
           </div>
         </div>
 
         {/* Mobile Menu Toggle */}
         <button
-          className="2xl:hidden text-white p-2 hover:text-primary transition-colors"
+          className="xl:hidden text-white p-2 hover:text-primary transition-colors"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label={isMobileMenuOpen ? "Zavřít menu" : "Otevřít menu"}
           aria-expanded={isMobileMenuOpen}
@@ -106,7 +106,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0, rotateX: 0 }}
             exit={{ opacity: 0, y: -20, rotateX: -15 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.8)] 2xl:hidden origin-top [transform-style:preserve-3d] max-h-[calc(100dvh-80px)] overflow-y-auto"
+            className="absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.8)] xl:hidden origin-top [transform-style:preserve-3d] max-h-[calc(100dvh-80px)] overflow-y-auto"
           >
             <div className="flex flex-col p-6 gap-4">
               {navLinks.map((link, index) => (
