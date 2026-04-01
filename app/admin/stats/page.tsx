@@ -1,6 +1,6 @@
 import db from '@/lib/db';
 import { StatsDashboard } from '@/components/stats-dashboard';
-import { ExportButton } from '@/components/export-button';
+import { ImportExportButtons } from '@/components/import-export-buttons';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
@@ -60,7 +60,7 @@ export default async function AdminStatsPage() {
               Statistiky návštěvnosti
             </h1>
           </div>
-          <ExportButton data={visits} />
+          <ImportExportButtons data={visits} />
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
