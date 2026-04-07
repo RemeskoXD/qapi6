@@ -4,6 +4,7 @@ import { Navbar } from '@/components/navbar';
 import { VrataSection } from '@/components/vrata-section';
 import { Booking } from '@/components/booking';
 import { Footer } from '@/components/footer';
+import { PopupOffer } from '@/components/popup-offer';
 
 export const metadata: Metadata = {
   title: 'Garážová vrata na míru | Sekční a rolovací vrata | QAPI',
@@ -28,6 +29,7 @@ export default function GarazovaVrataPage() {
 
   return (
     <main className="flex-1 overflow-x-hidden pt-24">
+      <PopupOffer />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}

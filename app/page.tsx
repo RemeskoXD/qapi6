@@ -14,10 +14,12 @@ import { MapSection } from '@/components/map-section';
 import { ReviewsSection } from '@/components/reviews-section';
 import { ThreeSteps } from '@/components/three-steps';
 import { WindowSaving } from '@/components/window-saving';
+import { PopupOffer } from '@/components/popup-offer';
 
 export default function Home() {
   return (
     <main className="flex-1 overflow-x-hidden">
+      <PopupOffer />
       <Navbar />
       <Hero />
       <Partners />

@@ -53,11 +53,15 @@ export function PopupOffer() {
   return (
     <AnimatePresence>
       {isVisible && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div 
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          onClick={() => handleClose('decline')}
+        >
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            onClick={(e) => e.stopPropagation()}
             className="relative w-full max-w-md bg-background border border-primary/30 rounded-3xl shadow-[0_20px_60px_-15px_rgba(212,175,55,0.4)] overflow-hidden"
           >
             {/* Close Button */}

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 import { MapPin, CheckCircle2, Search, Loader2, ArrowDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { cities as availableCities } from '@/lib/cities';
 
 const cityGroups = [
@@ -235,14 +236,14 @@ export function LokalityClient() {
                   const citySlug = availableCities.find(c => c.name === city.name)?.slug;
                   const href = citySlug ? `/mesto/${citySlug}` : `/?address=${encodeURIComponent(city.name)}#rezervace`;
                   return (
-                  <button
+                  <Link
                     key={cityIdx}
-                    onClick={() => router.push(href)}
+                    href={href}
                     className="flex items-center gap-2 py-2 border-b border-white/5 hover:border-primary/50 group transition-all text-left"
                   >
                     <MapPin className="w-3.5 h-3.5 text-white/20 group-hover:text-primary transition-colors flex-shrink-0" />
                     <span className="text-white/70 group-hover:text-white font-medium transition-colors text-sm sm:text-base truncate">{city.name}</span>
-                  </button>
+                  </Link>
                 )})}
               </div>
             </div>

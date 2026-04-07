@@ -31,6 +31,7 @@ export default async function AdminStatsPage() {
   
   const totalVisits = visits.length;
   const googleVisits = visits.filter(v => v.source === 'google/1').length;
+  const googleAdsLpVisits = visits.filter(v => v.source === 'google_ads_lp').length;
 
   // Fetch popup stats
   const popupStatsRows = db.prepare('SELECT action, COUNT(*) as count FROM popup_stats GROUP BY action').all() as any[];
@@ -46,6 +47,7 @@ export default async function AdminStatsPage() {
   });
 
   const popupLeadsCount = (db.prepare("SELECT COUNT(*) as count FROM leads WHERE notes LIKE '%[Z Pop-up okna]%'").get() as any).count;
+  const googleAdsLeadsCount = (db.prepare("SELECT COUNT(*) as count FROM leads WHERE type = 'Bezplatná kontrola oken - Google Ads'").get() as any).count;
 
   return (
     <main className="min-h-screen bg-background p-8 md:p-12">
@@ -71,6 +73,26 @@ export default async function AdminStatsPage() {
           <div className="bg-muted/20 border border-white/10 rounded-2xl p-6">
             <h3 className="text-white/60 text-sm font-bold uppercase tracking-wider mb-2">Z Google kampaně (/google/1)</h3>
             <p className="text-4xl font-display font-bold text-primary">{googleVisits}</p>
+          </div>
+        </div>
+
+        <h2 className="text-2xl font-display font-bold text-white mb-6 mt-12">
+          Google stats reklamy (Landing Page)
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          <div className="bg-muted/20 border border-white/10 rounded-2xl p-6">
+            <h3 className="text-white/60 text-sm font-bold uppercase tracking-wider mb-2">Návštěvy stránky</h3>
+            <p className="text-4xl font-display font-bold text-white">{googleAdsLpVisits}</p>
+            <p className="text-white/40 text-sm mt-2">Lidé, kteří přišli na /lp/kontrola-oken-ads</p>
+          </div>
+          <div className="bg-muted/20 border border-green-500/20 rounded-2xl p-6">
+            <h3 className="text-green-400/80 text-sm font-bold uppercase tracking-wider mb-2">Odeslané formuláře</h3>
+            <p className="text-4xl font-display font-bold text-green-400">{googleAdsLeadsCount}</p>
+            <div className="flex flex-col gap-1 mt-2">
+              <p className="text-white/40 text-sm">
+                {googleAdsLpVisits > 0 ? Math.round((googleAdsLeadsCount / googleAdsLpVisits) * 100) : 0}% konverze stránky
+              </p>
+            </div>
           </div>
         </div>
 

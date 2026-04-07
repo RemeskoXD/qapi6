@@ -4,6 +4,7 @@ import { Navbar } from '@/components/navbar';
 import { StiniciSection } from '@/components/stinici-section';
 import { Booking } from '@/components/booking';
 import { Footer } from '@/components/footer';
+import { PopupOffer } from '@/components/popup-offer';
 
 export const metadata: Metadata = {
   title: 'Stínicí technika a venkovní rolety na míru | QAPI',
@@ -28,6 +29,7 @@ export default function StiniciTechnikaPage() {
 
   return (
     <main className="flex-1 overflow-x-hidden pt-24">
+      <PopupOffer />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}

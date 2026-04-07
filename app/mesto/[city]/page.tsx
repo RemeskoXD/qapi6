@@ -9,6 +9,7 @@ import { LocalHero } from '@/components/local-hero';
 import { Services } from '@/components/services';
 import { Process } from '@/components/process';
 import { ReviewsSection } from '@/components/reviews-section';
+import { PopupOffer } from '@/components/popup-offer';
 
 export function generateStaticParams() {
   return cities.map((city) => ({
@@ -51,6 +52,7 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
 
   return (
     <main className="flex-1 overflow-x-hidden pt-24">
+      <PopupOffer />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}

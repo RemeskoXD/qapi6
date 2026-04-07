@@ -7,12 +7,14 @@ import { ArrowRight, CheckCircle2, ShieldCheck } from 'lucide-react';
 interface LpFormProps {
   leadMagnetName: string;
   buttonText: string;
+  formTitle?: string;
   thankYouHeadline?: string;
   thankYouText?: React.ReactNode;
   nextStepText?: string;
+  nextStepUrl?: string;
 }
 
-export function LpForm({ leadMagnetName, buttonText, thankYouHeadline, thankYouText, nextStepText }: LpFormProps) {
+export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline, thankYouText, nextStepText, nextStepUrl }: LpFormProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -119,7 +121,7 @@ export function LpForm({ leadMagnetName, buttonText, thankYouHeadline, thankYouT
           {thankYouText || defaultThankYouText}
         </p>
         <a 
-          href={`/?${queryParams}#rezervace`}
+          href={nextStepUrl || `/?${queryParams}#rezervace`}
           className="inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-4 bg-primary text-primary-foreground font-bold text-lg uppercase tracking-widest rounded-xl hover:bg-white transition-all transform hover:-translate-y-1 shadow-[0_15px_30px_rgba(212,175,55,0.3)]"
         >
           {nextStepText || 'Chci bezplatnou kontrolu oken'}
@@ -131,7 +133,7 @@ export function LpForm({ leadMagnetName, buttonText, thankYouHeadline, thankYouT
 
   return (
     <div className="bg-background/80 backdrop-blur-2xl p-8 md:p-10 rounded-3xl border border-white/10 shadow-2xl">
-      <h3 className="text-2xl font-display font-bold text-white mb-6">Kam vám to máme poslat?</h3>
+      <h3 className="text-2xl font-display font-bold text-white mb-6">{formTitle || 'Kam vám to máme poslat?'}</h3>
       
       {error && (
         <div className="bg-red-500/10 border border-red-500/50 text-red-500 p-4 rounded-xl mb-6 text-sm">

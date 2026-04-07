@@ -2,7 +2,6 @@ import type {Metadata} from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import Script from 'next/script';
 import { CookieBanner } from '@/components/cookie-banner';
-import { PopupOffer } from '@/components/popup-offer';
 import './globals.css'; // Global styles
 
 const inter = Inter({
@@ -164,7 +163,6 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         </noscript>
         {/* End Google Tag Manager (noscript) */}
         {children}
-        <PopupOffer />
         <CookieBanner />
       </body>
     </html>
