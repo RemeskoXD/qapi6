@@ -10,9 +10,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/servis-oken',
     '/garazova-vrata',
     '/stinici-technika',
-    '/lp/kontrola-oken-zdarma',
-    '/lp/tajny-trik-okna',
-    '/lp/zabijaci-garazovych-vrat',
   ];
 
   const staticPages = routes.map((route) => ({
