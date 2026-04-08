@@ -76,6 +76,8 @@ export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline
       if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
         (window as any).gtag('event', 'conversion', {
           'send_to': 'AW-18019878591/QQoqCO6jxpccEL-NxpBD',
+          'value': 1.0,
+          'currency': 'CZK',
           'event_callback': function() {
             console.log('Google Ads conversion sent');
           },

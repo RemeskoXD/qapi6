@@ -87,6 +87,19 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
+            
+            // Výchozí nastavení pro zbytek světa (povoleno)
+            gtag('consent', 'default', {
+              'ad_storage': 'granted',
+              'analytics_storage': 'granted',
+              'ad_user_data': 'granted',
+              'ad_personalization': 'granted',
+              'personalization_storage': 'granted',
+              'functionality_storage': 'granted',
+              'wait_for_update': 500
+            });
+
+            // Výchozí nastavení pro EHP (Evropský hospodářský prostor), UK a Švýcarsko (zamítnuto)
             gtag('consent', 'default', {
               'ad_storage': 'denied',
               'analytics_storage': 'denied',
@@ -94,8 +107,10 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
               'ad_personalization': 'denied',
               'personalization_storage': 'denied',
               'functionality_storage': 'denied',
+              'region': ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO', 'CH', 'GB', 'UK'],
               'wait_for_update': 500
             });
+
             gtag('set', 'ads_data_redaction', true);
           `}
         </Script>
