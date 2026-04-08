@@ -24,6 +24,10 @@ export async function POST(request: Request) {
 
     const info = stmt.run(service, finalType, color || null, finalDate, finalTime, name, phone, email, address, notes || null);
 
+    // Zjištění, zda je zapnutý Test Mode
+    const testModeRow = db.prepare("SELECT value FROM settings WHERE key = 'test_mode'").get() as any;
+    const isTestMode = testModeRow?.value === 'true';
+
     // Odeslání e-mailu
     if (process.env.GMAIL_USER && process.env.GMAIL_PASS) {
       const transporter = nodemailer.createTransport({
@@ -36,8 +40,8 @@ export async function POST(request: Request) {
 
       const mailOptions = {
         from: `"Qapi.cz Web" <${process.env.GMAIL_USER}>`,
-        to: 'info@qapi.cz, poptavky@qapi.cz, ludvikremesekwork@gmail.com',
-        subject: `Nová poptávka z webu: ${service} - ${name}`,
+        to: isTestMode ? 'ludvikremesekwork@gmail.com' : 'info@qapi.cz, poptavky@qapi.cz, ludvikremesekwork@gmail.com',
+        subject: `${isTestMode ? '[TEST MODE] ' : ''}Nová poptávka z webu: ${service} - ${name}`,
         html: `
           <h2>Nová poptávka z webu Qapi.cz</h2>
           <p><strong>Služba:</strong> ${service}</p>

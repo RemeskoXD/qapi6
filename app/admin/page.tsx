@@ -273,6 +273,29 @@ export default function AdminDashboard() {
               </div>
 
               <div className="bg-background rounded-xl border border-white/5 p-8">
+                <h3 className="text-lg font-medium text-white mb-4">Systémové nastavení</h3>
+                <div className="flex items-center justify-between py-4 border-b border-white/5">
+                  <div>
+                    <h4 className="text-white font-medium">Testovací režim (Test Mode)</h4>
+                    <p className="text-white/60 text-sm">Pokud je zapnuto, všechny nové poptávky se budou odesílat POUZE na e-mail ludvikremesekwork@gmail.com.</p>
+                  </div>
+                  <button
+                    onClick={() => handleSettingChange('test_mode', settings.test_mode === 'true' ? 'false' : 'true')}
+                    disabled={isSavingSettings}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
+                      settings.test_mode === 'true' ? 'bg-primary' : 'bg-white/20'
+                    } ${isSavingSettings ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                        settings.test_mode === 'true' ? 'translate-x-6' : 'translate-x-1'
+                      }`}
+                    />
+                  </button>
+                </div>
+              </div>
+
+              <div className="bg-background rounded-xl border border-white/5 p-8">
                 <h3 className="text-lg font-medium text-white mb-4">Formulář poptávky</h3>
                 <div className="flex items-center justify-between py-4 border-b border-white/5">
                   <div>

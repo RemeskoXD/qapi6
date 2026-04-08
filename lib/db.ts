@@ -43,6 +43,7 @@ db.exec(`
   
   INSERT OR IGNORE INTO settings (key, value) VALUES ('show_preferred_time', 'false');
   INSERT OR IGNORE INTO settings (key, value) VALUES ('show_window_service', 'true');
+  INSERT OR IGNORE INTO settings (key, value) VALUES ('test_mode', 'false');
 `);
 
 export default db;

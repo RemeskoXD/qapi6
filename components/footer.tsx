@@ -158,9 +158,14 @@ export function Footer() {
           <div className="text-white/30 text-xs font-light text-center md:text-left max-w-2xl">
             <strong>Obsluhované regiony:</strong> Servis oken Praha, Brno, Ostrava, Plzeň, Liberec, Olomouc, České Budějovice, Hradec Králové. Montáž garážových vrat a stínicí techniky po celé ČR.
           </div>
-          <p className="text-white/40 text-sm font-light group">
-            Vytvořeno s důrazem na <span className="text-primary italic font-bold group-hover:drop-shadow-[0_0_8px_rgba(207,175,108,0.8)] transition-all duration-300 inline-block group-hover:scale-110">dokonalost</span>
-          </p>
+          <div className="flex flex-col items-end gap-1">
+            <p className="text-white/40 text-sm font-light group">
+              Vytvořeno s důrazem na <span className="text-primary italic font-bold group-hover:drop-shadow-[0_0_8px_rgba(207,175,108,0.8)] transition-all duration-300 inline-block group-hover:scale-110">dokonalost</span>
+            </p>
+            <p className="text-white/30 text-xs font-light">
+              Vytvořil <a href="https://mescon.cz/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors hover:underline">Ludvík Remešek</a>.
+            </p>
+          </div>
         </div>
       </div>
     </footer>
