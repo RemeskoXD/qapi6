@@ -10,6 +10,7 @@ import { Services } from '@/components/services';
 import { Process } from '@/components/process';
 import { ReviewsSection } from '@/components/reviews-section';
 import { PopupOffer } from '@/components/popup-offer';
+import { LocalFaqSection } from '@/components/local-faq-section';
 
 export function generateStaticParams() {
   return cities.map((city) => ({
@@ -47,7 +48,12 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
       "@type": "City",
       "name": cityObj.name
     },
-    "description": `Servis oken a dveří, garážová vrata a stínicí technika v lokalitě ${cityObj.name}.`
+    "description": `Servis oken a dveří, garážová vrata a stínicí technika v lokalitě ${cityObj.name}.`,
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "124"
+    }
   };
 
   return (
@@ -61,6 +67,7 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
       <LocalHero cityName={cityObj.name} />
       <Services />
       <Process />
+      <LocalFaqSection cityName={cityObj.name} />
       <ReviewsSection />
       <Suspense fallback={<div>Načítání...</div>}>
         <Booking />

@@ -5,6 +5,7 @@ import { ServisOkenSection } from '@/components/servis-oken-section';
 import { Booking } from '@/components/booking';
 import { Footer } from '@/components/footer';
 import { PopupOffer } from '@/components/popup-offer';
+import { FaqSection } from '@/components/faq-section';
 
 export const metadata: Metadata = {
   title: 'Servis oken a dveří | Profesionální oprava a seřízení | QAPI',
@@ -24,6 +25,11 @@ export default function ServisOkenPage() {
     "areaServed": {
       "@type": "Country",
       "name": "Czech Republic"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "124"
     }
   };
 
@@ -36,6 +42,7 @@ export default function ServisOkenPage() {
       />
       <Navbar />
       <ServisOkenSection />
+      <FaqSection />
       <Suspense fallback={<div>Načítání...</div>}>
         <Booking />
       </Suspense>

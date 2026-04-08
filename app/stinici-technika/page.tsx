@@ -24,6 +24,11 @@ export default function StiniciTechnikaPage() {
     "areaServed": {
       "@type": "Country",
       "name": "Czech Republic"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "124"
     }
   };
 
