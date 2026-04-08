@@ -74,7 +74,8 @@ export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline
 
       // Google Ads Conversion Hit
       if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
-        (window as any).gtag('event', 'conversion_event_submit_lead_form_2', {
+        (window as any).gtag('event', 'conversion', {
+          'send_to': 'AW-18019878591/QQoqCO6jxpccEL-NxpBD',
           'event_callback': function() {
             console.log('Google Ads conversion sent');
           },
