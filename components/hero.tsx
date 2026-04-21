@@ -14,11 +14,32 @@ export function Hero() {
   const [isSearching, setIsSearching] = useState(false);
   const [searchSuccess, setSearchSuccess] = useState(false);
   const [suggestions, setSuggestions] = useState<any[]>([]);
-  const [isMounted, setIsMounted] = useState(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsMounted(true);
+    // Delay loading the heavy YouTube iframe to improve PageSpeed
+    const timer = setTimeout(() => {
+      setIsVideoLoaded(true);
+    }, 3500);
+
+    const handleInteraction = () => {
+      setIsVideoLoaded(true);
+      clearTimeout(timer);
+      window.removeEventListener('scroll', handleInteraction);
+      window.removeEventListener('mousemove', handleInteraction);
+      window.removeEventListener('touchstart', handleInteraction);
+    };
+
+    window.addEventListener('scroll', handleInteraction, { passive: true });
+    window.addEventListener('mousemove', handleInteraction, { passive: true });
+    window.addEventListener('touchstart', handleInteraction, { passive: true });
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', handleInteraction);
+      window.removeEventListener('mousemove', handleInteraction);
+      window.removeEventListener('touchstart', handleInteraction);
+    };
   }, []);
 
   const handleAddressChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +83,7 @@ export function Hero() {
       {/* Background Video - Fixed Fullscreen */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute inset-0 w-full h-full">
-          {isMounted && (
+          {isVideoLoaded && (
             <iframe
               src="https://www.youtube-nocookie.com/embed/cMQFYabS5eU?autoplay=1&mute=1&controls=0&loop=1&playlist=cMQFYabS5eU&wmode=transparent&enablejsapi=1&rel=0&origin=https://qapi.cz"
               title="QAPI Background Video"
@@ -85,7 +106,7 @@ export function Hero() {
         <div className="interactive-search-wrapper !mx-0 !max-w-3xl flex flex-col items-start text-left">
           
           <h1
-            className="font-display text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] font-bold text-white leading-[1.05] tracking-tight drop-shadow-2xl animate-fade-in-up animate-delay-300"
+            className="font-display text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] font-bold text-white leading-[1.05] tracking-tight drop-shadow-2xl"
           >
             Ztrácíte teplo i peníze?
             <span className="text-primary italic font-light tracking-normal mt-3 mb-3 block">Zjistěte okamžitě,</span>
@@ -201,7 +222,6 @@ export function Hero() {
             sizes="(max-width: 1024px) 0vw, 50vw"
             className="object-contain object-right-bottom"
             referrerPolicy="no-referrer"
-            priority
           />
         </div>
       </div>

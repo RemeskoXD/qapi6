@@ -25,10 +25,12 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
   const [service, setService] = useState<string>('');
   const [selectedType, setSelectedType] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>('');
+  const [selectedSubType, setSelectedSubType] = useState<string>('');
   
   // Form fields state
   const [formData, setFormData] = useState({
     name: '',
+    phonePrefix: '+420',
     phone: '',
     email: '',
     address: '',
@@ -39,7 +41,7 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showPreferredTime, setShowPreferredTime] = useState(false);
-  const [showWindowService, setShowWindowService] = useState(true);
+  const [showWindowService, setShowWindowService] = useState(false);
 
   useEffect(() => {
     fetch('/api/admin/settings')
@@ -49,7 +51,9 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
           if (data.settings.show_preferred_time === 'true') {
             setShowPreferredTime(true);
           }
-          if (data.settings.show_window_service === 'false') {
+          if (data.settings.show_window_service === 'true') {
+            setShowWindowService(true);
+          } else if (data.settings.show_window_service === 'false') {
             setShowWindowService(false);
           }
         }
@@ -59,13 +63,23 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
 
   useEffect(() => {
     if (addressParam || nameParam || emailParam || phoneParam) {
-      setFormData(prev => ({ 
-        ...prev, 
-        address: addressParam || prev.address,
-        name: nameParam || prev.name,
-        email: emailParam || prev.email,
-        phone: phoneParam || prev.phone,
-      }));
+      setFormData(prev => {
+        let phonePrefix = prev.phonePrefix;
+        let phone = prev.phone;
+        if (phoneParam) {
+           if (phoneParam.startsWith('+421')) { phonePrefix = '+421'; phone = phoneParam.replace('+421', '').trim(); }
+           else if (phoneParam.startsWith('+420')) { phonePrefix = '+420'; phone = phoneParam.replace('+420', '').trim(); }
+           else { phone = phoneParam; }
+        }
+        return { 
+          ...prev, 
+          address: addressParam || prev.address,
+          name: nameParam || prev.name,
+          email: emailParam || prev.email,
+          phonePrefix,
+          phone
+        }
+      });
     }
     
     if (addressParam) {
@@ -86,38 +100,47 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
   
   const availableTimes = ['08:00', '09:30', '11:00', '13:00', '14:30', '16:00'];
 
-  const serviceOptions: Record<string, { types: { id: string, label: string, img: string }[], colors?: { id: string, label: string, hex: string }[] }> = {
+  const serviceOptions: Record<string, { types: { id: string, label: string, img: string, subTypes?: { id: string, label: string, img: string }[] }[], colors?: { id: string, label: string, hex: string }[] }> = {
     'Garážová vrata': {
       types: [
-        { id: 'sekcni', label: 'Sekční vrata', img: 'https://web2.itnahodinu.cz/QAPI/WhatsApp-Image-2025-11-07-at-15.08.16.webp' },
-        { id: 'rolovaci', label: 'Rolovací vrata', img: 'https://web2.itnahodinu.cz/QAPI/IMG_6817.webp' },
-        { id: 'dvoukridla', label: 'Dvoukřídlá vrata', img: 'https://web2.itnahodinu.cz/QAPI/po-2.webp' },
-      ],
-      colors: [
-        { id: 'antracit', label: 'Antracit', hex: '#333333' },
-        { id: 'bila', label: 'Bílá', hex: '#FFFFFF' },
-        { id: 'zlaty-dub', label: 'Zlatý dub', hex: '#8B5A2B' },
-        { id: 'orech', label: 'Ořech', hex: '#5C4033' },
-        { id: 'mahagon', label: 'Mahagon', hex: '#4C0000' },
+        { id: 'sekcni', label: 'Sekční vrata', img: 'https://web2.itnahodinu.cz/QAPI/fr/sekcnivrata.webp' },
+        { id: 'rolovaci', label: 'Rolovací vrata', img: 'https://web2.itnahodinu.cz/QAPI/fr/rolovaci.webp' },
+        { id: 'dvoukridla', label: 'Dvoukřídlá vrata', img: 'https://web2.itnahodinu.cz/QAPI/fr/dvoukridla.webp' },
       ]
     },
     'Servis oken': {
       types: [
-        { id: 'plastova', label: 'Plastová okna', img: 'https://web2.itnahodinu.cz/QAPI/IMG_8265.webp' },
-        { id: 'drevena', label: 'Dřevěná okna', img: 'https://web2.itnahodinu.cz/QAPI/IMG_8266-1536x864.webp' },
-        { id: 'hlinikova', label: 'Hliníková okna', img: 'https://web2.itnahodinu.cz/QAPI/po-2.webp' },
+        { id: 'plastova', label: 'Plastová okna', img: 'https://web2.itnahodinu.cz/QAPI/fr/plast.webp' },
+        { id: 'drevena', label: 'Dřevěná okna', img: 'https://web2.itnahodinu.cz/QAPI/fr/drevo.webp' },
+        { id: 'hlinikova', label: 'Hliníková okna', img: 'https://web2.itnahodinu.cz/QAPI/fr/hlinik.webp' },
       ]
     },
     'Stínicí technika': {
       types: [
-        { id: 'zaluzie', label: 'Venkovní žaluzie', img: 'https://web2.itnahodinu.cz/QAPI/4.webp' },
-        { id: 'rolety', label: 'Venkovní rolety', img: 'https://web2.itnahodinu.cz/QAPI/10.webp' },
-        { id: 'markyzy', label: 'Markýzy', img: 'https://web2.itnahodinu.cz/QAPI/IMG_6817.webp' },
-      ],
-      colors: [
-        { id: 'stribrna', label: 'Stříbrná', hex: '#C0C0C0' },
-        { id: 'antracit', label: 'Antracit', hex: '#333333' },
-        { id: 'bila', label: 'Bílá', hex: '#FFFFFF' },
+        { 
+          id: 'exterierove', 
+          label: 'Exteriérové stínění', 
+          img: 'https://web2.itnahodinu.cz/QAPI/fr/exterierove.webp',
+          subTypes: [
+            { id: 'zaluzie', label: 'Žaluzie', img: 'https://web2.itnahodinu.cz/QAPI/fr/1.webp' },
+            { id: 'rolety', label: 'Rolety', img: 'https://web2.itnahodinu.cz/QAPI/fr/2.webp' },
+            { id: 'screenove', label: 'Screenové rolety', img: 'https://web2.itnahodinu.cz/QAPI/fr/3.webp' },
+            { id: 'markyzy', label: 'Markýzy', img: 'https://web2.itnahodinu.cz/QAPI/fr/4.webp' },
+            { id: 'jine', label: 'Jiné', img: 'https://web2.itnahodinu.cz/QAPI/fr/nvm.webp' }
+          ]
+        },
+        { 
+          id: 'interierove', 
+          label: 'Interiérové stínění', 
+          img: 'https://web2.itnahodinu.cz/QAPI/fr/interierove.webp',
+          subTypes: [
+            { id: 'horiz-zaluzie', label: 'Horizontální žaluzie', img: 'https://web2.itnahodinu.cz/QAPI/fr/14.webp' },
+            { id: 'rolety-int', label: 'Rolety', img: 'https://web2.itnahodinu.cz/QAPI/fr/13.webp' },
+            { id: 'den-noc', label: 'Rolety den a noc', img: 'https://web2.itnahodinu.cz/QAPI/fr/11.webp' },
+            { id: 'vert-zaluzie', label: 'Vertikální žaluzie', img: 'https://web2.itnahodinu.cz/QAPI/fr/10.webp' },
+            { id: 'jine-int', label: 'Jiné', img: 'https://web2.itnahodinu.cz/QAPI/fr/nvm.webp' }
+          ]
+        }
       ]
     },
     'Průmyslová vrata': {
@@ -142,7 +165,7 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
   const handleNext = () => setStep(s => Math.min(s + 1, 5));
   const handlePrev = () => setStep(s => Math.max(s - 1, 1));
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -160,10 +183,10 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
       return;
     }
 
-    // Validate phone format (allows + and numbers)
-    const phoneRegex = /^\+?[0-9\s]+$/;
-    if (!phoneRegex.test(formData.phone)) {
-      setError('Neplatný formát telefonu. Zadejte prosím pouze znak + a číslice.');
+    // Validate phone: clean all non-digits and check for exactly 9 digits
+    const rawPhoneDigits = formData.phone.replace(/\D/g, '');
+    if (rawPhoneDigits.length !== 9) {
+      setError('Telefonní číslo musí obsahovat přesně 9 číslic (např. 123 456 789).');
       return;
     }
     
@@ -176,9 +199,12 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
     setError(null);
 
     try {
-      const finalNotes = sourceParam === 'popup' 
-        ? `[Z Pop-up okna] ${formData.notes}`.trim() 
-        : formData.notes;
+      const subTypeLabel = selectedSubType ? serviceOptions[service]?.types.find(t => t.id === selectedType)?.subTypes?.find(s => s.id === selectedSubType)?.label : null;
+      const finalNotes = [
+        sourceParam === 'popup' ? '[Z Pop-up okna]' : '',
+        subTypeLabel ? `Upřesnění typu: ${subTypeLabel}` : '',
+        formData.notes
+      ].filter(Boolean).join('\n').trim();
 
       const response = await fetch('/api/leads', {
         method: 'POST',
@@ -189,9 +215,11 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
           service,
           type: selectedType,
           color: selectedColor,
+          subType: selectedSubType,
           date: selectedDate ? format(selectedDate, 'yyyy-MM-dd') : '',
           time: selectedTime,
           ...formData,
+          phone: `${formData.phonePrefix} ${rawPhoneDigits}`,
           notes: finalNotes
         }),
       });
@@ -358,7 +386,11 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
                     {serviceOptions[service]?.types.map((type) => (
                       <button
                         key={type.id}
-                        onClick={() => setSelectedType(type.id)}
+                        onClick={() => {
+                          setSelectedType(type.id);
+                          setSelectedColor('');
+                          setSelectedSubType('');
+                        }}
                         className={`relative overflow-hidden rounded-2xl border text-left transition-all duration-500 transform hover:-translate-y-1 h-32 group ${
                           selectedType === type.id 
                             ? 'border-primary shadow-[0_0_30px_rgba(212,175,55,0.3)]' 
@@ -377,6 +409,35 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
                     ))}
                   </div>
                 </div>
+
+                {serviceOptions[service]?.types.find(t => t.id === selectedType)?.subTypes && (
+                  <div className="space-y-6">
+                    <h4 className="text-lg font-bold text-white">Upřesněte výběr</h4>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                      {serviceOptions[service].types.find(t => t.id === selectedType)?.subTypes?.map((subType) => (
+                        <button
+                          key={subType.id}
+                          onClick={() => setSelectedSubType(subType.id)}
+                          className={`relative flex flex-col items-center justify-center gap-3 rounded-xl border p-4 transition-all duration-300 transform hover:-translate-y-1 group bg-background/50 ${
+                            selectedSubType === subType.id 
+                              ? 'border-primary shadow-[0_0_20px_rgba(212,175,55,0.3)] bg-primary/5' 
+                              : 'border-white/5 hover:border-primary/30 hover:bg-white/5'
+                          }`}
+                        >
+                          <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
+                            <Image src={subType.img} alt={subType.label} fill sizes="(max-width: 768px) 80px, 80px" className="object-contain" referrerPolicy="no-referrer" />
+                          </div>
+                          <div className="font-bold text-xs sm:text-sm text-white text-center break-words w-full px-1 leading-tight">{subType.label}</div>
+                          {selectedSubType === subType.id && (
+                            <div className="absolute top-2 right-2 w-5 h-5 bg-primary rounded-full flex items-center justify-center z-10">
+                              <CheckCircle2 className="w-3 h-3 text-background" />
+                            </div>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {serviceOptions[service]?.colors && (
                   <div className="space-y-6">
@@ -418,7 +479,7 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
                         setStep(4);
                       }
                     }}
-                    disabled={!selectedType || (serviceOptions[service]?.colors && !selectedColor)}
+                    disabled={!selectedType || (serviceOptions[service]?.colors && !selectedColor) || (!!serviceOptions[service]?.types.find(t => t.id === selectedType)?.subTypes && !selectedSubType)}
                     className="w-full sm:w-auto px-8 py-4 bg-primary text-primary-foreground font-bold text-sm uppercase tracking-widest rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white transition-colors flex items-center justify-center gap-2 shadow-[0_10px_20px_rgba(212,175,55,0.2)]"
                   >
                     Pokračovat <ChevronRight className="w-5 h-5" />
@@ -522,7 +583,26 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
                     <label className="text-xs font-bold text-white/60 flex items-center gap-2 uppercase tracking-widest">
                       <Phone className="w-4 h-4 text-primary" /> Telefon *
                     </label>
-                    <input name="phone" value={formData.phone} onChange={handleInputChange} type="tel" className="w-full bg-background/50 border border-white/5 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-primary/50 focus:bg-background/80 transition-all placeholder:text-white/20 shadow-inner" placeholder="+420 123 456 789" required />
+                    <div className="flex bg-background/50 border border-white/5 rounded-xl shadow-inner overflow-hidden focus-within:border-primary/50 focus-within:bg-background/80 transition-all">
+                      <select 
+                        name="phonePrefix" 
+                        value={formData.phonePrefix} 
+                        onChange={handleInputChange}
+                        className="bg-transparent text-white px-3 py-4 border-r border-white/10 focus:outline-none appearance-none cursor-pointer hover:bg-white/5 transition-colors"
+                      >
+                        <option value="+420" className="bg-background text-white">+420</option>
+                        <option value="+421" className="bg-background text-white">+421</option>
+                      </select>
+                      <input 
+                        name="phone" 
+                        value={formData.phone} 
+                        onChange={handleInputChange} 
+                        type="tel" 
+                        className="w-full bg-transparent px-4 py-4 text-white focus:outline-none placeholder:text-white/20" 
+                        placeholder="123 456 789" 
+                        required 
+                      />
+                    </div>
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs font-bold text-white/60 flex items-center gap-2 uppercase tracking-widest">
@@ -590,8 +670,8 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
                   <div className="flex flex-col items-center sm:items-end gap-3 w-full sm:w-auto">
                     <button
                       onClick={handleSubmit}
-                      disabled={isSubmitting || !formData.name || !formData.phone || !formData.email || !formData.address || !agreedToTerms}
-                      className="w-full sm:w-auto px-10 py-5 bg-primary text-primary-foreground font-bold text-base md:text-lg uppercase tracking-widest rounded-xl hover:bg-white transition-colors flex items-center justify-center gap-3 shadow-[0_15px_30px_rgba(212,175,55,0.3)] disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-1"
+                      disabled={isSubmitting}
+                      className="w-full sm:w-auto px-10 py-5 bg-primary text-primary-foreground font-bold text-base md:text-lg uppercase tracking-widest rounded-xl hover:bg-white transition-colors flex items-center justify-center gap-3 shadow-[0_15px_30px_rgba(212,175,55,0.3)] disabled:opacity-50 transform hover:-translate-y-1"
                     >
                       {isSubmitting ? 'Odesílám...' : '[ REZERVOVAT PREFEROVANÝ TERMÍN ZDARMA ]'} <CheckCircle2 className="w-6 h-6" />
                     </button>
@@ -629,6 +709,7 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
                       setService('');
                       setSelectedType('');
                       setSelectedColor('');
+                      setSelectedSubType('');
                     }}
                     className="px-8 py-4 bg-transparent border border-white/10 text-white font-bold text-sm uppercase tracking-widest rounded-xl hover:border-white/30 hover:bg-white/5 transition-colors"
                   >

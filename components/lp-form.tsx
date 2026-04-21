@@ -18,17 +18,19 @@ export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phonePrefix: '+420',
     phone: '',
     address: '',
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,10 +46,10 @@ export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline
       return;
     }
 
-    // Validate phone format (allows + and numbers)
-    const phoneRegex = /^\+?[0-9\s]+$/;
-    if (!phoneRegex.test(formData.phone)) {
-      setError('Neplatný formát telefonu. Zadejte prosím pouze znak + a číslice.');
+    // Validate phone: clean all non-digits and check for exactly 9 digits
+    const rawPhoneDigits = formData.phone.replace(/\D/g, '');
+    if (rawPhoneDigits.length !== 9) {
+      setError('Telefonní číslo musí obsahovat přesně 9 číslic (např. 123 456 789).');
       return;
     }
 
@@ -64,6 +66,7 @@ export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline
           service: 'Lead Magnet',
           type: leadMagnetName,
           ...formData,
+          phone: `${formData.phonePrefix} ${rawPhoneDigits}`,
           notes: `Lead z reklamy: ${leadMagnetName}`
         }),
       });
@@ -167,14 +170,23 @@ export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline
             required 
           />
         </div>
-        <div>
+        <div className="flex bg-background/50 border border-white/5 rounded-xl shadow-inner overflow-hidden focus-within:border-primary/50 focus-within:bg-background/80 transition-all">
+          <select 
+            name="phonePrefix" 
+            value={formData.phonePrefix} 
+            onChange={handleInputChange}
+            className="bg-transparent text-white px-3 py-4 border-r border-white/10 focus:outline-none appearance-none cursor-pointer hover:bg-white/5 transition-colors"
+          >
+            <option value="+420" className="bg-background text-white">+420</option>
+            <option value="+421" className="bg-background text-white">+421</option>
+          </select>
           <input 
             type="tel" 
             name="phone" 
             value={formData.phone} 
             onChange={handleInputChange} 
-            placeholder="Váš telefon" 
-            className="w-full bg-background/50 border border-white/5 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-primary/50 focus:bg-background/80 transition-all placeholder:text-white/30"
+            placeholder="Vaše telefonní číslo (9 číslic)" 
+            className="w-full bg-transparent px-4 py-4 text-white focus:outline-none placeholder:text-white/30"
             required 
           />
         </div>
@@ -208,7 +220,7 @@ export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline
           <button 
             type="submit" 
             disabled={isSubmitting}
-            className="w-full px-8 py-5 bg-primary text-primary-foreground font-bold text-lg uppercase tracking-widest rounded-xl hover:bg-white transition-all flex items-center justify-center gap-3 shadow-[0_15px_30px_rgba(212,175,55,0.3)] disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-1"
+            className="w-full px-8 py-5 bg-primary text-primary-foreground font-bold text-lg uppercase tracking-widest rounded-xl hover:bg-white transition-all flex items-center justify-center gap-3 shadow-[0_15px_30px_rgba(212,175,55,0.3)] disabled:opacity-50 transform hover:-translate-y-1"
           >
             {isSubmitting ? 'Odesílám...' : buttonText}
             {!isSubmitting && <ArrowRight className="w-5 h-5" />}

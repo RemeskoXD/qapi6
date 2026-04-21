@@ -6,6 +6,8 @@ import { Footer } from '@/components/footer';
 import { headers } from 'next/headers';
 import db from '@/lib/db';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Bezplatná kontrola oken u vás doma',
   description: 'Ztrácíte tisíce za topení kvůli netěsnícím oknům? Nechte si okna zdarma zkontrolovat naším technikem.',
@@ -22,10 +24,10 @@ export default async function KontrolaOkenAdsPage() {
     const ip = headersList.get('x-forwarded-for') || headersList.get('x-real-ip') || 'unknown';
     const userAgent = headersList.get('user-agent') || 'unknown';
     
-    db.prepare(`
+    await db.query(`
       INSERT INTO visits (source, ip, user_agent)
-      VALUES (?, ?, ?)
-    `).run('google_ads_lp', ip, userAgent);
+      VALUES ($1, $2, $3)
+    `, ['google_ads_lp', ip, userAgent]);
   } catch (error) {
     console.error('Failed to log LP visit:', error);
   }

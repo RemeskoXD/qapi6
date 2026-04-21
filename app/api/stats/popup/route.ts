@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import db from '@/lib/db';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
   try {
     const { action } = await request.json();
@@ -9,8 +11,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
     }
     
-    const stmt = db.prepare(`INSERT INTO popup_stats (action) VALUES (?)`);
-    stmt.run(action);
+    await db.query(`INSERT INTO popup_stats (action) VALUES ($1)`, [action]);
     
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -21,14 +22,13 @@ export async function POST(request: Request) {
 
 export async function GET() {
   try {
-    const stmt = db.prepare(`
+    const { rows } = await db.query(`
       SELECT action, COUNT(*) as count 
       FROM popup_stats 
       GROUP BY action
     `);
-    const rows = stmt.all();
     
-    const stats = {
+    const stats: any = {
       show: 0,
       accept: 0,
       decline: 0
@@ -36,7 +36,7 @@ export async function GET() {
     
     rows.forEach((row: any) => {
       if (row.action in stats) {
-        stats[row.action as keyof typeof stats] = row.count;
+        stats[row.action] = parseInt(row.count, 10);
       }
     });
     

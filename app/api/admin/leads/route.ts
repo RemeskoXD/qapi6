@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    const leads = db.prepare('SELECT * FROM leads ORDER BY created_at DESC').all();
+    const { rows: leads } = await db.query('SELECT * FROM leads ORDER BY created_at DESC');
     return NextResponse.json({ success: true, leads });
   } catch (error) {
     console.error('Failed to fetch leads:', error);

@@ -7,13 +7,40 @@ import { ArrowLeft } from 'lucide-react';
 export const dynamic = 'force-dynamic';
 
 export default async function AdminStatsPage() {
-  // Fetch all visits
-  const visits = db.prepare('SELECT * FROM visits ORDER BY created_at ASC').all() as any[];
-  
+  let visits: any[] = [];
+  let popupStats = { show: 0, accept: 0, decline: 0 };
+  let popupLeadsCount = 0;
+  let googleAdsLeadsCount = 0;
+  let hasDbError = false;
+
+  try {
+    // Fetch all visits
+    const { rows: visitsRaw } = await db.query('SELECT * FROM visits ORDER BY created_at ASC');
+    visits = visitsRaw as any[];
+
+    // Fetch popup stats
+    const { rows: popupStatsRows } = await db.query('SELECT action, COUNT(*) as count FROM popup_stats GROUP BY action');
+    popupStatsRows.forEach((row: any) => {
+      if (row.action in popupStats) {
+        popupStats[row.action as keyof typeof popupStats] = parseInt(row.count, 10);
+      }
+    });
+
+    const { rows: popupLeadsRows } = await db.query("SELECT COUNT(*) as count FROM leads WHERE notes LIKE '%[Z Pop-up okna]%'");
+    popupLeadsCount = parseInt(popupLeadsRows[0].count, 10);
+
+    const { rows: googleAdsLeadsRows } = await db.query("SELECT COUNT(*) as count FROM leads WHERE type = 'Bezplatná kontrola oken - Google Ads'");
+    googleAdsLeadsCount = parseInt(googleAdsLeadsRows[0].count, 10);
+  } catch (error) {
+    console.error('Failed to load admin stats:', error);
+    hasDbError = true;
+  }
+
   // Process visits by day
   const visitsByDay = visits.reduce((acc: any, visit: any) => {
-    // SQLite created_at is in 'YYYY-MM-DD HH:MM:SS' format
-    const date = visit.created_at.split(' ')[0];
+    // pg created_at is a Date object or string, adjust it safely
+    const dateStr = visit.created_at instanceof Date ? visit.created_at.toISOString().split('T')[0] : String(visit.created_at).split(' ')[0].split('T')[0];
+    const date = dateStr;
     if (!acc[date]) {
       acc[date] = { date, count: 0, sources: {} };
     }
@@ -33,22 +60,6 @@ export default async function AdminStatsPage() {
   const googleVisits = visits.filter(v => v.source === 'google/1').length;
   const googleAdsLpVisits = visits.filter(v => v.source === 'google_ads_lp').length;
 
-  // Fetch popup stats
-  const popupStatsRows = db.prepare('SELECT action, COUNT(*) as count FROM popup_stats GROUP BY action').all() as any[];
-  const popupStats = {
-    show: 0,
-    accept: 0,
-    decline: 0
-  };
-  popupStatsRows.forEach((row: any) => {
-    if (row.action in popupStats) {
-      popupStats[row.action as keyof typeof popupStats] = row.count;
-    }
-  });
-
-  const popupLeadsCount = (db.prepare("SELECT COUNT(*) as count FROM leads WHERE notes LIKE '%[Z Pop-up okna]%'").get() as any).count;
-  const googleAdsLeadsCount = (db.prepare("SELECT COUNT(*) as count FROM leads WHERE type = 'Bezplatná kontrola oken - Google Ads'").get() as any).count;
-
   return (
     <main className="min-h-screen bg-background p-8 md:p-12">
       <div className="max-w-6xl mx-auto">
@@ -64,6 +75,12 @@ export default async function AdminStatsPage() {
           </div>
           <ImportExportButtons data={visits} />
         </div>
+        
+        {hasDbError && (
+          <div className="bg-red-500/10 border border-red-500/50 text-red-500 px-6 py-4 rounded-xl text-sm mb-8">
+            <b>Upozornění:</b> Nepodařilo se připojit k databázi nebo tabulky nebyly ještě inicializovány. Statistiky jsou momentálně nedostupné.
+          </div>
+        )}
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <div className="bg-muted/20 border border-white/10 rounded-2xl p-6">
@@ -142,7 +159,7 @@ export default async function AdminStatsPage() {
             <tbody>
               {visits.slice().reverse().slice(0, 50).map((visit, i) => (
                 <tr key={i} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                  <td className="py-3 px-4 text-white/80">{new Date(visit.created_at + 'Z').toLocaleString('cs-CZ')}</td>
+                  <td className="py-3 px-4 text-white/80">{visit.created_at instanceof Date ? visit.created_at.toLocaleString('cs-CZ') : new Date(visit.created_at).toLocaleString('cs-CZ')}</td>
                   <td className="py-3 px-4 text-primary font-medium">{visit.source}</td>
                   <td className="py-3 px-4 text-white/50 text-sm">{visit.ip} <br/> <span className="text-xs truncate max-w-[200px] inline-block">{visit.user_agent}</span></td>
                 </tr>

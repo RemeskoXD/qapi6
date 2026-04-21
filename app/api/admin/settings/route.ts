@@ -5,8 +5,8 @@ export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    const settings = db.prepare('SELECT * FROM settings').all() as { key: string, value: string }[];
-    const settingsObj = settings.reduce((acc, curr) => {
+    const { rows: settings } = await db.query('SELECT * FROM settings');
+    const settingsObj = settings.reduce((acc: any, curr: any) => {
       acc[curr.key] = curr.value;
       return acc;
     }, {} as Record<string, string>);
@@ -27,13 +27,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing key or value' }, { status: 400 });
     }
 
-    const stmt = db.prepare(`
+    await db.query(`
       INSERT INTO settings (key, value)
-      VALUES (?, ?)
+      VALUES ($1, $2)
       ON CONFLICT(key) DO UPDATE SET value = excluded.value
-    `);
-
-    stmt.run(key, String(value));
+    `, [key, String(value)]);
 
     return NextResponse.json({ success: true });
   } catch (error) {

@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import dynamic from 'next/dynamic';
 import { Navbar } from '@/components/navbar';
 import { Hero } from '@/components/hero';
 import { Guarantees } from '@/components/guarantees';
@@ -6,7 +7,6 @@ import { Partners } from '@/components/partners';
 import { Services } from '@/components/services';
 import { About } from '@/components/about';
 import { Process } from '@/components/process';
-import { Booking } from '@/components/booking';
 import { Footer } from '@/components/footer';
 // import { GarageDoorScroll } from '@/components/garage-door-scroll';
 import { KontaktSection } from '@/components/kontakt-section';
@@ -16,6 +16,10 @@ import { FaqSection } from '@/components/faq-section';
 import { ThreeSteps } from '@/components/three-steps';
 import { WindowSaving } from '@/components/window-saving';
 import { PopupOffer } from '@/components/popup-offer';
+
+const Booking = dynamic(() => import('@/components/booking').then(mod => mod.Booking), {
+  loading: () => <div className="py-20 text-center text-white/50">Načítání rezervačního formuláře...</div>
+});
 
 export default function Home() {
   const localBusinessSchema = {
@@ -53,9 +57,7 @@ export default function Home() {
       <Hero />
       <Partners />
       <WindowSaving />
-      <Suspense fallback={<div>Načítání...</div>}>
-        <Booking id="rezervace-top" />
-      </Suspense>
+      <Booking id="rezervace-top" />
       <ThreeSteps />
       <Guarantees />
       {/* <GarageDoorScroll /> */}
@@ -65,9 +67,7 @@ export default function Home() {
       <FaqSection />
       <MapSection />
       <ReviewsSection />
-      <Suspense fallback={<div>Načítání...</div>}>
-        <Booking />
-      </Suspense>
+      <Booking />
       <KontaktSection />
       <Footer />
     </main>
