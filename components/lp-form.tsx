@@ -21,6 +21,7 @@ export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline
     phonePrefix: '+420',
     phone: '',
     address: '',
+    windowType: 'Plast',
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -67,7 +68,7 @@ export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline
           type: leadMagnetName,
           ...formData,
           phone: `${formData.phonePrefix} ${rawPhoneDigits}`,
-          notes: `Lead z reklamy: ${leadMagnetName}`
+          notes: `Lead z reklamy: ${leadMagnetName}\nTyp okna: ${formData.windowType}`
         }),
       });
 
@@ -148,6 +149,20 @@ export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline
       )}
 
       <form onSubmit={handleSubmit} className="space-y-5">
+        <div>
+          <label className="text-xs font-bold text-white/60 uppercase tracking-widest mb-2 block">Typ okna</label>
+          <select 
+            name="windowType" 
+            value={formData.windowType} 
+            onChange={handleInputChange}
+            className="w-full bg-background/50 border border-white/5 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-primary/50 focus:bg-background/80 transition-all appearance-none cursor-pointer"
+          >
+            <option value="Plast">Plast</option>
+            <option value="Hliník">Hliník</option>
+            <option value="Dřevěná">Dřevěná</option>
+            <option value="Jiné">Jiné</option>
+          </select>
+        </div>
         <div>
           <input 
             type="text" 

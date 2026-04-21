@@ -19,21 +19,29 @@ try {
         host,
         port: port ? parseInt(port, 10) : 5432,
         database,
-        ssl: dbUrl.includes('render.com') || dbUrl.includes('supabase') || dbUrl.includes('elephantsql') || host.includes('itnahdoinu') ? { rejectUnauthorized: false } : undefined
+        connectionTimeoutMillis: 10000, // 10s timeout for hanging connections
+        // SSL only if specifically requested via URL parameter or for known cloud providers
+        ssl: (dbUrl.includes('sslmode=require') || dbUrl.includes('render.com') || dbUrl.includes('supabase') || dbUrl.includes('elephantsql')) 
+             ? { rejectUnauthorized: false } 
+             : undefined
       });
       isDbEnabled = true;
     } else {
       // Fallback for other formats
-      dbPool = new Pool({ connectionString: dbUrl });
+      dbPool = new Pool({ 
+        connectionString: dbUrl,
+        connectionTimeoutMillis: 10000,
+        ssl: dbUrl.includes('sslmode=require') ? { rejectUnauthorized: false } : undefined
+      });
       isDbEnabled = true;
     }
   } else {
-    // Dummy pool that won't actually be used, or connect to localhost natively
+    // Dummy pool that won't actually be used
     dbPool = new Pool(); 
   }
 } catch (error) {
-  // Suppression of the full error object to avoid logging the DATABASE_URL which contains the password
-  console.warn('PostgreSQL: Failed to initialize database connection. Database features disabled.');
+  const errMsg = error instanceof Error ? error.message : 'Unknown error';
+  console.warn(`PostgreSQL: Initialization failed (${errMsg}). Database features disabled.`);
   dbPool = new Pool();
 }
 
@@ -98,7 +106,8 @@ async function initDb() {
     `);
     console.log('PostgreSQL db initialized');
   } catch (err) {
-    console.error('Db init error: Podařilo se připojit, ale inicializace tabulek selhala. (Chyba byla skryta pro bezpečnost)');
+    const errMsg = err instanceof Error ? err.message : 'Unknown error';
+    console.error(`Db init error: ${errMsg}`);
   }
 }
 

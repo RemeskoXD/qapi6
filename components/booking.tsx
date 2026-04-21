@@ -83,7 +83,7 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
     }
     
     if (addressParam) {
-      setIsAddressLocked(true);
+      setIsAddressLocked(false);
     }
     
     if (serviceParam === 'kontrola' || addressParam) {
@@ -157,7 +157,10 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
     },
     'Bezplatná kontrola oken': {
       types: [
-        { id: 'kontrola', label: 'Komplexní diagnostika', img: 'https://web2.itnahodinu.cz/QAPI/IMG_8265.webp' }
+        { id: 'plastova', label: 'Plastová okna', img: 'https://web2.itnahodinu.cz/QAPI/fr/plast.webp' },
+        { id: 'hlinikova', label: 'Hliníková okna', img: 'https://web2.itnahodinu.cz/QAPI/fr/hlinik.webp' },
+        { id: 'drevena', label: 'Dřevěná okna', img: 'https://web2.itnahodinu.cz/QAPI/fr/drevo.webp' },
+        { id: 'nope', label: 'Jiné', img: 'https://web2.itnahodinu.cz/QAPI/fr/nvm.webp' },
       ]
     }
   };
@@ -291,7 +294,7 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
               className="font-display text-[var(--text-h2)] font-bold text-white leading-[1.1] tracking-tighter drop-shadow-lg"
             >
-              Získejte cenu do <span className="text-primary italic font-light">2 minut</span>
+              Získej <span className="text-primary italic font-light">nezávaznou nabídku</span>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -619,10 +622,9 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
                       value={formData.address} 
                       onChange={handleInputChange} 
                       type="text" 
-                      className={`w-full bg-background/50 border ${isAddressLocked ? 'border-primary/50 text-white/80' : 'border-white/5 text-white'} rounded-xl px-4 py-4 focus:outline-none focus:border-primary/50 focus:bg-background/80 transition-all placeholder:text-white/20 shadow-inner`} 
+                      className={`w-full bg-background/50 border border-white/5 text-white rounded-xl px-4 py-4 focus:outline-none focus:border-primary/50 focus:bg-background/80 transition-all placeholder:text-white/20 shadow-inner`} 
                       placeholder="Město nebo celá adresa" 
                       required 
-                      readOnly={isAddressLocked}
                     />
                     {isAddressLocked && (
                       <p className="text-xs text-primary/80 flex items-center gap-1 mt-1">
