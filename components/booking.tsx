@@ -313,7 +313,7 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
             {[
               { num: 1, label: 'Služba' },
               { num: 2, label: 'Detaily' },
-              ...(showPreferredTime ? [{ num: 3, label: 'Pref. termín' }] : []),
+              ...(showPreferredTime ? [{ num: 3, label: 'Kdy se to hodí?' }] : []),
               { num: showPreferredTime ? 4 : 3, label: 'Údaje', originalNum: 4 },
               { num: showPreferredTime ? 5 : 4, label: 'Hotovo', originalNum: 5 }
             ].map((s) => {
@@ -495,8 +495,8 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
             {step === 3 && showPreferredTime && (
               <div className="space-y-8" style={{ transform: "translateZ(20px)" }}>
                 <div>
-                  <h3 className="text-2xl font-display font-bold text-white mb-2">Vyberte si preferovaný termín</h3>
-                  <p className="text-white/60 text-sm mb-8">Tento termín je orientační. Budeme se snažit mu co nejvíce přiblížit a přesný čas vám potvrdíme telefonicky.</p>
+                  <h3 className="text-2xl font-display font-bold text-white mb-2">Kdy by se vám to hodilo?</h3>
+                  <p className="text-white/60 text-sm mb-8">Navrhněte orientační čas. Budeme se snažit mu co nejvíce přiblížit a přesný termín vám potvrdíme telefonicky.</p>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                   <div className="flex justify-center bg-muted/30 p-4 md:p-6 rounded-2xl border border-white/5 shadow-inner overflow-x-auto">
@@ -675,11 +675,11 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
                       disabled={isSubmitting}
                       className="w-full sm:w-auto px-10 py-5 bg-primary text-primary-foreground font-bold text-base md:text-lg uppercase tracking-widest rounded-xl hover:bg-white transition-colors flex items-center justify-center gap-3 shadow-[0_15px_30px_rgba(212,175,55,0.3)] disabled:opacity-50 transform hover:-translate-y-1"
                     >
-                      {isSubmitting ? 'Odesílám...' : '[ REZERVOVAT PREFEROVANÝ TERMÍN ZDARMA ]'} <CheckCircle2 className="w-6 h-6" />
+                      {isSubmitting ? 'Odesílám...' : '[ ODESLAT NEZÁVAZNOU POPTÁVKU ZDARMA ]'} <CheckCircle2 className="w-6 h-6" />
                     </button>
                     <div className="flex items-center gap-2 text-white/60 text-xs md:text-sm font-light mt-2 bg-white/5 px-4 py-2 rounded-lg border border-white/10">
                       <ShieldCheck className="w-4 h-4 text-primary" />
-                      <span><strong>100% ZDARMA.</strong> Žádné skryté poplatky. Výjezd technika vás k ničemu nezavazuje.</span>
+                      <span><strong>100% ZDARMA.</strong> Žádné skryté poplatky. Nezávazná poptávka, která k ničemu nezavazuje.</span>
                     </div>
                   </div>
                 </div>
@@ -697,10 +697,9 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
                 >
                   <CheckCircle2 className="w-12 h-12 text-primary" />
                 </motion.div>
-                <h3 className="text-3xl font-display font-bold text-white drop-shadow-lg">Rezervace úspěšná</h3>
+                <h3 className="text-3xl font-display font-bold text-white drop-shadow-lg">Poptávka odeslána</h3>
                 <p className="text-white/60 font-light max-w-md mx-auto leading-relaxed">
-                  Děkujeme za vaši rezervaci. Na zadaný e-mail jsme vám zaslali potvrzení. 
-                  Náš technik se s vámi brzy spojí.
+                  Děkujeme za váš zájem. Brzy se vám ozveme zpět a domluvíme další kroky k vaší nezávazné nabídce.
                 </p>
                 <div className="pt-8">
                   <button
@@ -715,7 +714,7 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
                     }}
                     className="px-8 py-4 bg-transparent border border-white/10 text-white font-bold text-sm uppercase tracking-widest rounded-xl hover:border-white/30 hover:bg-white/5 transition-colors"
                   >
-                    Nová rezervace
+                    Nová poptávka
                   </button>
                 </div>
               </div>
