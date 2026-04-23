@@ -99,7 +99,7 @@ export default async function SiteProtiHmyzuLpPage() {
                 <LpForm 
                   formType="site"
                   leadMagnetName="Sítě do oken - Akce Sleva" 
-                  buttonText="Zarezervuj si nezávaznou konzultaci" 
+                  buttonText="Objednat zaměření Zdarma" 
                   formTitle="Ozvěte se dokud platí sleva"
                   thankYouHeadline="Skvělé!"
                   thankYouText={

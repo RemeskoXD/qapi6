@@ -89,7 +89,7 @@ export default async function StiniciTechnikaLpPage() {
                 <LpForm 
                   formType="stineni"
                   leadMagnetName="Stínicí technika - LP" 
-                  buttonText="Získat nezávaznou konzultaci" 
+                  buttonText="Objednat zaměření Zdarma" 
                   formTitle="Ozvěte se nám"
                   thankYouHeadline="Výborně!"
                   thankYouText={
