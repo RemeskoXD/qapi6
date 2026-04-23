@@ -5,7 +5,7 @@ import nodemailer from 'nodemailer';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { service, type, color, date, time, name, phone, email, address, notes } = body;
+    const { service, type, category, color, date, time, name, phone, email, address, notes } = body;
 
     // Základní validace
     if (!service || !name || !phone || !email || !address) {
@@ -61,6 +61,7 @@ export async function POST(request: Request) {
           html: `
             <h2>Nová poptávka z webu Qapi.cz</h2>
             <p><strong>Služba:</strong> ${service}</p>
+            ${category ? `<p><strong>Kategorie:</strong> ${category}</p>` : ''}
             <p><strong>Typ:</strong> ${finalType}</p>
             ${color ? `<p><strong>Barva:</strong> ${color}</p>` : ''}
             <p><strong>Datum:</strong> ${finalDate}</p>

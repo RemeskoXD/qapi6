@@ -217,6 +217,7 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
         body: JSON.stringify({
           service,
           type: selectedType,
+          category: serviceOptions[service]?.types.find(t => t.id === selectedType)?.label || selectedType,
           color: selectedColor,
           subType: selectedSubType,
           date: selectedDate ? format(selectedDate, 'yyyy-MM-dd') : '',

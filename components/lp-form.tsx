@@ -66,6 +66,7 @@ export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline
         body: JSON.stringify({
           service: 'Lead Magnet',
           type: leadMagnetName,
+          category: formData.windowType,
           ...formData,
           phone: `${formData.phonePrefix} ${rawPhoneDigits}`,
           notes: `Lead z reklamy: ${leadMagnetName}\nTyp okna: ${formData.windowType}`
