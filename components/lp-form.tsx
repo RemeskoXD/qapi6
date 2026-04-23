@@ -12,21 +12,33 @@ interface LpFormProps {
   thankYouText?: React.ReactNode;
   nextStepText?: string;
   nextStepUrl?: string;
+  formType?: 'okna' | 'site' | 'stineni';
 }
 
-export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline, thankYouText, nextStepText, nextStepUrl }: LpFormProps) {
+export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline, thankYouText, nextStepText, nextStepUrl, formType = 'okna' }: LpFormProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phonePrefix: '+420',
     phone: '',
     address: '',
-    windowType: 'Plast',
+    category: formType === 'stineni' ? 'Exteriérové stínění' : formType === 'site' ? 'Rolovací' : 'Plast',
+    subCategory: formType === 'stineni' ? 'Žaluzie' : '',
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => {
+      const changes: any = { [name]: value };
+      
+      // Auto-update subcategory default when category changes (Stínění)
+      if (name === 'category' && formType === 'stineni') {
+        if (value === 'Exteriérové stínění') changes.subCategory = 'Žaluzie';
+        if (value === 'Interiérové stínění') changes.subCategory = 'Horizontální žaluzie';
+      }
+      
+      return { ...prev, ...changes };
+    });
   };
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,6 +70,20 @@ export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline
     setError(null);
 
     try {
+      let notesText = `Lead z reklamy: ${leadMagnetName}\n`;
+      let finalTypeForApi = leadMagnetName;
+
+      if (formType === 'stineni') {
+        notesText += `Kategorie: ${formData.category}\nTyp: ${formData.subCategory}`;
+        finalTypeForApi = `${leadMagnetName} - ${formData.subCategory}`;
+      } else if (formType === 'site') {
+        notesText += `Typ sítě: ${formData.category}`;
+        finalTypeForApi = `${leadMagnetName} - ${formData.category}`;
+      } else {
+        notesText += `Typ okna: ${formData.category}`;
+        finalTypeForApi = `${leadMagnetName} - ${formData.category}`;
+      }
+
       const response = await fetch('/api/leads', {
         method: 'POST',
         headers: {
@@ -65,11 +91,11 @@ export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline
         },
         body: JSON.stringify({
           service: 'Lead Magnet',
-          type: leadMagnetName,
-          category: formData.windowType,
+          type: finalTypeForApi,
+          category: formData.category,
           ...formData,
           phone: `${formData.phonePrefix} ${rawPhoneDigits}`,
-          notes: `Lead z reklamy: ${leadMagnetName}\nTyp okna: ${formData.windowType}`
+          notes: notesText
         }),
       });
 
@@ -150,20 +176,85 @@ export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline
       )}
 
       <form onSubmit={handleSubmit} className="space-y-5">
-        <div>
-          <label className="text-xs font-bold text-white/60 uppercase tracking-widest mb-2 block">Typ okna</label>
-          <select 
-            name="windowType" 
-            value={formData.windowType} 
-            onChange={handleInputChange}
-            className="w-full bg-background/50 border border-white/5 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-primary/50 focus:bg-background/80 transition-all appearance-none cursor-pointer"
-          >
-            <option value="Plast">Plast</option>
-            <option value="Hliník">Hliník</option>
-            <option value="Dřevěná">Dřevěná</option>
-            <option value="Jiné">Jiné</option>
-          </select>
-        </div>
+        {formType === 'okna' && (
+          <div>
+            <label className="text-xs font-bold text-white/60 uppercase tracking-widest mb-2 block">Materiál okna</label>
+            <select 
+              name="category" 
+              value={formData.category} 
+              onChange={handleInputChange}
+              className="w-full bg-background/50 border border-white/5 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-primary/50 focus:bg-background/80 transition-all appearance-none cursor-pointer"
+            >
+              <option value="Plast">Plast</option>
+              <option value="Hliník">Hliník</option>
+              <option value="Dřevěná">Dřevěná</option>
+              <option value="Jiné">Jiné</option>
+            </select>
+          </div>
+        )}
+
+        {formType === 'site' && (
+          <div>
+            <label className="text-xs font-bold text-white/60 uppercase tracking-widest mb-2 block">Typ sítě</label>
+            <select 
+              name="category" 
+              value={formData.category} 
+              onChange={handleInputChange}
+              className="w-full bg-background/50 border border-white/5 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-primary/50 focus:bg-background/80 transition-all appearance-none cursor-pointer"
+            >
+              <option value="Rolovací">Rolovací</option>
+              <option value="Okenní">Okenní</option>
+              <option value="Plisé">Plisé</option>
+              <option value="Posuvné">Posuvné</option>
+              <option value="Dveřní">Dveřní</option>
+            </select>
+          </div>
+        )}
+
+        {formType === 'stineni' && (
+          <>
+            <div>
+              <label className="text-xs font-bold text-white/60 uppercase tracking-widest mb-2 block">Kategorie</label>
+              <select 
+                name="category" 
+                value={formData.category} 
+                onChange={handleInputChange}
+                className="w-full bg-background/50 border border-white/5 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-primary/50 focus:bg-background/80 transition-all appearance-none cursor-pointer mb-5"
+              >
+                <option value="Exteriérové stínění">Exteriérové stínění</option>
+                <option value="Interiérové stínění">Interiérové stínění</option>
+              </select>
+            </div>
+            <div>
+              <label className="text-xs font-bold text-white/60 uppercase tracking-widest mb-2 block">Typ stínění</label>
+              <select 
+                name="subCategory" 
+                value={formData.subCategory} 
+                onChange={handleInputChange}
+                className="w-full bg-background/50 border border-white/5 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-primary/50 focus:bg-background/80 transition-all appearance-none cursor-pointer"
+              >
+                {formData.category === 'Exteriérové stínění' ? (
+                  <>
+                    <option value="Žaluzie">Žaluzie</option>
+                    <option value="Rolety">Rolety</option>
+                    <option value="Screenové rolety">Screenové rolety</option>
+                    <option value="Markýzy">Markýzy</option>
+                    <option value="Jiné">Jiné</option>
+                  </>
+                ) : (
+                  <>
+                    <option value="Horizontální žaluzie">Horizontální žaluzie</option>
+                    <option value="Rolety">Rolety</option>
+                    <option value="Rolety den a noc">Rolety den a noc</option>
+                    <option value="Vertikální žaluzie">Vertikální žaluzie</option>
+                    <option value="Jiné">Jiné</option>
+                  </>
+                )}
+              </select>
+            </div>
+          </>
+        )}
+
         <div>
           <input 
             type="text" 

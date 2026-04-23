@@ -47,7 +47,9 @@ export async function GET(request: Request) {
     const currSeznam = currVisits.filter(v => v.source === 'seznam_ads').length;
     const currBanner = currVisits.filter(v => v.source === 'click_floating_banner').length;
     const currPhone = currVisits.filter(v => v.source === 'click_phone').length;
-    const currLP = currVisits.filter(v => v.source === 'google_ads_lp').length;
+    const currLPOkna = currVisits.filter(v => v.source === 'google_ads_lp').length;
+    const currLPStineni = currVisits.filter(v => v.source === 'lp_stinici_technika').length;
+    const currLPSite = currVisits.filter(v => v.source === 'lp_site_do_oken' || v.source === 'lp_site_proti_hmyzu').length;
 
     // Pop-up data
     let popupShow = 0, popupAccept = 0, popupDecline = 0;
@@ -104,8 +106,16 @@ export async function GET(request: Request) {
             <td style="padding: 10px 0; text-align: right; font-weight: bold;">${currSeznam}</td>
           </tr>
           <tr>
-            <td style="padding: 10px 0; color: #4b5563;">Návštěvy Promo Okna LP</td>
-            <td style="padding: 10px 0; text-align: right; font-weight: bold;">${currLP}</td>
+            <td style="padding: 10px 0; color: #4b5563;">Návštěvy Landing Page (Okna)</td>
+            <td style="padding: 10px 0; text-align: right; font-weight: bold;">${currLPOkna}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px 0; color: #4b5563;">Návštěvy Landing Page (Stínění)</td>
+            <td style="padding: 10px 0; text-align: right; font-weight: bold;">${currLPStineni}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px 0; color: #4b5563;">Návštěvy Landing Page (Sítě)</td>
+            <td style="padding: 10px 0; text-align: right; font-weight: bold;">${currLPSite}</td>
           </tr>
         </table>
       </div>
