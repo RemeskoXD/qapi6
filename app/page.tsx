@@ -16,6 +16,7 @@ import { FaqSection } from '@/components/faq-section';
 import { ThreeSteps } from '@/components/three-steps';
 import { WindowSaving } from '@/components/window-saving';
 import { PopupOffer } from '@/components/popup-offer';
+import { FloatingBanner } from '@/components/floating-banner';
 
 const Booking = dynamic(() => import('@/components/booking').then(mod => mod.Booking), {
   loading: () => <div className="py-20 text-center text-white/50">Načítání rezervačního formuláře...</div>
@@ -53,6 +54,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
       />
       <PopupOffer />
+      <FloatingBanner />
       <Navbar />
       <Hero />
       <Partners />

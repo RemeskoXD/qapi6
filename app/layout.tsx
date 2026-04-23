@@ -2,6 +2,10 @@ import type {Metadata} from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import Script from 'next/script';
 import { CookieBanner } from '@/components/cookie-banner';
+import { PhoneTracker } from '@/components/phone-tracker';
+import { CampaignTracker } from '@/components/campaign-tracker';
+import { PageTracker } from '@/components/page-tracker';
+import { Suspense } from 'react';
 import './globals.css'; // Global styles
 
 const inter = Inter({
@@ -211,6 +215,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         {/* End Google Tag Manager (noscript) */}
         {children}
         <CookieBanner />
+        <PhoneTracker />
+        <Suspense fallback={null}>
+          <CampaignTracker />
+        </Suspense>
+        <PageTracker />
       </body>
     </html>
   );

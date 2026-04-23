@@ -100,6 +100,14 @@ async function initDb() {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
       
+      CREATE TABLE IF NOT EXISTS pageviews (
+        id SERIAL PRIMARY KEY,
+        path TEXT NOT NULL,
+        ip TEXT,
+        user_agent TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+      
       INSERT INTO settings (key, value) VALUES ('show_preferred_time', 'false') ON CONFLICT (key) DO NOTHING;
       INSERT INTO settings (key, value) VALUES ('show_window_service', 'false') ON CONFLICT (key) DO NOTHING;
       INSERT INTO settings (key, value) VALUES ('test_mode', 'false') ON CONFLICT (key) DO NOTHING;
