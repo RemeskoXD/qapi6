@@ -11,10 +11,10 @@ const services = [
     title: 'Servis Oken',
     pain: 'Táhne vám okny a platíte zbytečně moc za topení?',
     relief: 'Zajistíme dokonalé utěsnění a seřízení. Snížíme vaše účty za energie a vrátíme domů tepelný komfort.',
-    image: 'https://web2.itnahodinu.cz/QAPI/serisoknazena.webp',
+    image: 'https://web2.itnahodinu.cz/QAPI/fotkaokna.jpeg',
     link: '/servis-oken',
-    colSpan: 'md:col-span-2',
-    rowSpan: 'md:row-span-2',
+    colSpan: 'md:col-span-1',
+    rowSpan: 'md:row-span-1',
   },
   {
     id: 'vrata',
@@ -33,6 +33,16 @@ const services = [
     relief: 'Precizní montáž oken a stínící techniky s důrazem na detail a dlouhou životnost.',
     image: 'https://web2.itnahodinu.cz/OKNA/vnitrnistineni.webp',
     link: '/stinici-technika',
+    colSpan: 'md:col-span-1',
+    rowSpan: 'md:row-span-1',
+  },
+  {
+    id: 'site',
+    title: 'Sítě proti hmyzu',
+    pain: 'Otravuje vás hmyz v domě?',
+    relief: 'Namontujeme odolné sítě proti hmyzu do oken i dveří pro svobodné větrání a klidný spánek.',
+    image: 'https://web2.itnahodinu.cz/QAPI/sit.jpeg',
+    link: '/site-proti-hmyzu',
     colSpan: 'md:col-span-1',
     rowSpan: 'md:row-span-1',
   },
@@ -83,7 +93,7 @@ export function Services() {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[350px] sm:auto-rows-[400px] md:auto-rows-[450px] [perspective:2000px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 auto-rows-[350px] sm:auto-rows-[400px] md:auto-rows-[450px] [perspective:2000px]">
           {services.map((service, index) => (
             <motion.div
               key={service.id}
