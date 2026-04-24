@@ -38,21 +38,6 @@ export default async function SiteDoOkenLpPage() {
     <main className="min-h-screen bg-background relative flex flex-col pt-[80px]">
       <Navbar />
       
-      {/* Category Selection Subnav */}
-      <div className="w-full bg-[#111111] border-b border-white/5 py-4 sticky top-[80px] z-[40]">
-         <div className="container mx-auto px-6 flex justify-center">
-            <div className="flex items-center gap-2 md:gap-6 overflow-x-auto no-scrollbar snap-x">
-               {['Rolovací', 'Okenní', 'Plisé', 'Posuvné', 'Dveřní'].map((cat) => (
-                  <div key={cat} className="snap-center shrink-0">
-                     <span className="px-5 py-2 rounded-full border border-white/20 text-white/80 hover:text-white hover:bg-white/10 transition-colors cursor-pointer text-sm font-medium">
-                        {cat}
-                     </span>
-                  </div>
-               ))}
-            </div>
-         </div>
-      </div>
-
       <div className="flex-1 relative flex items-center justify-center py-20 pb-32">
         {/* Background gradients */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-background to-background" />

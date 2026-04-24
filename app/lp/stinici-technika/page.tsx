@@ -34,7 +34,7 @@ export default async function StiniciTechnikaLpPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background relative flex flex-col">
+    <main className="min-h-screen bg-background relative flex flex-col pt-[80px]">
       <Navbar />
       
       <div className="flex-1 relative flex items-center justify-center py-24 md:py-32">
@@ -90,6 +90,7 @@ export default async function StiniciTechnikaLpPage() {
                   formType="stineni"
                   leadMagnetName="Stínicí technika - LP" 
                   buttonText="Objednat zaměření Zdarma" 
+                  gtagConversionId="AW-18019878591/wE5eCOL55KEcEL-NxpBD"
                   formTitle="Ozvěte se nám"
                   thankYouHeadline="Výborně!"
                   thankYouText={

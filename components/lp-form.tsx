@@ -2,7 +2,36 @@
 
 import { useState } from 'react';
 import { motion } from 'motion/react';
+import Image from 'next/image';
 import { ArrowRight, CheckCircle2, ShieldCheck } from 'lucide-react';
+
+interface SelectionItem {
+  id: string;
+  label: string;
+  img: string;
+}
+
+const SITE_ITEMS: SelectionItem[] = [
+  { id: 'Rolovací', label: 'Rolovací', img: 'https://web2.itnahodinu.cz/QAPI/roll.png' },
+  { id: 'Okenní', label: 'Okenní', img: 'https://web2.itnahodinu.cz/QAPI/www.png' },
+  { id: 'Plisé', label: 'Plisé', img: 'https://web2.itnahodinu.cz/QAPI/plise.png' },
+  { id: 'Posuvné', label: 'Posuvné', img: 'https://web2.itnahodinu.cz/QAPI/posuvne.png' },
+  { id: 'Dveřní', label: 'Dveřní', img: 'https://web2.itnahodinu.cz/QAPI/dvere.png' },
+];
+
+const STINENI_EXTERIER_ITEMS: SelectionItem[] = [
+  { id: 'Žaluzie', label: 'Žaluzie', img: 'https://web2.itnahodinu.cz/QAPI/fr/1.webp' },
+  { id: 'Rolety', label: 'Rolety', img: 'https://web2.itnahodinu.cz/QAPI/fr/2.webp' },
+  { id: 'Screenové rolety', label: 'Screenové rolety', img: 'https://web2.itnahodinu.cz/QAPI/fr/3.webp' },
+  { id: 'Markýzy', label: 'Markýzy', img: 'https://web2.itnahodinu.cz/QAPI/fr/4.webp' },
+];
+
+const STINENI_INTERIER_ITEMS: SelectionItem[] = [
+  { id: 'Horizontální žaluzie', label: 'Žaluzie', img: 'https://web2.itnahodinu.cz/QAPI/fr/14.webp' },
+  { id: 'Rolety', label: 'Rolety', img: 'https://web2.itnahodinu.cz/QAPI/fr/13.webp' },
+  { id: 'Rolety den a noc', label: 'Rolety den a noc', img: 'https://web2.itnahodinu.cz/QAPI/fr/11.webp' },
+  { id: 'Vertikální žaluzie', label: 'Vertikální žaluzie', img: 'https://web2.itnahodinu.cz/QAPI/fr/10.webp' },
+];
 
 interface LpFormProps {
   leadMagnetName: string;
@@ -13,9 +42,10 @@ interface LpFormProps {
   nextStepText?: string;
   nextStepUrl?: string;
   formType?: 'okna' | 'site' | 'stineni';
+  gtagConversionId?: string;
 }
 
-export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline, thankYouText, nextStepText, nextStepUrl, formType = 'okna' }: LpFormProps) {
+export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline, thankYouText, nextStepText, nextStepUrl, formType = 'okna', gtagConversionId }: LpFormProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -106,11 +136,11 @@ export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline
       // Google Ads Conversion Hit
       if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
         (window as any).gtag('event', 'conversion', {
-          'send_to': 'AW-18019878591/QQoqCO6jxpccEL-NxpBD',
+          'send_to': gtagConversionId || 'AW-18019878591/QQoqCO6jxpccEL-NxpBD',
           'value': 1.0,
           'currency': 'CZK',
           'event_callback': function() {
-            console.log('Google Ads conversion sent');
+            console.log('Google Ads conversion sent:', gtagConversionId || 'default');
           },
           'event_timeout': 2000
         });
@@ -194,65 +224,95 @@ export function LpForm({ leadMagnetName, buttonText, formTitle, thankYouHeadline
         )}
 
         {formType === 'site' && (
-          <div>
+          <div className="space-y-3">
             <label className="text-xs font-bold text-white/60 uppercase tracking-widest mb-2 block">Typ sítě</label>
-            <select 
-              name="category" 
-              value={formData.category} 
-              onChange={handleInputChange}
-              className="w-full bg-background/50 border border-white/5 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-primary/50 focus:bg-background/80 transition-all appearance-none cursor-pointer"
-            >
-              <option value="Rolovací">Rolovací</option>
-              <option value="Okenní">Okenní</option>
-              <option value="Plisé">Plisé</option>
-              <option value="Posuvné">Posuvné</option>
-              <option value="Dveřní">Dveřní</option>
-            </select>
+            <div className="grid grid-cols-2 gap-3">
+              {SITE_ITEMS.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => setFormData(prev => ({ ...prev, category: item.id }))}
+                  className={`flex items-center gap-3 p-3 rounded-xl border transition-all duration-300 transform hover:-translate-y-1 bg-background/50 group ${
+                    formData.category === item.id 
+                      ? 'border-primary bg-primary/10 shadow-[0_0_15px_rgba(212,175,55,0.2)]' 
+                      : 'border-white/5 hover:border-primary/30'
+                  }`}
+                >
+                  <div className="relative w-10 h-10 flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
+                    <Image 
+                      src={item.img} 
+                      alt={item.label} 
+                      fill 
+                      className="object-contain"
+                      sizes="40px"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                  <span className="text-base font-bold text-white text-left leading-tight">{item.label}</span>
+                </button>
+              ))}
+            </div>
           </div>
         )}
 
         {formType === 'stineni' && (
-          <>
+          <div className="space-y-6">
             <div>
-              <label className="text-xs font-bold text-white/60 uppercase tracking-widest mb-2 block">Kategorie</label>
-              <select 
-                name="category" 
-                value={formData.category} 
-                onChange={handleInputChange}
-                className="w-full bg-background/50 border border-white/5 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-primary/50 focus:bg-background/80 transition-all appearance-none cursor-pointer mb-5"
-              >
-                <option value="Exteriérové stínění">Exteriérové stínění</option>
-                <option value="Interiérové stínění">Interiérové stínění</option>
-              </select>
+              <label className="text-xs font-bold text-white/60 uppercase tracking-widest mb-3 block">Kategorie</label>
+              <div className="flex gap-3">
+                {['Exteriérové stínění', 'Interiérové stínění'].map((cat) => (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => {
+                      setFormData(prev => ({ 
+                        ...prev, 
+                        category: cat,
+                        subCategory: cat === 'Exteriérové stínění' ? 'Žaluzie' : 'Horizontální žaluzie'
+                      }));
+                    }}
+                    className={`flex-1 py-3 px-4 rounded-xl border text-sm font-bold transition-all duration-300 ${
+                      formData.category === cat 
+                        ? 'border-primary bg-primary text-primary-foreground shadow-[0_10px_20px_rgba(212,175,55,0.2)]' 
+                        : 'border-white/5 bg-background/50 text-white/60 hover:border-primary/30'
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
             </div>
+            
             <div>
-              <label className="text-xs font-bold text-white/60 uppercase tracking-widest mb-2 block">Typ stínění</label>
-              <select 
-                name="subCategory" 
-                value={formData.subCategory} 
-                onChange={handleInputChange}
-                className="w-full bg-background/50 border border-white/5 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-primary/50 focus:bg-background/80 transition-all appearance-none cursor-pointer"
-              >
-                {formData.category === 'Exteriérové stínění' ? (
-                  <>
-                    <option value="Žaluzie">Žaluzie</option>
-                    <option value="Rolety">Rolety</option>
-                    <option value="Screenové rolety">Screenové rolety</option>
-                    <option value="Markýzy">Markýzy</option>
-                    <option value="Jiné">Jiné</option>
-                  </>
-                ) : (
-                  <>
-                    <option value="Horizontální žaluzie">Horizontální žaluzie</option>
-                    <option value="Rolety">Rolety</option>
-                    <option value="Rolety den a noc">Rolety den a noc</option>
-                    <option value="Vertikální žaluzie">Vertikální žaluzie</option>
-                    <option value="Jiné">Jiné</option>
-                  </>
-                )}
-              </select>
+              <label className="text-xs font-bold text-white/60 uppercase tracking-widest mb-3 block">Typ stínění</label>
+              <div className="grid grid-cols-2 gap-3">
+                {(formData.category === 'Exteriérové stínění' ? STINENI_EXTERIER_ITEMS : STINENI_INTERIER_ITEMS).map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => setFormData(prev => ({ ...prev, subCategory: item.id }))}
+                    className={`flex items-center gap-3 p-3 rounded-xl border transition-all duration-300 group bg-background/50 ${
+                      formData.subCategory === item.id 
+                        ? 'border-primary bg-primary/10 shadow-[0_0_15px_rgba(212,175,55,0.2)]' 
+                        : 'border-white/5 hover:border-primary/30'
+                    }`}
+                  >
+                    <div className="relative w-10 h-10 flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
+                      <Image 
+                        src={item.img} 
+                        alt={item.label} 
+                        fill 
+                        className="object-contain"
+                        sizes="40px"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                    <span className="text-base font-bold text-white text-left leading-tight">{item.label}</span>
+                  </button>
+                ))}
+              </div>
             </div>
-          </>
+          </div>
         )}
 
         <div>

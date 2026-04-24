@@ -155,6 +155,15 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
         { id: 'antracit', label: 'Antracit', hex: '#333333' },
       ]
     },
+    'Sítě proti hmyzu': {
+      types: [
+        { id: 'rolovaci', label: 'Rolovací', img: 'https://web2.itnahodinu.cz/QAPI/roll.png' },
+        { id: 'okenni', label: 'Okenní', img: 'https://web2.itnahodinu.cz/QAPI/www.png' },
+        { id: 'plise', label: 'Plisé', img: 'https://web2.itnahodinu.cz/QAPI/plise.png' },
+        { id: 'posuvne', label: 'Posuvné', img: 'https://web2.itnahodinu.cz/QAPI/posuvne.png' },
+        { id: 'dverni', label: 'Dveřní', img: 'https://web2.itnahodinu.cz/QAPI/dvere.png' },
+      ]
+    },
     'Bezplatná kontrola oken': {
       types: [
         { id: 'plastova', label: 'Plastová okna', img: 'https://web2.itnahodinu.cz/QAPI/fr/plast.webp' },
@@ -350,7 +359,7 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
               <div className="space-y-6" style={{ transform: "translateZ(20px)" }}>
                 <h3 className="text-2xl font-display font-bold text-white mb-8">S čím přesně potřebujete pomoci?</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {['Bezplatná kontrola oken', 'Garážová vrata', 'Servis oken', 'Stínicí technika']
+                  {['Bezplatná kontrola oken', 'Garážová vrata', 'Servis oken', 'Stínicí technika', 'Sítě proti hmyzu']
                     .filter(item => item !== 'Servis oken' || showWindowService)
                     .map((item) => (
                     <button
@@ -386,8 +395,35 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
                 
                 <div className="space-y-6">
                   <h4 className="text-lg font-bold text-white">Vyberte typ</h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {serviceOptions[service]?.types.map((type) => (
+                  <div className={`grid gap-4 ${service === 'Sítě proti hmyzu' ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3'}`}>
+                    {serviceOptions[service]?.types.map((type) => {
+                      const isIconStyle = service === 'Sítě proti hmyzu';
+                      
+                      return isIconStyle ? (
+                        <button
+                          key={type.id}
+                          onClick={() => {
+                            setSelectedType(type.id);
+                            setSelectedColor('');
+                            setSelectedSubType('');
+                          }}
+                          className={`relative flex flex-col items-center justify-center gap-3 rounded-xl border p-4 transition-all duration-300 transform hover:-translate-y-1 group bg-background/50 ${
+                            selectedType === type.id 
+                              ? 'border-primary shadow-[0_0_20px_rgba(212,175,55,0.3)] bg-primary/5' 
+                              : 'border-white/5 hover:border-primary/30 hover:bg-white/5'
+                          }`}
+                        >
+                          <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
+                            <Image src={type.img} alt={type.label} fill sizes="(max-width: 768px) 80px, 80px" className="object-contain" referrerPolicy="no-referrer" />
+                          </div>
+                          <div className="font-bold text-xs sm:text-sm text-white text-center break-words w-full px-1 leading-tight">{type.label}</div>
+                          {selectedType === type.id && (
+                            <div className="absolute top-2 right-2 w-5 h-5 bg-primary rounded-full flex items-center justify-center z-10">
+                              <CheckCircle2 className="w-3 h-3 text-background" />
+                            </div>
+                          )}
+                        </button>
+                      ) : (
                       <button
                         key={type.id}
                         onClick={() => {
@@ -410,7 +446,7 @@ export function Booking({ id = "rezervace" }: { id?: string } = {}) {
                           </div>
                         )}
                       </button>
-                    ))}
+                    )})}
                   </div>
                 </div>
 
