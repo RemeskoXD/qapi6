@@ -178,6 +178,7 @@ export default function AdminDashboard() {
                         <th className="px-6 py-4 text-sm font-medium text-white/60">Služba</th>
                         <th className="px-6 py-4 text-sm font-medium text-white/60">Termín</th>
                         <th className="px-6 py-4 text-sm font-medium text-white/60">Poznámka</th>
+                        <th className="px-6 py-4 text-sm font-medium text-white/60">Akce</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-white/5">
@@ -212,6 +213,42 @@ export default function AdminDashboard() {
                           </td>
                           <td className="px-6 py-4 text-sm text-white/60 min-w-[250px] whitespace-pre-wrap bg-white/5" title={lead.notes || ''}>
                             {lead.notes?.replace('[Z Pop-up okna]', '').trim() || '-'}
+                          </td>
+                          <td className="px-6 py-4 text-sm text-white/80 whitespace-nowrap">
+                            <button
+                              onClick={async (e) => {
+                                const btn = e.currentTarget;
+                                const originalText = btn.innerText;
+                                btn.innerText = 'Odesílám...';
+                                btn.disabled = true;
+                                try {
+                                  const res = await fetch('/api/admin/resend-lead', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ id: lead.id }),
+                                  });
+                                  const data = await res.json();
+                                  if (data.success) {
+                                    btn.innerText = 'Úspěšně odesláno';
+                                    btn.classList.add('text-green-400');
+                                  } else {
+                                    btn.innerText = 'Chyba';
+                                    btn.classList.add('text-red-400');
+                                  }
+                                } catch (err) {
+                                  btn.innerText = 'Chyba';
+                                  btn.classList.add('text-red-400');
+                                }
+                                setTimeout(() => {
+                                  btn.innerText = originalText;
+                                  btn.disabled = false;
+                                  btn.classList.remove('text-green-400', 'text-red-400');
+                                }, 3000);
+                              }}
+                              className="px-3 py-1.5 bg-primary/20 text-primary hover:bg-primary/30 rounded text-xs transition-colors font-medium"
+                            >
+                              Znovu poslat email
+                            </button>
                           </td>
                         </tr>
                       ))}

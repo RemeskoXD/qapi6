@@ -186,6 +186,15 @@ export async function GET(request: Request) {
     const port = parseInt(process.env.SMTP_PORT || '587');
     const secure = process.env.SMTP_PORT === '465'; // true for 465, false for other ports
 
+    // Zjištění Test Mode (bezpečně)
+    let isTestMode = false;
+    try {
+      const { rows: testModeRows } = await db.query("SELECT value FROM settings WHERE key = 'test_mode'");
+      isTestMode = testModeRows[0]?.value === 'true';
+    } catch (err) {
+      console.warn('Nepodařilo se zjistit test_mode z DB, výchozí je false.');
+    }
+
     if (host && user && pass) {
       const transporter = nodemailer.createTransport({
         host: host,
@@ -199,8 +208,8 @@ export async function GET(request: Request) {
 
       await transporter.sendMail({
         from: '"QAPI Report" <report@qapi.cz>',
-        to: "ludvikremesekwork@gmail.com, info@qapi.cz",
-        subject: "QAPI - Týdenní přehled: " + currVisits.length + " návštěv a " + currLeads.length + " poptávek",
+        to: isTestMode ? "ludvikremesekwork@gmail.com" : "ludvikremesekwork@gmail.com, info@qapi.cz",
+        subject: `${isTestMode ? '[TEST MODE] ' : ''}QAPI - Týdenní přehled: ` + currVisits.length + " návštěv a " + currLeads.length + " poptávek",
         html: htmlReport,
       });
 
