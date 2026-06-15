@@ -210,7 +210,7 @@ export default function AdminDashboard() {
                           <td className="px-6 py-4 text-sm text-white/80 whitespace-nowrap">
                             {lead.date !== 'Nezadáno' ? `${lead.date} ${lead.time}` : 'Nezadáno'}
                           </td>
-                          <td className="px-6 py-4 text-sm text-white/60 max-w-[200px] truncate" title={lead.notes || ''}>
+                          <td className="px-6 py-4 text-sm text-white/60 min-w-[250px] whitespace-pre-wrap bg-white/5" title={lead.notes || ''}>
                             {lead.notes?.replace('[Z Pop-up okna]', '').trim() || '-'}
                           </td>
                         </tr>
