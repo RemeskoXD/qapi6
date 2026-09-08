@@ -195,11 +195,9 @@ export async function GET(request: Request) {
       console.warn('Nepodařilo se zjistit test_mode z DB, výchozí je false.');
     }
 
-    if (host && user && pass) {
+    if (user && pass) {
       const transporter = nodemailer.createTransport({
-        host: host,
-        port: port,
-        secure: secure,
+        service: 'gmail',
         auth: {
           user: user,
           pass: pass,
@@ -207,7 +205,7 @@ export async function GET(request: Request) {
       });
 
       await transporter.sendMail({
-        from: '"QAPI Report" <report@qapi.cz>',
+        from: `"QAPI Report" <${user}>`,
         to: isTestMode ? "ludvikremesekwork@gmail.com" : "ludvikremesekwork@gmail.com, info@qapi.cz",
         subject: `${isTestMode ? '[TEST MODE] ' : ''}QAPI - Týdenní přehled: ` + currVisits.length + " návštěv a " + currLeads.length + " poptávek",
         html: htmlReport,

@@ -27,7 +27,7 @@ export default function OchranaOsobnichUdaju() {
               <p>
                 Kontaktní údaje správce:<br />
                 E-mail: info@qapi.cz<br />
-                Telefon: +420 702 835 964
+                Telefon: +420 734 564 818
               </p>
             </section>
 

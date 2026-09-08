@@ -10,7 +10,7 @@ export function Footer() {
     "image": "https://web2.itnahodinu.cz/QAPI/Logo-Bile.webp",
     "@id": "https://qapi.cz",
     "url": "https://qapi.cz",
-    "telephone": "+420702835964",
+    "telephone": "+420734564818",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Varšavská 715/36, Vinohrady",
@@ -126,9 +126,9 @@ export function Footer() {
             <h4 className="text-xs font-bold text-white uppercase tracking-[0.2em] drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">Kontakt</h4>
             <ul className="space-y-4">
               <li>
-                <a href="tel:+420702835964" className="flex items-center gap-3 text-white/60 hover:text-primary transition-all duration-300 font-light group hover:translate-x-2">
+                <a href="tel:+420734564818" className="flex items-center gap-3 text-white/60 hover:text-primary transition-all duration-300 font-light group hover:translate-x-2">
                   <Phone className="w-4 h-4 group-hover:text-primary transition-colors group-hover:scale-110 group-hover:rotate-12" />
-                  +420 702 835 964
+                  +420 734 564 818
                 </a>
               </li>
               <li>
@@ -152,9 +152,14 @@ export function Footer() {
         </div>
 
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-white/40 text-sm font-light">
-            © {new Date().getFullYear()} QAPI. Všechna práva vyhrazena.
-          </p>
+          <div className="flex flex-col gap-1">
+            <p className="text-white/40 text-sm font-light">
+              © {new Date().getFullYear()} QAPI. Všechna práva vyhrazena.
+            </p>
+            <p className="text-primary/40 text-xs font-mono tracking-widest uppercase">
+              Verze 2.1.0
+            </p>
+          </div>
           <div className="text-white/30 text-xs font-light text-center md:text-left max-w-2xl">
             <strong>Obsluhované regiony:</strong> Servis oken Praha, Brno, Ostrava, Plzeň, Liberec, Olomouc, České Budějovice, Hradec Králové. Montáž garážových vrat a stínicí techniky po celé ČR.
           </div>

@@ -79,11 +79,11 @@ export function Navbar() {
 
           {/* Contact */}
           <div className="flex items-center gap-3 2xl:gap-5">
-            <a href="tel:+420702835964" className="flex items-center gap-2 2xl:gap-3 text-white hover:text-primary transition-colors group">
+            <a href="tel:+420734564818" className="flex items-center gap-2 2xl:gap-3 text-white hover:text-primary transition-colors group">
               <div className="w-8 h-8 2xl:w-10 2xl:h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all duration-300 shadow-[0_0_15px_rgba(212,175,55,0.3)] group-hover:shadow-[0_0_25px_rgba(212,175,55,0.6)]">
                 <Phone className="w-3 h-3 2xl:w-4 2xl:h-4 text-primary group-hover:text-background transition-colors" />
               </div>
-              <span className="text-xs 2xl:text-sm font-bold tracking-wider 2xl:tracking-widest whitespace-nowrap">+420 702 835 964</span>
+              <span className="text-xs 2xl:text-sm font-bold tracking-wider 2xl:tracking-widest whitespace-nowrap">+420 734 564 818</span>
             </a>
           </div>
         </div>

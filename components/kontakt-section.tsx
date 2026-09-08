@@ -32,7 +32,7 @@ export function KontaktSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {[
-            { icon: Phone, title: 'Telefon', value: '+420 702 835 964', link: 'tel:+420702835964' },
+            { icon: Phone, title: 'Telefon', value: '+420 734 564 818', link: 'tel:+420734564818' },
             { icon: Mail, title: 'E-mail', value: 'info@qapi.cz', link: 'mailto:info@qapi.cz' },
             { icon: MapPin, title: 'Adresa', value: 'Působíme v rámci celé ČR', link: '#' },
             { icon: Clock, title: 'Otevírací doba', value: 'Po - Pá: 8:00 - 17:00', link: '#' },
